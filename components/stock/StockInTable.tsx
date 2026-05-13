@@ -9,8 +9,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { ArrowDownLeft, User } from "lucide-react";
-import { format } from "date-fns";
+import { ArrowDownLeft, Edit2, Trash, User } from "lucide-react";
+import { format, formatDate } from "date-fns";
+import { Button } from "../ui/button";
 
 export default function StockInTable({ data }: { data: any[] }) {
   return (
@@ -18,48 +19,54 @@ export default function StockInTable({ data }: { data: any[] }) {
       <Table>
         <TableHeader className="bg-emerald-50/30">
           <TableRow>
-            <TableHead className="w-[120px] font-bold">Ref ID</TableHead>
-            <TableHead className="font-bold">Product</TableHead>
+            <TableHead className="font-bold">Spare Part</TableHead>
             <TableHead className="font-bold text-center">Qty In</TableHead>
-            <TableHead className="font-bold">Supplier</TableHead>
-            <TableHead className="font-bold">Date</TableHead>
-            <TableHead className="text-right font-bold">Handler</TableHead>
+            <TableHead className="font-bold">Price</TableHead>
+            <TableHead className="font-bold">Received Date</TableHead>
+            <TableHead className="text-right font-bold">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {data.map((log) => (
             <TableRow key={log.id} className="hover:bg-slate-50/50">
-              <TableCell className="font-mono text-[11px] font-bold text-primary">
-                {log.id}
-              </TableCell>
               <TableCell>
-                <p className="font-bold text-slate-800">{log.productName}</p>
-                {log.note && (
-                  <p className="text-[10px] text-slate-400 italic">
-                    "{log.note}"
+                <p className="font-bold text-slate-800">
+                  {log?.spare_part.name}
+                </p>
+                {log?.spare_part.price && (
+                  <p className="text-sm text-slate-400 italic">
+                    "{log?.spare_part.price} ks"
                   </p>
                 )}
               </TableCell>
               <TableCell className="text-center">
                 <div className="flex items-center justify-center gap-1 text-emerald-600 font-black">
-                  <ArrowDownLeft size={14} />+{log.quantity}
+                  <ArrowDownLeft size={14} />+{log.initial_quantity}
                 </div>
               </TableCell>
               <TableCell>
                 <Badge
                   variant="outline"
-                  className="bg-slate-50 text-slate-600 border-slate-200"
+                  className="bg-slate-100 font-bold  text-slate-600 border-slate-200"
                 >
-                  {log.supplier}
+                  {log.purchase_price} Ks
                 </Badge>
               </TableCell>
               <TableCell className="text-sm text-slate-600">
-                {format(new Date(log.date), "MMM dd, yyyy")}
+                {formatDate(log.received_date, "dd-MM-yyyy ")}
               </TableCell>
               <TableCell className="text-right">
-                <div className="flex items-center justify-end gap-2 text-xs font-medium text-slate-500">
-                  <User size={12} />
-                  {log.receivedBy}
+                <div className="flex justify-end gap-1">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="h-8 w-8 bg-amber-200 hover:bg-yellow-300"
+                  >
+                    <Edit2 size={14} />
+                  </Button>
+                  <Button variant="destructive" size="icon">
+                    <Trash size={14} />
+                  </Button>
                 </div>
               </TableCell>
             </TableRow>

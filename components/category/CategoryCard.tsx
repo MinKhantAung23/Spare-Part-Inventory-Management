@@ -8,6 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Button } from "../ui/button";
 
 export default function CategoryCard({ category }: { category: any }) {
   return (
@@ -25,7 +26,10 @@ export default function CategoryCard({ category }: { category: any }) {
             <DropdownMenuTrigger className="p-1 text-slate-800 hover:text-slate-600 outline-none ">
               <MoreVertical size={20} />
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="font-padauk bg-slate-50">
+            <DropdownMenuContent
+              align="end"
+              className="font-padauk bg-slate-50"
+            >
               <DropdownMenuItem>
                 <Edit size={16} className="mr-2" /> Edit
               </DropdownMenuItem>
@@ -35,24 +39,9 @@ export default function CategoryCard({ category }: { category: any }) {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-
-        <div>
-          <p className="text-sm text-slate-400 line-clamp-2 mb-4 leading-relaxed">
-            {category.description}
-          </p>
-        </div>
-
-        <div className="flex items-center justify-between mt-auto">
-          <Badge
-            variant="secondary"
-            className="bg-slate-100 text-slate-600 font-bold px-3 py-1"
-          >
-            {category.count} Items
-          </Badge>
-          <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-300 group-hover:bg-primary group-hover:text-white transition-all">
-            <ChevronRight size={18} />
-          </div>
-        </div>
+        <Button variant="link" className="w-8 h-8 rounded-full ms-auto bg-slate-50 flex items-center justify-center text-slate-300 group-hover:bg-primary group-hover:text-white transition-all">
+          <ChevronRight size={18} />
+        </Button>
       </div>
     </div>
   );

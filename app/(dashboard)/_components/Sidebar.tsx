@@ -28,13 +28,13 @@ export default function Sidebar({ isExpanded, setIsExpanded }: any) {
       items: [
         { name: "Dashboard", href: "/", icon: LayoutDashboard },
         { name: "Quick Search", href: "/quick-search", icon: Search },
-        { name: "Products", href: "/products", icon: Package },
+        { name: "Spare Parts", href: "/spare-parts", icon: Package },
         { name: "Inventory", href: "/inventory", icon: Database },
         { name: "Stock In", href: "/stock-in", icon: ArrowDownCircle },
         { name: "Stock Out", href: "/stock-out", icon: ArrowUpCircle },
       ],
     },
-    {
+    { 
       title: "CATALOG",
       items: [
         { name: "Brands & Models", href: "/brands", icon: Tags },

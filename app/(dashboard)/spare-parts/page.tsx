@@ -1,14 +1,14 @@
 "use client";
 
-import { useProducts } from "@/hooks/useProduct";
+import { useSpareParts } from "@/hooks/useSparePart";
 import ProductCard from "../../../components/product/ProductCard";
 import { Plus, Search, Filter, Loader2 } from "lucide-react";
 import { useState } from "react";
 import ProductModal from "@/components/product/ProductModal";
 import { Button } from "@/components/ui/button";
 
-export default function ProductsPage() {
-  const { data: products, isLoading, error } = useProducts();
+export default function SparePartsPage() {
+  const { data: spareParts, isLoading, error } = useSpareParts();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
@@ -28,7 +28,7 @@ export default function ProductsPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-800">
-            အပိုပစ္စည်းများ (Products)
+            အပိုပစ္စည်းများ (Spare Parts)
           </h1>
           <p className="text-sm text-slate-400">
             Manage your mobile spare parts inventory
@@ -39,7 +39,7 @@ export default function ProductsPage() {
           className="bg-primary hover:bg-blue-600 text-white px-5 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 transition-all shadow-lg shadow-primary/20 shrink-0"
         >
           <Plus size={18} />
-          Add Product
+          Add Spare Part
         </Button>
       </div>
 
@@ -65,19 +65,19 @@ export default function ProductsPage() {
       {isLoading ? (
         <div className="flex flex-col items-center justify-center py-20 text-slate-400">
           <Loader2 className="animate-spin mb-2" size={32} />
-          <p className="text-sm font-medium">Loading products...</p>
+          <p className="text-sm font-medium">Loading data ...</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {products?.map((item: any) => (
+        <div className="grid gsrid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {spareParts?.data?.map((item: any) => (
             <ProductCard key={item.id} product={item} />
           ))}
 
           {/* Empty State */}
-          {products?.length === 0 && (
+          {spareParts?.data?.length === 0 && (
             <div className="col-span-full py-20 text-center bg-white border border-dashed border-slate-200 rounded-3xl">
               <p className="text-slate-400">
-                No products found. Start by adding one!
+                No spare parts found. Start by adding one!
               </p>
             </div>
           )}

@@ -1,17 +1,13 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { fetchStockInLogs } from "@/services/stock-in.service";
-import StockInTable from "../../../components/stock/StockInTable";
+  import StockInTable from "../../../components/stock/StockInTable";
 import { Button } from "@/components/ui/button";
 import { Plus, Loader2 } from "lucide-react";
+import { useStockIn } from "@/hooks/useStockIn";
 
 export default function StockInPage() {
-  const { data: logs, isLoading } = useQuery({
-    queryKey: ["stock-in-logs"],
-    queryFn: fetchStockInLogs,
-  });
-
+  const { data: stockIn, isLoading: isStockInLoading } = useStockIn();
+console.log(stockIn)
   return (
     <div className="space-y-6 font-padauk">
       {/* Header Section */}
@@ -34,23 +30,23 @@ export default function StockInPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
           <p className="text-[10px] uppercase font-bold text-slate-400 mb-1">
-            Today's Total
+            Total In
           </p>
           <p className="text-2xl font-black text-emerald-600">
-            + 720{" "}
-            <span className="text-xs font-normal text-slate-400">Units</span>
+            {stockIn?.count || 0}
+            <span className="text-xs font-normal text-slate-400"> Units</span>
           </p>
         </div>
         {/* Add more cards here if needed */}
       </div>
 
       {/* Main Table */}
-      {isLoading ? (
+      {isStockInLoading ? (
         <div className="flex justify-center py-20">
           <Loader2 className="animate-spin text-emerald-600" size={40} />
         </div>
       ) : (
-        <StockInTable data={logs || []} />
+        <StockInTable data={stockIn?.data || []} />
       )}
     </div>
   );

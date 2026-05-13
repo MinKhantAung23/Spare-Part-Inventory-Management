@@ -8,26 +8,19 @@ export default function ProductCard({ product }: ProductCardProps) {
   const isLowStock = product.stock > 0 && product.stock < 5;
   const isOutOfStock = product.stock === 0;
 
+  console.log(product);
   return (
     <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-primary/20 transition-all group relative">
       {/* Header */}
       <div className="flex justify-between items-start mb-4">
         <div className="flex gap-3">
-          <div
-            className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${
-              isOutOfStock
-                ? "bg-slate-100 text-slate-400"
-                : "bg-blue-50 text-primary"
-            }`}
-          >
-            <Package size={24} />
-          </div>
+          
           <div>
             <h3 className="font-bold text-slate-800 line-clamp-1">
               {product.name}
             </h3>
             <p className="text-[11px] text-slate-400 font-medium uppercase tracking-wider">
-              {product.brand} • {product.category}
+              {product.model.name} • {product.category?.name}
             </p>
           </div>
         </div>
@@ -43,55 +36,32 @@ export default function ProductCard({ product }: ProductCardProps) {
             Sale Price
           </p>
           <p className="text-sm font-bold text-primary">
-            {product.salePrice.toLocaleString()} Ks
-          </p>
-        </div>
-        <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-100">
-          <p className="text-[9px] uppercase font-bold text-slate-400">
-            Cost Price
-          </p>
-          <p className="text-sm font-bold text-slate-500">
-            {product.costPrice.toLocaleString()} Ks
+            {product.price.toLocaleString()} Ks
           </p>
         </div>
       </div>
 
-      {/* Stock Status */}
-      <div className="flex items-center justify-between pt-3 border-t border-slate-50">
-        <div>
-          <p className="text-[10px] text-slate-400 font-bold uppercase">
-            Inventory
-          </p>
-          <p
-            className={`text-lg font-black ${
-              isOutOfStock
-                ? "text-destructive"
-                : isLowStock
-                  ? "text-orange-500"
-                  : "text-success"
-            }`}
-          >
-            {product.stock}{" "}
-            <span className="text-[10px] font-medium text-slate-400 ml-1">
-              Units
-            </span>
-          </p>
+      {/* Specification Status */}
+      <div className="space-y-2 mt-4">
+        <h4 className="text-[10px] uppercase font-bold text-slate-400 tracking-widest">
+          Specifications
+        </h4>
+        <div className="grid grid-cols-1 gap-2">
+          {product.specification &&
+            Object.entries(product.specification).map(([key, value]) => (
+              <div
+                key={key}
+                className="flex justify-between items-center bg-slate-50 gap-1 p-2 rounded-lg border border-slate-100"
+              >
+                <span className="text-[10px] font-bold text-slate-400 uppercase">
+                  {key}:
+                </span>
+                <span className="text-xs font-bold text-slate-700 text-right">
+                  {String(value)}
+                </span>
+              </div>
+            ))}
         </div>
-        <span
-          className={`text-[10px] font-bold px-2 py-1 rounded-full ${
-            isOutOfStock
-              ? "bg-red-50 text-red-600"
-              : isLowStock
-                ? "bg-orange-50 text-orange-600"
-                : "bg-emerald-50 text-emerald-600"
-          }`}
-        >
-          {isOutOfStock
-            ? "Out of Stock"
-            : isLowStock
-              ? "Low Stock"
-              : "In Stock"}
-        </span>
       </div>
     </div>
   );

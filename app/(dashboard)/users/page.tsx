@@ -6,13 +6,12 @@ import UserTable from "../../../components/user/UserTable";
 import { Button } from "@/components/ui/button";
 import { Plus, Search, UserPlus, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { useUsers } from "@/hooks/useUser";
 
 export default function UsersPage() {
-  const { data: users, isLoading } = useQuery({
-    queryKey: ["users"],
-    queryFn: fetchUsers,
-  });
 
+  const { data: users, isLoading } = useUsers();
+console.log(users)
   return (
     <div className="space-y-6 font-padauk">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -39,7 +38,7 @@ export default function UsersPage() {
           <Loader2 className="animate-spin text-primary" size={40} />
         </div>
       ) : (
-        <UserTable data={users || []} />
+        <UserTable data={users?.data || []} />
       )}
     </div>
   );

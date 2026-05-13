@@ -1,5 +1,7 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "../ui/button";
+import { Trash } from "lucide-react";
 
 export default function BrandsTable({ data, selectedId, onSelect }: any) {
   return (
@@ -8,7 +10,7 @@ export default function BrandsTable({ data, selectedId, onSelect }: any) {
         <TableHeader className="bg-slate-50/50">
           <TableRow>
             <TableHead className="font-bold">Brand Name</TableHead>
-            <TableHead className="font-bold text-center">Models</TableHead>
+            <TableHead className="font-bold text-center">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -20,17 +22,17 @@ export default function BrandsTable({ data, selectedId, onSelect }: any) {
             >
               <TableCell>
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center font-bold text-slate-500 text-xs">
-                    {brand.logo}
-                  </div>
+                  
                   <div>
                     <p className="font-bold text-slate-800 text-sm">{brand.name}</p>
-                    <p className="text-[10px] text-slate-400 uppercase font-medium">{brand.origin}</p>
+                   
                   </div>
                 </div>
               </TableCell>
               <TableCell className="text-center">
-                <Badge variant="secondary" className="font-bold">{brand.modelCount}</Badge>
+                <Button variant="destructive" size="xs" >
+                  <Trash size={14} />
+                </Button>
               </TableCell>
             </TableRow>
           ))}

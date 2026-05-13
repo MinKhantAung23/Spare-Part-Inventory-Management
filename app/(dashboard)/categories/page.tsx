@@ -1,18 +1,15 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { fetchCategories } from "@/services/category.service";
 import CategoryCard from "../../../components/category/CategoryCard";
 import { Button } from "@/components/ui/button";
 import { Plus, Search, Loader2, Filter } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { useCategory } from "@/hooks/useCategory";
 
 export default function CategoriesPage() {
-  const { data: categories, isLoading } = useQuery({
-    queryKey: ["categories"],
-    queryFn: fetchCategories,
-  });
+  const { data: categories, isLoading } = useCategory();
 
+  console.log("categories", categories)
   return (
     <div className="space-y-8 font-padauk">
       {/* Header Area */}
@@ -49,7 +46,7 @@ export default function CategoriesPage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {categories?.map((cat) => (
+          {categories?.data?.map((cat: any) => (
             <CategoryCard key={cat.id} category={cat} />
           ))}
         </div>
