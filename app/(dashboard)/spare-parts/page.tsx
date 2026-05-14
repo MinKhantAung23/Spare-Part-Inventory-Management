@@ -4,7 +4,7 @@ import { useSpareParts } from "@/hooks/useSparePart";
 import ProductCard from "../../../components/product/ProductCard";
 import { Plus, Search, Filter, Loader2 } from "lucide-react";
 import { useState } from "react";
-import ProductModal from "@/components/product/ProductModal";
+import ProductDialog from "@/components/product/ProductDialog";
 import { Button } from "@/components/ui/button";
 
 export default function SparePartsPage() {
@@ -70,7 +70,7 @@ export default function SparePartsPage() {
       ) : (
         <div className="grid gsrid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {spareParts?.data?.map((item: any) => (
-            <ProductCard key={item.id} product={item} />
+            <ProductCard key={item.id} onEdit={handleEditProduct} product={item} />
           ))}
 
           {/* Empty State */}
@@ -84,7 +84,7 @@ export default function SparePartsPage() {
         </div>
       )}
 
-      <ProductModal
+      <ProductDialog
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         initialData={selectedProduct}

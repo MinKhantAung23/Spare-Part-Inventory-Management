@@ -1,21 +1,19 @@
-export interface Product {
-  id: string;
-  name: string;
-  brand: string;
-  model: string;
-  category: string;
-  stock: number;
-  salePrice: number;
-  costPrice: number;
-  image?: string;
-  status: 'In Stock' | 'Low Stock' | 'Out of Stock';
+
+export interface Specification {
+  [key: string]: string;
 }
 
-export interface ProductFormData {
+export interface Product {
+  id: number;
   name: string;
-  category: string;
-  brand: string;
-  salePrice: number;
-  compatibleModels: string; // Array of model IDs/Names
-  specifications: Record<string, string>; // This will be stored as JSON
+  price: number;
+  spare_category_id: number;
+  model_id: number;
+  specification: Specification;
+  createdAt?: string;
+  updatedAt?: string;
 }
+
+export type CreateProductInput = Omit<Product, "id" | "createdAt" | "updatedAt">;
+
+export type UpdateProductInput = Partial<CreateProductInput>;

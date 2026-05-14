@@ -1,7 +1,6 @@
 "use client";
 
 import { Layers, ChevronRight, MoreVertical, Edit, Trash2 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,8 +8,29 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "../ui/button";
+import { useDeleteCategory } from "@/hooks/useCategory";
+import { useState } from "react";
+import ConfirmDeleteModal from "../ui/ConfirmDeleteModel";
 
-export default function CategoryCard({ category }: { category: any }) {
+export default function CategoryCard({
+  category,
+  onEdit,
+}: {
+  category: any;
+  onEdit: any;
+}) {
+  const { mutate: deleteCategory, isPending: isDeleting } = useDeleteCategory();
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+
+  const handleDelete = () => {
+    if (!deleteId) return;
+
+    deleteCategory(deleteId, {
+      onSuccess: () => {
+        setDeleteId(null); // Close modal
+      },
+    });
+  };
   return (
     <div className="group bg-white border border-slate-200 rounded-3xl p-6 shadow-sm hover:shadow-md hover:border-primary/20 transition-all cursor-pointer relative overflow-hidden">
       {/* Decorative Background Icon */}
@@ -31,18 +51,41 @@ export default function CategoryCard({ category }: { category: any }) {
               className="font-padauk bg-slate-50"
             >
               <DropdownMenuItem>
-                <Edit size={16} className="mr-2" /> Edit
+                <Button variant="link" onClick={() => onEdit(category)}>
+                  <Edit size={16} className="mr-2" /> Edit
+                </Button>
               </DropdownMenuItem>
               <DropdownMenuItem className="text-destructive">
-                <Trash2 size={16} className="mr-2" /> Delete
+                <Button
+                  variant="destructive"
+                  onClick={() => setDeleteId(category.id)}
+                  disabled={isDeleting}
+                >
+                  {isDeleting ? (
+                    "Deleting..."
+                  ) : (
+                    <span className="flex items-center">
+                      <Trash2 size={16} className="mr-2" /> Delete
+                    </span>
+                  )}
+                </Button>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        <Button variant="link" className="w-8 h-8 rounded-full ms-auto bg-slate-50 flex items-center justify-center text-slate-300 group-hover:bg-primary group-hover:text-white transition-all">
+        {/* <Button variant="link" className="w-8 h-8 rounded-full ms-auto bg-slate-50 flex items-center justify-center text-slate-300 group-hover:bg-primary group-hover:text-white transition-all">
           <ChevronRight size={18} />
-        </Button>
+        </Button> */}
       </div>
+
+      <ConfirmDeleteModal
+        isOpen={!!deleteId}
+        isLoading={isDeleting}
+        onClose={() => setDeleteId(null)}
+        onConfirm={handleDelete}
+        title="ဖျက်ရန် သေချာပါသလား?"
+        description="ဤ category ကို ဖျက်လိုက်ပါက ပြန်လည်ရယူ၍ မရနိုင်တော့ပါ။"
+      />
     </div>
   );
 }

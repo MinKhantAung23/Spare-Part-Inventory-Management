@@ -1,20 +1,43 @@
-import { Package, MoreVertical, Edit2, Trash2 } from "lucide-react";
+import { Edit, MoreVertical, Trash2 } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "../ui/button";
+import { useDeleteSparePart } from "@/hooks/useSparePart";
+import { useState } from "react";
+import ConfirmDeleteModal from "../ui/ConfirmDeleteModel";
 
 interface ProductCardProps {
   product: any;
+  onEdit: any;
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, onEdit }: ProductCardProps) {
   const isLowStock = product.stock > 0 && product.stock < 5;
   const isOutOfStock = product.stock === 0;
 
-  console.log(product);
+  const { mutate: deleteSparePart, isPending: isDeleting } =
+    useDeleteSparePart();
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+
+  const handleDelete = () => {
+    if (!deleteId) return;
+
+    deleteSparePart(deleteId, {
+      onSuccess: () => {
+        setDeleteId(null); // Close modal
+      },
+    });
+  };
+
   return (
     <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-primary/20 transition-all group relative">
       {/* Header */}
       <div className="flex justify-between items-start mb-4">
         <div className="flex gap-3">
-          
           <div>
             <h3 className="font-bold text-slate-800 line-clamp-1">
               {product.name}
@@ -24,9 +47,34 @@ export default function ProductCard({ product }: ProductCardProps) {
             </p>
           </div>
         </div>
-        <button className="text-slate-300 hover:text-slate-600 p-1">
-          <MoreVertical size={18} />
-        </button>
+        <DropdownMenu>
+          <DropdownMenuTrigger className="p-1 text-slate-800 hover:text-slate-600 outline-none ">
+            <MoreVertical size={20} />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="font-padauk bg-slate-50 ">
+            <DropdownMenuItem>
+              <Button variant="outline" onClick={() => onEdit(product)}>
+                <Edit size={16} className="mr-2" /> Edit
+              </Button>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="text-destructive">
+              <Button
+                variant="destructive"
+                onClick={() => setDeleteId(product.id)}
+                disabled={isDeleting}
+              >
+                {isDeleting ? (
+                  "Deleting..."
+                ) : (
+                  <span className="flex items-center">
+                    <Trash2 size={16} className="mr-2" /> Delete
+                  </span>
+                )}
+              </Button>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        
       </div>
 
       {/* Pricing Grid */}
@@ -63,6 +111,15 @@ export default function ProductCard({ product }: ProductCardProps) {
             ))}
         </div>
       </div>
+
+      <ConfirmDeleteModal
+        isOpen={!!deleteId}
+        isLoading={isDeleting}
+        onClose={() => setDeleteId(null)}
+        onConfirm={handleDelete}
+        title="ဖျက်ရန် သေချာပါသလား?"
+        description="ဤ spare part ကို ဖျက်လိုက်ပါက ပြန်လည်ရယူ၍ မရနိုင်တော့ပါ။"
+      />
     </div>
   );
 }

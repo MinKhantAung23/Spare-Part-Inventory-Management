@@ -8,15 +8,40 @@ import { Plus, Smartphone, BadgeCheck } from "lucide-react";
 import { useModels } from "@/hooks/useModel";
 import { useBrands } from "@/hooks/useBrand";
 import { Badge } from "@/components/ui/badge";
+import BrandDialog from "@/components/brand/BrandDialog";
+import ModelDialog from "@/components/brand/ModelDialog";
 
 export default function BrandsModelsPage() {
   const [selectedBrandId, setSelectedBrandId] = useState<string | null>(null);
 
   const { data: models, isLoading: loadingModels } = useModels();
 
-  console.log(" models", models);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedModel, setSelectedModel] = useState<any>(null);
+
+  const handleAddModel = () => {
+    setSelectedModel(null); // Clear previous data
+    setIsModalOpen(true);
+  };
+
+  const handleEditModel = (brand: any) => {
+    setSelectedModel(brand); // Set data to edit
+    setIsModalOpen(true);
+  };
+
   const { data: brands, isLoading: loadingBrands } = useBrands();
-  console.log(" brands", brands);
+  const [isBrandModalOpen, setIsBrandModalOpen] = useState(false);
+  const [selectedBrand, setSelectedBrand] = useState<any>(null);
+
+  const handleAddBrand = () => {
+    setSelectedBrand(null); // Clear previous data
+    setIsBrandModalOpen(true);
+  };
+
+  const handleEditBrand = (brand: any) => {
+    setSelectedBrand(brand); // Set data to edit
+    setIsBrandModalOpen(true);
+  };
   return (
     <div className="space-y-6 font-padauk">
       {/* Header */}
@@ -32,12 +57,13 @@ export default function BrandsModelsPage() {
         </div>
         <div className="flex gap-2">
           <Button
+            onClick={handleAddBrand}
             variant="outline"
             className="rounded-xl gap-2 border-slate-200"
           >
             <Plus size={16} /> Brand
           </Button>
-          <Button className="rounded-xl bg-primary gap-2 shadow-lg shadow-primary/20">
+          <Button onClick={handleAddModel} className="rounded-xl bg-primary gap-2 shadow-lg shadow-primary/20">
             <Smartphone size={16} /> Add Model
           </Button>
         </div>
@@ -57,10 +83,14 @@ export default function BrandsModelsPage() {
               </Badge>
             </div>
           </div>
-          <BrandsTable
-            data={brands?.data || []}
-          />
+          <BrandsTable onEdit={handleEditBrand} data={brands?.data || []} />
         </div>
+
+        <BrandDialog
+          isOpen={isBrandModalOpen}
+          onClose={() => setIsBrandModalOpen(false)}
+          initialData={selectedBrand}
+        />
 
         {/* Right Column: Models (8/12 width) */}
         <div className="lg:col-span-8 space-y-4">
@@ -75,10 +105,16 @@ export default function BrandsModelsPage() {
               <Badge variant="secondary" className="font-bold">
                 {models?.count}
               </Badge>
-            </div>  
+            </div>
           </div>
-          <ModelsTable data={models?.data || []} />
+          <ModelsTable onEdit={handleEditModel} data={models?.data || []} />
         </div>
+
+       <ModelDialog
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          initialData={selectedModel}
+        />
       </div>
     </div>
   );
