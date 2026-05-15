@@ -9,6 +9,7 @@ import { Button } from "../ui/button";
 import { useDeleteSparePart } from "@/hooks/useSparePart";
 import { useState } from "react";
 import ConfirmDeleteModal from "../ui/ConfirmDeleteModel";
+import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
   product: any;
@@ -19,6 +20,7 @@ export default function ProductCard({ product, onEdit }: ProductCardProps) {
   const { mutate: deleteSparePart, isPending: isDeleting } =
     useDeleteSparePart();
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const router = useRouter();
 
   const handleDelete = () => {
     if (!deleteId) return;
@@ -28,6 +30,10 @@ export default function ProductCard({ product, onEdit }: ProductCardProps) {
         setDeleteId(null); // Close modal
       },
     });
+  };
+
+  const handleNavigate = (id: string) => {
+    router.push(`/spare-parts/${id}`);
   };
 
   return (
@@ -53,7 +59,7 @@ export default function ProductCard({ product, onEdit }: ProductCardProps) {
               <Button
                 variant="outline"
                 className="w-full"
-                onClick={() => onEdit(product)}
+                onClick={() => handleNavigate(product.id)}
               >
                 <Eye size={16} className="mr-2" /> Details
               </Button>
