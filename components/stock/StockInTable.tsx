@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { ArrowDownLeft, Edit2, Trash, User } from "lucide-react";
+import { ArrowDownLeft, Edit2, Eye, Trash, User } from "lucide-react";
 import { format, formatDate } from "date-fns";
 import { Button } from "../ui/button";
 
@@ -62,11 +62,11 @@ export default function StockInTable({ data }: { data: any[] }) {
                     size="icon"
                     className="h-8 w-8 bg-amber-200 hover:bg-yellow-300"
                   >
-                    <Edit2 size={14} />
+                    <Eye size={14} />
                   </Button>
-                  <Button variant="destructive" size="icon">
+                  {/* <Button variant="destructive" size="icon">
                     <Trash size={14} />
-                  </Button>
+                  </Button> */}
                 </div>
               </TableCell>
             </TableRow>

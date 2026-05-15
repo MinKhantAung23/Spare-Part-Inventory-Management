@@ -55,7 +55,7 @@ export default function StockOutPage() {
           <Loader2 className="animate-spin text-rose-600" size={40} />
         </div>
       ) : (
-        <StockOutTable data={stockOut.data || []} />
+        <StockOutTable data={stockOut?.data || []} />
       )}
     </div>
   );

@@ -24,7 +24,7 @@ export default function StockOutTable({ data }: { data: any[] }) {
             <TableHead className="font-bold">Reason</TableHead>
             <TableHead className="font-bold">Profit</TableHead>
             <TableHead className="font-bold">Date</TableHead>
-            <TableHead className="text-right font-bold">Action</TableHead>
+            {/* <TableHead className="text-right font-bold">Action</TableHead> */}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -69,7 +69,7 @@ export default function StockOutTable({ data }: { data: any[] }) {
               <TableCell className="text-sm text-slate-600">
                 {format(new Date(log.date), "MMM dd, yyyy")}
               </TableCell>
-              <TableCell className="text-right">
+              {/* <TableCell className="text-right">
                 <div className="flex justify-end gap-1">
                   <Button
                     variant="outline"
@@ -89,7 +89,7 @@ export default function StockOutTable({ data }: { data: any[] }) {
                     <Trash size={14} />
                   </Button>
                 </div>
-              </TableCell>
+              </TableCell> */}
             </TableRow>
           ))}
         </TableBody>

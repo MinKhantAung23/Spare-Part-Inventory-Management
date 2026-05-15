@@ -1,5 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createStockIn, fetchStockIn } from "@/services/stock-in.service";
+import {
+  createStockIn,
+  fetchStockIn,
+  fetchStockInById,
+} from "@/services/stock-in.service";
 import { CreateStockInInput } from "@/types/stock-in";
 import { toast } from "sonner";
 
@@ -7,21 +11,29 @@ export const useStockIn = () => {
   return useQuery({
     queryKey: ["stockIn"],
     queryFn: fetchStockIn,
-    staleTime: 1000 * 60 * 5, 
+    staleTime: 1000 * 60 * 5,
   });
 };
 
-  export const useCreateStockIn = () => {
-    const queryClient = useQueryClient();
+export const useStockInById = (id: string) => {
+  return useQuery({
+    queryKey: ["stockIn", id],
+    queryFn: () => fetchStockInById(id),
+    staleTime: 1000 * 60 * 5,
+  });
+};
 
-    return useMutation({
-      mutationFn: (data: CreateStockInInput) => createStockIn(data),
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["stockOut"] });
-        toast.success("Stock out created successfully");
-      },
-      onError: (error: any) => {
-        toast.error(error.response?.data?.error || "Failed to create");
-      },
-    });
-  };
+export const useCreateStockIn = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: CreateStockInInput) => createStockIn(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["stockOut"] });
+      toast.success("Stock out created successfully");
+    },
+    onError: (error: any) => {
+      toast.error(error.response?.data?.error || "Failed to create");
+    },
+  });
+};
