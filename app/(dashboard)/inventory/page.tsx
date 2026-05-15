@@ -9,10 +9,11 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
+import Link from "next/link";
 
 export default function InventoryPage() {
   const { data: inventory, isLoading } = useInventory();
-
+console.log(inventory)
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -25,10 +26,10 @@ export default function InventoryPage() {
           </p>
         </div>
         <div className="flex gap-2">
-          <Button className="rounded-xl text-sm font-bold flex items-center gap-2">
+          <Link href={"/stock-in"} className="rounded-xl border px-4 py-2 bg-primary hover:bg-blue-600 text-white text-sm font-bold flex items-center gap-2">
             <Plus size={18} />
             Receive Stock
-          </Button>
+          </Link>
         </div>
       </div>
 
@@ -53,11 +54,11 @@ export default function InventoryPage() {
         <div className="flex flex-col items-center justify-center py-32">
           <Loader2 className="animate-spin text-primary" size={40} />
           <p className="mt-4 text-slate-400 font-medium">
-            Loading inventory data...
+            Loading inventory data... 
           </p>
         </div>
       ) : (
-        <InventoryTable data={inventory} />
+        <InventoryTable data={inventory?.data || []} />
       )}
     </div>
   );

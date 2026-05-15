@@ -68,7 +68,7 @@ export default function SparePartsPage() {
           <p className="text-sm font-medium">Loading data ...</p>
         </div>
       ) : (
-        <div className="grid gsrid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid gsrid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {spareParts?.data?.map((item: any) => (
             <ProductCard key={item.id} onEdit={handleEditProduct} product={item} />
           ))}

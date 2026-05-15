@@ -51,13 +51,14 @@ export default function CategoryCard({
               className="font-padauk bg-slate-50"
             >
               <DropdownMenuItem>
-                <Button variant="link" onClick={() => onEdit(category)}>
+                <Button variant="outline" className="w-full" onClick={() => onEdit(category)}>
                   <Edit size={16} className="mr-2" /> Edit
                 </Button>
               </DropdownMenuItem>
               <DropdownMenuItem className="text-destructive">
                 <Button
                   variant="destructive"
+                  className="w-full"
                   onClick={() => setDeleteId(category.id)}
                   disabled={isDeleting}
                 >

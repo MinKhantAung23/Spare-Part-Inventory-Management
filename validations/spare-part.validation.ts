@@ -1,4 +1,3 @@
-// validations/spare-part.validation.ts
 import { z } from "zod";
 
 export const createSparePartSchema = z.object({

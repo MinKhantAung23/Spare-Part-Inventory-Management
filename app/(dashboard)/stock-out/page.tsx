@@ -1,13 +1,12 @@
 "use client";
 
 import StockOutTable from "../../../components/stock/StockOutTable";
-import { Button } from "@/components/ui/button";
-import { Minus, Loader2, TrendingDown, DollarSign } from "lucide-react";
+import { Loader2, TrendingDown, DollarSign } from "lucide-react";
 import { useStockOut } from "@/hooks/useStockOut";
+import StockOutFormPage from "@/components/stock/StockOutForm";
 
 export default function StockOutPage() {
   const { data : stockOut, isLoading: isStockOutLoading } = useStockOut();
-  console.log(stockOut)
   return (
     <div className="space-y-6 font-padauk">
       {/* Header */}
@@ -16,12 +15,8 @@ export default function StockOutPage() {
           <h1 className="text-2xl font-bold text-slate-800">ပစ္စည်းအထွက်စာရင်း (Stock Out)</h1>
           <p className="text-sm text-slate-400">Review sales and inventory reductions</p>
         </div>
-        <Button className="bg-rose-600 hover:bg-rose-700 text-white rounded-xl gap-2 shadow-lg shadow-rose-600/20 transition-all active:scale-95">
-          <Minus size={18} />
-          Create Stock Out
-        </Button>
       </div>
-
+      <StockOutFormPage />
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
@@ -60,7 +55,7 @@ export default function StockOutPage() {
           <Loader2 className="animate-spin text-rose-600" size={40} />
         </div>
       ) : (
-        <StockOutTable data={ stockOut.data || []} />
+        <StockOutTable data={stockOut.data || []} />
       )}
     </div>
   );

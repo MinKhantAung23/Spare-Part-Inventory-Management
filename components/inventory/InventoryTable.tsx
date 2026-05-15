@@ -16,12 +16,10 @@ export default function InventoryTable({ data }: { data: any[] }) {
       <Table>
         <TableHeader className="bg-slate-50/50">
           <TableRow>
-            <TableHead className="w-[300px] font-bold">Product</TableHead>
-            <TableHead className="font-bold">Category</TableHead>
-            <TableHead className="font-bold">Brand</TableHead>
+            <TableHead className="w-[300px] font-bold">Spare Part</TableHead>
             <TableHead className="font-bold">Stock</TableHead>
-            <TableHead className="font-bold">Price</TableHead>
-            <TableHead className="font-bold">Status</TableHead>
+            <TableHead className="font-bold">Sell Price</TableHead>
+            <TableHead className="font-bold">Buy Price</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -32,47 +30,34 @@ export default function InventoryTable({ data }: { data: any[] }) {
             >
               <TableCell>
                 <div className="flex flex-col">
-                  <span className="font-bold text-slate-800">{item.name}</span>
+                  <span className="font-bold text-slate-800">{item.spare_part.name}</span>
                 </div>
               </TableCell>
-              <TableCell>{item.category}</TableCell>
-              <TableCell>
-                <Badge variant="secondary" className="font-medium">
-                  {item.brand}
-                </Badge>
-              </TableCell>
+             
               <TableCell>
                 <div className="flex flex-col gap-1">
                   <span
                     className={`text-sm font-bold ${item.stock < 5 ? "text-destructive" : "text-slate-700"}`}
                   >
-                    {item.stock} Units
+                    {item.quantity} Units
                   </span>
                   <div className="w-20 h-1 bg-slate-100 rounded-full overflow-hidden">
                     <div
-                      className={`h-full ${item.stock < 5 ? "bg-destructive" : "bg-primary"}`}
+                      className={`h-full ${item.quantity < 5 ? "bg-destructive" : "bg-primary"}`}
                       style={{
-                        width: `${Math.min((item.stock / 50) * 100, 100)}%`,
+                        width: `${Math.min((item.quantity / 50) * 100, 100)}%`,
                       }}
                     />
                   </div>
                 </div>
               </TableCell>
               <TableCell className="font-medium">
-                {item.salePrice.toLocaleString()} Ks
+                {item.spare_part.price.toLocaleString()} Ks
               </TableCell>
-              <TableCell>
-                <Badge
-                  className={
-                    item.stock > 0
-                      ? "bg-emerald-50 text-emerald-700 hover:bg-emerald-50 border-emerald-100"
-                      : "bg-rose-50 text-rose-700 hover:bg-rose-50 border-rose-100"
-                  }
-                  variant="outline"
-                >
-                  {item.stock > 0 ? "In Stock" : "Out of Stock"}
-                </Badge>
+               <TableCell className="font-medium">
+                {item.total_cost.toLocaleString()} Ks
               </TableCell>
+             
             </TableRow>
           ))}
         </TableBody>

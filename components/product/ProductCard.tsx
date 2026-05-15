@@ -1,4 +1,4 @@
-import { Edit, MoreVertical, Trash2 } from "lucide-react";
+import { Edit, Eye, MoreVertical, Trash2 } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,9 +16,6 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, onEdit }: ProductCardProps) {
-  const isLowStock = product.stock > 0 && product.stock < 5;
-  const isOutOfStock = product.stock === 0;
-
   const { mutate: deleteSparePart, isPending: isDeleting } =
     useDeleteSparePart();
   const [deleteId, setDeleteId] = useState<string | null>(null);
@@ -53,7 +50,20 @@ export default function ProductCard({ product, onEdit }: ProductCardProps) {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="font-padauk bg-slate-50 ">
             <DropdownMenuItem>
-              <Button variant="outline" onClick={() => onEdit(product)}>
+              <Button
+                variant="outline"
+                className="w-full"
+                onClick={() => onEdit(product)}
+              >
+                <Eye size={16} className="mr-2" /> Details
+              </Button>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Button
+                variant="outline"
+                className="w-full"
+                onClick={() => onEdit(product)}
+              >
                 <Edit size={16} className="mr-2" /> Edit
               </Button>
             </DropdownMenuItem>
@@ -61,6 +71,7 @@ export default function ProductCard({ product, onEdit }: ProductCardProps) {
               <Button
                 variant="destructive"
                 onClick={() => setDeleteId(product.id)}
+                className="w-full"
                 disabled={isDeleting}
               >
                 {isDeleting ? (
@@ -74,7 +85,6 @@ export default function ProductCard({ product, onEdit }: ProductCardProps) {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        
       </div>
 
       {/* Pricing Grid */}

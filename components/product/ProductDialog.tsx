@@ -38,7 +38,6 @@ export default function ProductDialog({ isOpen, onClose, initialData }: any) {
   // Fetching the data from your GET request
   const { data: sparePartsResponse } = useSpareParts();
 
-  // 1. Extract Unique Categories and Models from the API response
   const categories = useMemo(() => {
     if (!sparePartsResponse?.data) return [];
     const unique = new Map();
@@ -57,7 +56,6 @@ export default function ProductDialog({ isOpen, onClose, initialData }: any) {
     return Array.from(unique.values());
   }, [sparePartsResponse]);
 
-  // 2. Setup Form
   const form = useForm({
     resolver: zodResolver(createSparePartSchema),
     defaultValues: {
@@ -230,7 +228,7 @@ export default function ProductDialog({ isOpen, onClose, initialData }: any) {
             <div className="col-span-2 border-t pt-4 space-y-4">
               <div className="flex justify-between items-center">
                 <Label className="text-primary font-bold">
-                  Specifications (JSON)
+                  Specifications
                 </Label>
                 <Button
                   type="button"
