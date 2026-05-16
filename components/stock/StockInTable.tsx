@@ -12,8 +12,10 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowDownLeft, Edit2, Eye, Trash, User } from "lucide-react";
 import { format, formatDate } from "date-fns";
 import { Button } from "../ui/button";
+import { useRouter } from "next/navigation";
 
 export default function StockInTable({ data }: { data: any[] }) {
+  const router = useRouter();
   return (
     <div className="rounded-2xl border border-border bg-white shadow-sm overflow-hidden">
       <Table>
@@ -58,6 +60,7 @@ export default function StockInTable({ data }: { data: any[] }) {
               <TableCell className="text-right">
                 <div className="flex justify-end gap-1">
                   <Button
+                    onClick={() => router.push(`/stock-in/${log.id}`)}
                     variant="outline"
                     size="icon"
                     className="h-8 w-8 bg-amber-200 hover:bg-yellow-300"

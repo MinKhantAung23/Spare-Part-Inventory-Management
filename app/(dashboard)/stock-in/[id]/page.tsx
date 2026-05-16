@@ -3,12 +3,8 @@
 import React, { useState } from "react";
 import {
   ChevronRight,
-  ShoppingCart,
-  Plus,
-  Minus,
   ShieldCheck,
   Battery as BatteryIcon,
-  Loader2,
   AlertCircle,
   Cpu,
   Info,
@@ -24,18 +20,16 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 // Hooks
 import { useSparePartsById } from "@/hooks/useSparePart";
+import { useStockInById } from "@/hooks/useStockIn";
 
-export default function ProductDetailPage() {
+export default function StockInDetailPage() {
   const params = useParams();
-  const router = useRouter();
   const id = params.id as string;
 
-  const [qty, setQty] = useState(1);
 
   // Fetch real data using your hook
-  const { data: response, isLoading, isError } = useSparePartsById(id);
+  const { data: response, isLoading, isError } = useStockInById(id);
   const product = response?.data;
-    
   // Loading State
   if (isLoading) return <ProductLoadingSkeleton />;
 
@@ -46,15 +40,12 @@ export default function ProductDetailPage() {
     <div className="min-h-screen bg-white font-padauk selection:bg-blue-100">
       {/* Breadcrumbs */}
       <nav className="max-w-7xl mx-auto px-6 py-6 flex items-center gap-2 text-sm text-slate-400">
-        <Link
-          href="/spare-parts"
-          className="hover:text-primary transition-colors"
-        >
-          Spare Parts
+        <Link href="/stock-in" className="hover:text-primary transition-colors">
+          Stock In
         </Link>
         <ChevronRight size={14} />
         <span className="text-slate-900 font-medium truncate">
-          {product.name}
+          {product.spare_part.name}
         </span>
       </nav>
 
@@ -63,25 +54,13 @@ export default function ProductDetailPage() {
           <div className="space-y-8">
             {/* Header Section */}
             <section className="space-y-4">
-              <div className="flex flex-wrap items-center gap-2">
-                <Badge className="bg-blue-600/10 text-blue-600 hover:bg-blue-600/15 border-none px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-lg">
-                  {product.category?.name || "Spare Part"}
-                </Badge>
-                <Badge
-                  variant="outline"
-                  className="text-slate-500 border-slate-200 px-3 py-1 text-xs font-medium rounded-lg"
-                >
-                  {product.model?.name || "Universal"}
-                </Badge>
-              </div>
-
               <h1 className="text-4xl xl:text-5xl font-bold text-slate-900 tracking-tight leading-[1.1]">
-                {product.name}
+                {product.spare_part.name}
               </h1>
 
               <div className="flex items-center gap-4 pt-2">
                 <span className="text-4xl font-extrabold text-primary tracking-tighter">
-                  {Number(product.price).toLocaleString()}{" "}
+                  {Number(product.spare_part.price).toLocaleString()}{" "}
                   <span className="text-xl font-bold ml-1">Ks</span>
                 </span>
               </div>
@@ -93,70 +72,47 @@ export default function ProductDetailPage() {
             <section className="grid grid-cols-2 gap-y-6 gap-x-12">
               <div className="space-y-1">
                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">
-                  Current Stock
+                  Remaining Stock
                 </p>
                 <p
-                  className={`text-lg font-bold ${product.quantity > 0 ? "text-green-600" : "text-rose-500"}`}
+                  className={`text-lg font-bold ${product.remaining_quantity > 0 ? "text-green-600" : "text-rose-500"}`}
                 >
-                  {product.quantity > 0
-                    ? `${product.quantity} Units Available`
+                  {product.remaining_quantity > 0
+                    ? `${product.remaining_quantity} Units Available`
                     : "Out of Stock"}
                 </p>
               </div>
-              
-              <div className="space-y-6">
-                <div className="flex items-end gap-6">
-                  <div className="space-y-3 w-full">
-                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
-                      Quantity
-                    </span>
-                    <div className="flex items-center justify-center bg-slate-100 rounded-2xl p-1.5 max-w-[200px] border border-slate-200">
-                      <span className="font-bold text-xl">
-                        {product.quantity === 0 ? 0 : qty} 
-                      </span>
-                    </div>
-                  </div>
-                </div>
+
+              <div className="space-y-1">
+                
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
+                    Initial Quantity
+                  </p>
+                  <p
+                    className={`text-lg font-bold ${product.remaining_quantity > 0 ? "text-green-600" : "text-rose-500"}`}
+                  >
+                    {product.initial_quantity}
+                  </p>
               </div>
             </section>
 
-            {/* Specifications Block (Inferred from nested object) */}
-            {product.specification && (
-              <section className="space-y-3">
-                <h3 className="text-xs font-black text-slate-900 uppercase tracking-[0.2em] flex items-center gap-2">
-                  <Cpu size={14} className="text-slate-400" /> Technical
-                  Specifications
-                </h3>
-                <div className="bg-slate-50/50 rounded-2xl p-2 border border-slate-100">
-                  {Object.entries(product.specification).map(([key, value]) => (
-                    <div
-                      key={key}
-                      className="flex justify-between py-3 px-4 border-b border-slate-100 last:border-0"
-                    >
-                      <span className="text-slate-500 text-sm capitalize">
-                        {key}
-                      </span>
-                      <span className="font-semibold text-slate-800 text-sm">
-                        {String(value)}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
-
             {/* Quality Standards */}
             <div className="grid grid-cols-2 gap-4 pt-2">
-              <div className="flex items-center gap-3 p-4 rounded-2xl bg-slate-50/50 border border-slate-100">
-                <ShieldCheck className="text-green-500" size={18} />
+              <div className="flex flex-col justify-center gap-3 p-4 rounded-2xl bg-slate-50/50 border border-slate-100">
                 <span className="text-xs font-bold text-slate-600">
-                  Verified Fit
+                  Purchased Price
+                </span>
+               <span className="text-3xl font-extrabold text-primary tracking-tighter">
+                  {Number(product.purchase_price).toLocaleString()}{" "}
+                  <span className="text-xl font-bold ml-1">Ks</span>
                 </span>
               </div>
-              <div className="flex items-center gap-3 p-4 rounded-2xl bg-slate-50/50 border border-slate-100">
-                <Info className="text-blue-500" size={18} />
+              <div className="flex flex-col justify-center gap-3 p-4 rounded-2xl bg-slate-50/50 border border-slate-100">
                 <span className="text-xs font-bold text-slate-600">
-                  OEM Grade
+                 received_date
+                </span>
+                <span className="text-3xl font-extrabold text-primary tracking-tighter">
+                  {product.received_date}
                 </span>
               </div>
             </div>
@@ -201,13 +157,13 @@ function ProductErrorState() {
       </div>
       <h2 className="text-2xl font-bold text-slate-900">
         Resource Unavailable
-      </h2>
+      </h2> 
       <p className="text-slate-500 mt-2 max-w-xs">
         We encountered an issue fetching the product info, or this specific ID
         has been shifted.
       </p>
       <Button asChild className="mt-8 rounded-xl" variant="outline">
-        <Link href="/inventory">Return to Inventory</Link>
+        <Link href="/inventory">Return to Stock In</Link>
       </Button>
     </div>
   );
