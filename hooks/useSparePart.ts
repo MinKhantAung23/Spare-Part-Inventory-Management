@@ -4,6 +4,7 @@ import {
   deleteSparePart,
   fetchSpareParts,
   fetchSparePartsById,
+  fetchSparePartsFiltered,
   updateSparePart,
 } from "@/services/spare-part.service";
 import { toast } from "sonner";
@@ -21,6 +22,15 @@ export const useSparePartsById = (id: string) => {
   return useQuery({
     queryKey: ["spareParts", id],
     queryFn: () => fetchSparePartsById(id),
+    staleTime: 1000 * 60 * 5,
+  });
+};
+
+export const useSparePartsFiltered = (modelId: string | null, categoryId: string | null) => {
+  return useQuery({
+    queryKey: ["spareParts", { modelId, categoryId }],
+    queryFn: () => fetchSparePartsFiltered({ modelId, categoryId }), // Adjust service to pass query parameters
+    enabled: !!modelId && !!categoryId, // Fetch only when both a model and category are chosen
     staleTime: 1000 * 60 * 5,
   });
 };

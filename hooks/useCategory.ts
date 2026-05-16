@@ -9,6 +9,14 @@ import {
 import { CreateCategoryInput, UpdateCategoryInput } from "@/types/category";
 import { toast } from "sonner";
 
+export const useCategories = () => {
+  return useQuery({
+    queryKey: ["categories"],
+    queryFn: fetchCategories,
+    staleTime: 1000 * 60 * 5,
+  });
+};
+
 export const useCategory = () => {
   return useQuery({
     queryKey: ["categories"],

@@ -1,8 +1,18 @@
-import {  CreateProductInput, UpdateProductInput } from "@/types/product";
+import { CreateProductInput, UpdateProductInput } from "@/types/product";
 import api from "@/lib/api";
 
 export const fetchSpareParts = async () => {
   const { data } = await api.get("/api/spare-part");
+  return data;
+};
+
+export const fetchSparePartsFiltered = async ({ modelId, categoryId }: { modelId: string | null; categoryId: string | null }) => {
+  const { data } = await api.get(`/api/spare-part/${categoryId}`, {
+    params: {
+      modelId,
+      categoryId,
+    },
+  });
   return data;
 };
 
