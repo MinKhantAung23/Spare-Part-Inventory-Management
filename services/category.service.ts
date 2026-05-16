@@ -11,6 +11,7 @@ export const fetchCategoriesById = async (id: string) => {
   return data;
 };
 
+
 export const createCategory = async (data: CreateCategoryInput) => {
   const { data: response } = await api.post("/api/spare-category", data);
   return response;

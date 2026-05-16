@@ -22,8 +22,8 @@ export const useModelById = (id: string) => {
 export const useModelsByBrand = (brandId: string | null) => {
   return useQuery({
     queryKey: ["models", { brandId }],
-    queryFn: () => fetchModelsByBrandId(brandId), // Update service to pass query param if needed
-    enabled: !!brandId, // Only fetch when a brand is selected
+    queryFn: () => fetchModelsByBrandId(brandId), 
+    enabled: !!brandId, 
     staleTime: 1000 * 60 * 5,
   });
 };

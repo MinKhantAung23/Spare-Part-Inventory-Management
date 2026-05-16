@@ -7,7 +7,7 @@ export const fetchSpareParts = async () => {
 };
 
 export const fetchSparePartsFiltered = async ({ modelId, categoryId }: { modelId: string | null; categoryId: string | null }) => {
-  const { data } = await api.get(`/api/spare-part/${categoryId}`, {
+  const { data } = await api.get(`/api/spare-part`, {
     params: {
       modelId,
       categoryId,
