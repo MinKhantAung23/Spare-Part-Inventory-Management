@@ -24,7 +24,7 @@ export default function DashboardLayout({
 
         {/* Scrollable Body */}
         <main className="flex-1 overflow-y-auto p-4 lg:p-8 custom-scrollbar">
-          <div className="max-w-[1600px] mx-auto">{children}</div>
+          <div className="max-w-400 mx-auto">{children}</div>
         </main>
 
         {/* Footer at the bottom of the scroll container */}

@@ -6,7 +6,7 @@ import { useStockOut } from "@/hooks/useStockOut";
 import StockOutFormPage from "@/components/stock/StockOutForm";
 
 export default function StockOutPage() {
-  const { data : stockOut, isLoading: isStockOutLoading } = useStockOut();
+  const { data: stockOut, isLoading: isStockOutLoading } = useStockOut();
   return (
     <div className="space-y-6 font-padauk">
       {/* Header */}
@@ -21,29 +21,29 @@ export default function StockOutPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
           <div className="flex justify-between items-start">
-             <p className="text-[10px] uppercase font-bold text-slate-400">Total Out</p>
-             <TrendingDown className="text-rose-500" size={16} />
+            <p className="text-[10px] uppercase font-bold text-slate-400">Total Out</p>
+            <TrendingDown className="text-rose-500" size={16} />
           </div>
           <p className="text-2xl font-black text-rose-600 mt-2">{stockOut?.summary.total_quantity || 0} <span className="text-xs font-normal text-slate-400">Items</span></p>
         </div>
         <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
           <div className="flex justify-between items-start">
-             <p className="text-[10px] uppercase font-bold text-slate-400">Total Sales</p>
-             <DollarSign className="text-rose-500" size={16} />
+            <p className="text-[10px] uppercase font-bold text-slate-400">Total Sales</p>
+            <DollarSign className="text-rose-500" size={16} />
           </div>
           <p className="text-2xl font-black text-rose-600 mt-2">{stockOut?.summary.total_sales || 0} <span className="text-xs font-normal text-slate-400">KS</span></p>
         </div>
         <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
           <div className="flex justify-between items-start">
-             <p className="text-[10px] uppercase font-bold text-slate-400">Total Out</p>
-             <DollarSign className="text-rose-500" size={16} />
+            <p className="text-[10px] uppercase font-bold text-slate-400">Total Out</p>
+            <DollarSign className="text-rose-500" size={16} />
           </div>
           <p className="text-2xl font-black text-rose-600 mt-2">{stockOut?.summary.total_cost || 0} <span className="text-xs font-normal text-slate-400">KS</span></p>
         </div>
         <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
           <div className="flex justify-between items-start">
-             <p className="text-[10px] uppercase font-bold text-slate-400">Total Out</p>
-             <DollarSign className="text-rose-500" size={16} />
+            <p className="text-[10px] uppercase font-bold text-slate-400">Total Out</p>
+            <DollarSign className="text-rose-500" size={16} />
           </div>
           <p className="text-2xl font-black text-rose-600 mt-2">{stockOut?.summary.total_profit || 0} <span className="text-xs font-normal text-slate-400">KS</span></p>
         </div>
