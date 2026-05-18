@@ -8,7 +8,7 @@ import {
   updateSparePart,
 } from "@/services/spare-part.service";
 import { toast } from "sonner";
-import { CreateProductInput, UpdateProductInput } from "@/types/product";
+import { CreateProductInput, Product, UpdateProductInput } from "@/types/product";
 
 export const useSpareParts = () => {
   return useQuery({
@@ -40,7 +40,7 @@ export const useCreateSparePart = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: CreateProductInput) => createSparePart(data),
+    mutationFn: (data: Product) => createSparePart(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["spareParts"] });
       toast.success("Spare part created successfully");
@@ -55,7 +55,7 @@ export const useUpdateSparePart = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, data }: { id: string; data: UpdateProductInput }) =>
+    mutationFn: ({ id, data }: { id: number; data: UpdateProductInput }) =>
       updateSparePart({ id, data }),
     onSuccess: (data, variables) => {
       // Refresh the list and the specific detail view

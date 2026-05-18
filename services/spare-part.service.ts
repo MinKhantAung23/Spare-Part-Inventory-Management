@@ -1,4 +1,4 @@
-import { CreateProductInput, UpdateProductInput } from "@/types/product";
+import { CreateProductInput, Product, UpdateProductInput } from "@/types/product";
 import api from "@/lib/api";
 
 export const fetchSpareParts = async () => {
@@ -16,18 +16,18 @@ export const fetchSparePartsFiltered = async ({ modelId, categoryId }: { modelId
   return data;
 };
 
-export const fetchSparePartsById = async (id: string) => {
+export const fetchSparePartsById = async (id: string | null) => {
   const { data } = await api.get(`/api/spare-part/${id}`);
   console.log("fetchSparePartsById => ", data)
   return data;
 };
 
-export const createSparePart = async (data: CreateProductInput) => {
+export const createSparePart = async (data: Product) => {
   const { data: response } = await api.post("/api/spare-part", data);
   return response;
 };
 
-export const updateSparePart = async ({ id, data }: { id: string; data: UpdateProductInput }) => {
+export const updateSparePart = async ({ id, data }: { id: number; data: UpdateProductInput }) => {
   const { data: response } = await api.put(`/api/spare-part/${id}`, data);
   return response;
 };

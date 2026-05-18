@@ -30,8 +30,9 @@ import {
   useUpdateSparePart,
 } from "@/hooks/useSparePart";
 import { createSparePartSchema } from "@/validations/spare-part.validation";
+import { Product } from "@/types/product";
 
-export default function ProductDialog({ isOpen, onClose, initialData }: any) {
+export default function ProductDialog({ isOpen, onClose, initialData }: { isOpen: boolean, onClose: any, initialData: Product | null }) {
   const { mutate: createPart, isPending: isCreating } = useCreateSparePart();
   const { mutate: updatePart, isPending: isUpdating } = useUpdateSparePart();
 
@@ -110,12 +111,16 @@ export default function ProductDialog({ isOpen, onClose, initialData }: any) {
       return acc;
     }, {});
 
-    const payload = {
+    const payload: Product = {
       name: values.name,
       price: Number(values.price),
       spare_category_id: Number(values.spare_category_id),
       model_id: Number(values.model_id),
       specification: specObject,
+      image: null,
+      quantity: null,
+      model: null,
+      category: null
     };
 
     const mutationOptions = {
@@ -126,9 +131,10 @@ export default function ProductDialog({ isOpen, onClose, initialData }: any) {
     };
 
     if (initialData) {
-      updatePart({ id: initialData.id, data: payload }, mutationOptions);
+      updatePart({ id: initialData.id ?? 0, data: payload }, mutationOptions);
     } else {
-      createPart(payload, mutationOptions);
+      // createPart(payload, mutationOptions);
+      createPart(payload);
     }
   };
 

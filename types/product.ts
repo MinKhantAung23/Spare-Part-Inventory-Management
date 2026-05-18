@@ -1,21 +1,35 @@
+import { Brand } from "./brand";
 import { Category } from "./category";
 import { Model } from "./model";
 
-export interface Specification {
+interface Specification {
   [key: string]: string;
 }
 
-export interface Product {
+export interface Batch {
   id: number;
+  spare_part_id: number;
+  initial_quantity: number;
+  remaining_quantity: number;
+  purchase_price: number;
+  received_date: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Product {
+  id?: number | null;
   name: string;
   price: number;
-  image: string | null,
-  spare_category_id: number;
-  model_id: number;
-  quantity: number,
-  model: Model,
-  category: Category,
-  specification: Specification;
+  image: string | null;
+  spare_category_id?: number;
+  model_id?: number | null;
+  quantity: number | null;
+  brand?: Brand | null;
+  model: Model | null;
+  category: Category | null;
+  specification: Specification | null;
+  batches?: Batch[];
   createdAt?: string;
   updatedAt?: string;
 }

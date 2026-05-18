@@ -6,19 +6,20 @@ import { Plus, Search, Filter, Loader2 } from "lucide-react";
 import { useState } from "react";
 import ProductDialog from "@/components/product/ProductDialog";
 import { Button } from "@/components/ui/button";
+import { Product } from "@/types/product";
 
 export default function SparePartsPage() {
   const { data: spareParts, isLoading, error } = useSpareParts();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<any>(null);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   const handleAddProduct = () => {
     setSelectedProduct(null); // Clear previous data
     setIsModalOpen(true);
   };
 
-  const handleEditProduct = (product: any) => {
+  const handleEditProduct = (product: Product) => {
     setSelectedProduct(product); // Set data to edit
     setIsModalOpen(true);
   };
@@ -69,7 +70,7 @@ export default function SparePartsPage() {
         </div>
       ) : (
         <div className="grid gsrid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {spareParts?.data?.map((item: any) => (
+          {(spareParts?.data as Product[]).map((item: Product) => (
             <ProductCard key={item.id} onEdit={handleEditProduct} product={item} />
           ))}
 
