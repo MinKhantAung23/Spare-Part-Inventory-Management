@@ -5,11 +5,11 @@ import CategoryCard from "../../../components/category/CategoryCard";
 import { Button } from "@/components/ui/button";
 import { Plus, Search, Loader2, Filter } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { useCategory } from "@/hooks/useCategory";
+import { useCategories } from "@/hooks/useCategory";
 import CategoryDialog from "@/components/category/CategoryDialog";
 
 export default function CategoriesPage() {
-  const { data: categories, isLoading } = useCategory();
+  const { data: categories, isLoading } = useCategories();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<any>(null);

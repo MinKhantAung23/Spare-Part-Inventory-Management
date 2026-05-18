@@ -14,7 +14,7 @@ export const fetchModelsById = async (id: string) => {
 
 export const fetchModelsByBrandId = async (id: string | null) => {
   const { data } = await api.get(`/api/model/brand/${id}`);
-  return data;
+  return data.data;
 };
 
 export const createModel = async (data: CreateModelInput) => {

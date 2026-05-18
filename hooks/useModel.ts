@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createModel, deleteModel, fetchModels, fetchModelsByBrandId, fetchModelsById, updateModel } from "@/services/model.service";
 import { CreateModelInput, UpdateModelInput } from "@/types/model";
 import { toast } from "sonner";
+import { Brand } from "@/types/brand";
 
 export const useModels = () => {
   return useQuery({
@@ -21,9 +22,9 @@ export const useModelById = (id: string) => {
 
 export const useModelsByBrand = (brandId: string | null) => {
   return useQuery({
-    queryKey: ["models", { brandId }],
-    queryFn: () => fetchModelsByBrandId(brandId), 
-    enabled: !!brandId, 
+    queryKey: ["models-by-brand", { brandId }],
+    queryFn: () => fetchModelsByBrandId(brandId),
+    enabled: !!brandId,
     staleTime: 1000 * 60 * 5,
   });
 };

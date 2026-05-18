@@ -18,10 +18,11 @@ export const useSpareParts = () => {
   });
 };
 
-export const useSparePartsById = (id: string) => {
+export const useSparePartsById = (id: string | null) => {
   return useQuery({
     queryKey: ["spareParts", id],
     queryFn: () => fetchSparePartsById(id),
+    enabled: id != null,
     staleTime: 1000 * 60 * 5,
   });
 };
