@@ -11,14 +11,14 @@ export default function QuickSearchPage() {
   const { data: partDetails, isLoading } = useSparePartsById(selectedPartId);
 
   return (
-    <div className="h-[calc(100vh-140px)] grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
       {/* Left tree — 4 cols */}
       <div className="lg:col-span-4 h-full">
         <SearchTree />
       </div>
 
       {/* Right detail pane — 8 cols */}
-      <div className="lg:col-span-8 bg-white border border-slate-200 rounded-3xl p-8 overflow-y-auto custom-scrollbar shadow-sm flex flex-col justify-stretch">
+      <div className="lg:col-span-8 bg-white border border-slate-200 rounded-3xl p-8 overflow-y-auto custom-scrollbar shadow-sm flex flex-col justify-stretch overflow-hidden h-min">
         {isLoading ? (
           <div className="flex flex-col items-center justify-center h-full text-slate-400 gap-2">
             <Loader2 className="animate-spin text-primary" size={32} />

@@ -21,7 +21,7 @@ export default function StockInPage() {
             className="ms-auto flex items-center justify-center gap-2 rounded-xl border bg-primary px-4 py-2 text-sm font-bold text-white transition-all hover:bg-blue-600 group"
           >
             <Plus size={18} />
-            Receive Stock
+            စတော့ထည့်မည်
           </Link>
 
         </div>

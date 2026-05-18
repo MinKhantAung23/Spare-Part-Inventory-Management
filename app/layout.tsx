@@ -37,7 +37,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${padauk.variable} h-ful antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${padauk.variable} h-full antialiased`}
     >
       <body className="font-padauk min-h-full flex flex-col">
         <QueryProvider>

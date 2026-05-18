@@ -15,17 +15,22 @@ export default function StockOutPage() {
     <div className="space-y-6 font-padauk">
       {/* Header */}
       <div className="flex justify-between items-end">
+        <div>
+
+          <Link
+            href="/stock-out/new-stock-out/"
+            className="ms-auto flex items-center justify-center gap-2 rounded-xl border bg-primary px-4 py-2 text-sm font-bold text-white transition-all hover:bg-blue-600 group"
+          >
+            <Plus size={18} />
+            စတော့ရောင်းမည်
+          </Link>
+
+        </div>
         <h1 className="text-2xl font-bold text-slate-800">
           ပစ္စည်းအထွက်စာရင်း
         </h1>
 
-        <Link
-          href={"/stock-out/new-stock-out/"}>
-          <Plus size={18} />
-          <span>
-            New Stock Out
-          </span>
-        </Link>
+
 
 
       </div>

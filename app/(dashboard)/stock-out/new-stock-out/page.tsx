@@ -25,10 +25,10 @@ import { SearchableSelect } from "@/components/Searchableselect";
 
 const REASONS = [
     { value: "Sale", label: "Sale (ရောင်းချခြင်း)" },
-    { value: "Return", label: "Return (ပြန်ပေးခြင်း)" },
-    { value: "Damage", label: "Damage (ပျက်စီးခြင်း)" },
-    { value: "Transfer", label: "Transfer (လွှဲပြောင်းခြင်း)" },
-    { value: "Loss", label: "Loss (ပျောက်ဆုံးခြင်း)" },
+    // { value: "Return", label: "Return (ပြန်ပေးခြင်း)" },
+    // { value: "Damage", label: "Damage (ပျက်စီးခြင်း)" },
+    // { value: "Transfer", label: "Transfer (လွှဲပြောင်းခြင်း)" },
+    // { value: "Loss", label: "Loss (ပျောက်ဆုံးခြင်း)" },
 ];
 
 export default function StockOutFormPage() {
@@ -95,12 +95,12 @@ export default function StockOutFormPage() {
                     : 5;
 
     return (
-        <div className="w-full mx-auto p-4 md:p-8 font-padauk max-w-2xl">
-            <Link href="/inventory" className="flex items-center text-slate-500 hover:text-primary mb-6 transition-colors text-sm">
-                <ArrowLeft size={16} className="mr-1.5" /> Back to Inventory
+        <div className="w-full mx-auto p-4 md:p-8 font-padauk h-fit bg-background">
+            <Link href="/stock-out" className="flex items-center text-slate-500 hover:text-primary mb-6 transition-colors text-sm">
+                <ArrowLeft size={16} className="mr-1.5" /> နောက်သို့
             </Link>
 
-            <Card className="rounded-3xl shadow-xl border-none">
+            <div className="border-none">
                 <CardHeader className="bg-slate-50/50 rounded-t-3xl border-b">
                     <div className="flex items-center gap-4">
                         <div className="p-3 bg-rose-100 text-rose-500 rounded-2xl">
@@ -223,7 +223,7 @@ export default function StockOutFormPage() {
                         )}
                     </form>
                 </CardContent>
-            </Card>
+            </div>
         </div>
     );
 }

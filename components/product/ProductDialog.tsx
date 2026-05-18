@@ -145,8 +145,8 @@ export default function ProductDialog({ isOpen, onClose, initialData }: { isOpen
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-slate-800">
               {initialData
-                ? "ပြင်ဆင်ရန် (Edit Product)"
-                : "အသစ်ထည့်ရန် (Add Product)"}
+                ? "ပြင်ဆင်ရန်"
+                : "အသစ်ထည့်ရန်"}
             </DialogTitle>
           </DialogHeader>
 

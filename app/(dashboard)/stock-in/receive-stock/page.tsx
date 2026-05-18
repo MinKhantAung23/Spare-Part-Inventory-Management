@@ -81,13 +81,13 @@ export default function StockInFormPage() {
                     : 5;
 
     return (
-        <div className="w-full mx-auto p-4 md:p-8 font-padauk max-w-2xl">
-            <Link href="/inventory" className="flex items-center text-slate-500 hover:text-primary mb-6 transition-colors text-sm">
-                <ArrowLeft size={16} className="mr-1.5" /> Back to Inventory
+        <div className="w-full mx-auto p-4 md:p-8 font-padauk h-fit bg-background">
+            <Link href="/stock-in" className="flex items-center text-slate-500 hover:text-primary mb-6 transition-colors text-sm">
+                <ArrowLeft size={16} className="mr-1.5" /> နောက်သို့
             </Link>
 
-            <Card className="rounded-3xl shadow-xl border-none">
-                <CardHeader className="bg-slate-50/50 rounded-t-3xl border-b">
+            <div className="border-none">
+                <CardHeader className="bg-slate-50/50 rounded-t-3xl border-b pt-3">
                     <div className="flex items-center gap-4">
                         <div className="p-3 bg-emerald-100 text-emerald-600 rounded-2xl">
                             <PackagePlus size={26} />
@@ -191,7 +191,7 @@ export default function StockInFormPage() {
                         )}
                     </form>
                 </CardContent>
-            </Card>
+            </div>
         </div>
     );
 }

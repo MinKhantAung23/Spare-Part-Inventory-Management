@@ -10,13 +10,14 @@ import { useBrands } from "@/hooks/useBrand";
 import { Badge } from "@/components/ui/badge";
 import BrandDialog from "@/components/brand/BrandDialog";
 import ModelDialog from "@/components/brand/ModelDialog";
+import { Input } from "@/components/ui/input";
 
 export default function BrandsModelsPage() {
   const [selectedBrandId, setSelectedBrandId] = useState<string | null>(null);
 
   const { data: models, isLoading: loadingModels } = useModels();
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedModel, setSelectedModel] = useState<any>(null);
 
   const handleAddModel = () => {
@@ -83,6 +84,7 @@ export default function BrandsModelsPage() {
               </Badge>
             </div>
           </div>
+          <Input type="search" placeholder="Search Brands" />
           <BrandsTable onEdit={handleEditBrand} data={brands?.data || []} />
         </div>
 
@@ -107,10 +109,11 @@ export default function BrandsModelsPage() {
               </Badge>
             </div>
           </div>
+          <Input type="search" placeholder="Search Models" />
           <ModelsTable onEdit={handleEditModel} data={models?.data || []} />
         </div>
 
-       <ModelDialog
+        <ModelDialog
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           initialData={selectedModel}
