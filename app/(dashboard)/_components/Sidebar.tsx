@@ -34,7 +34,7 @@ export default function Sidebar({ isExpanded, setIsExpanded }: any) {
         { name: "Stock Out", href: "/stock-out", icon: ArrowUpCircle },
       ],
     },
-    { 
+    {
       title: "CATALOG",
       items: [
         { name: "Brands & Models", href: "/brands", icon: Tags },
@@ -88,7 +88,10 @@ export default function Sidebar({ isExpanded, setIsExpanded }: any) {
             )}
             <div className="space-y-1">
               {section.items.map((item) => {
-                const active = pathname === item.href;
+                // const active = pathname === item.href;
+                const active = item.href === "/"
+                  ? pathname === "/"
+                  : pathname === item.href || pathname.startsWith(`${item.href}/`);
                 return (
                   <Link
                     key={item.href}
@@ -119,7 +122,9 @@ export default function Sidebar({ isExpanded, setIsExpanded }: any) {
         </div>
         {isExpanded && (
           <div className="text-[11px] truncate">
-            <p className="font-bold text-slate-800">Logout</p>
+            <Link href={"/profile"}>
+              <p className="font-bold text-slate-800">အသုံးပြုသူ</p>
+            </Link>
           </div>
         )}
       </div>

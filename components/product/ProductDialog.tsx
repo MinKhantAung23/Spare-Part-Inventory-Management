@@ -2,10 +2,8 @@
 
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { Plus, Trash2, Loader2 } from "lucide-react";
-
-// UI Components
 import {
   Dialog,
   DialogContent,
@@ -16,96 +14,82 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
-import {
-  useCreateSparePart,
-  useSpareParts,
-  useUpdateSparePart,
-} from "@/hooks/useSparePart";
+import { useCreateSparePart, useUpdateSparePart } from "@/hooks/useSparePart";
+import { useCategories } from "@/hooks/useCategory";
+import { useModelsByBrand } from "@/hooks/useModel";
+import { useBrands } from "@/hooks/useBrand";
 import { createSparePartSchema } from "@/validations/spare-part.validation";
+import { Product } from "@/types/product";
+import { useSparePartsStore } from "@/store/use-spare-parts-store";
+import { useState } from "react";
+import { SearchableSelect } from "../Searchableselect";
 
-export default function ProductDialog({ isOpen, onClose, initialData }: any) {
+export default function ProductDialog() {
+  const { productDialogOpen, editingProduct, closeProductDialog } = useSparePartsStore();
+  const isEdit = !!editingProduct;
+
   const { mutate: createPart, isPending: isCreating } = useCreateSparePart();
   const { mutate: updatePart, isPending: isUpdating } = useUpdateSparePart();
 
-  // Fetching the data from your GET request
-  const { data: sparePartsResponse } = useSpareParts();
+  // ── Data hooks — use dedicated endpoints, NOT spare-parts list ──
+  const { data: brandsData, isLoading: loadingBrands } = useBrands();
+  const { data: categoriesData, isLoading: loadingCategories } = useCategories();
 
-  const categories = useMemo(() => {
-    if (!sparePartsResponse?.data) return [];
-    const unique = new Map();
-    sparePartsResponse.data.forEach((item: any) => {
-      unique.set(item.category.id, item.category);
-    });
-    return Array.from(unique.values());
-  }, [sparePartsResponse]);
+  const brands = brandsData?.data ?? brandsData ?? [];
+  const categories = categoriesData?.data ?? categoriesData ?? [];
 
-  const models = useMemo(() => {
-    if (!sparePartsResponse?.data) return [];
-    const unique = new Map();
-    sparePartsResponse.data.forEach((item: any) => {
-      unique.set(item.model.id, item.model);
-    });
-    return Array.from(unique.values());
-  }, [sparePartsResponse]);
+  // Brand selection for model cascade inside the dialog
+  const [dialogBrandId, setDialogBrandId] = useState<string | null>(null);
+  const { data: modelsData, isLoading: loadingModels } = useModelsByBrand(dialogBrandId);
+  const models = modelsData?.data ?? modelsData ?? [];
 
-  const form = useForm({
+  // ── Form ──
+  const {
+    register,
+    control,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm({
     resolver: zodResolver(createSparePartSchema),
     defaultValues: {
       name: "",
       price: 0,
       spare_category_id: 0,
       model_id: 0,
-      specifications: [],
+      specifications: [] as { key: string; value: string }[],
     },
   });
-
-  const {
-    register,
-    control,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = form;
 
   const { fields, append, remove } = useFieldArray({
     control,
     name: "specifications" as any,
   });
 
-  // 3. Populate Form for Editing
+  // Populate for edit
   useEffect(() => {
-    if (initialData && isOpen) {
-      const formattedSpecs = Object.entries(
-        initialData.specification || {},
-      ).map(([key, value]) => ({
-        key,
-        value: String(value),
-      }));
-
+    if (editingProduct && productDialogOpen) {
+      const specs = Object.entries(editingProduct.specification || {}).map(
+        ([key, value]) => ({ key, value: String(value) }),
+      );
+      const brandId = editingProduct.brand?.id ? String(editingProduct.brand.id) : null;
+      setDialogBrandId(brandId);
       reset({
-        name: initialData.name,
-        price: initialData.price,
-        spare_category_id:
-          initialData.category?.id || initialData.spare_category_id,
-        model_id: initialData.model?.id || initialData.model_id,
-        specifications: formattedSpecs as any,
+        name: editingProduct.name,
+        price: editingProduct.price,
+        spare_category_id: editingProduct.category?.id ?? editingProduct.spare_category_id ?? 0,
+        model_id: editingProduct.model?.id ?? editingProduct.model_id ?? 0,
+        specifications: specs as any,
       });
-    } else if (!isOpen) {
-      reset();
+    } else if (!productDialogOpen) {
+      reset({ name: "", price: 0, spare_category_id: 0, model_id: 0, specifications: [] });
+      setDialogBrandId(null);
     }
-  }, [initialData, isOpen, reset]);
+  }, [editingProduct, productDialogOpen, reset]);
 
-  // 4. Handle Submission
   const onSubmit = (values: any) => {
-    const specObject = values.specifications.reduce((acc: any, curr: any) => {
+    const specification = values.specifications.reduce((acc: any, curr: any) => {
       if (curr.key.trim()) acc[curr.key.trim()] = curr.value;
       return acc;
     }, {});
@@ -115,119 +99,136 @@ export default function ProductDialog({ isOpen, onClose, initialData }: any) {
       price: Number(values.price),
       spare_category_id: Number(values.spare_category_id),
       model_id: Number(values.model_id),
-      specification: specObject,
+      specification,
+      image: null,
+      quantity: null,
+      model: null,
+      category: null,
     };
 
-    const mutationOptions = {
-      onSuccess: () => {
-        onClose();
-        reset();
-      },
-    };
+    const opts = { onSuccess: () => closeProductDialog() };
 
-    if (initialData) {
-      updatePart({ id: initialData.id, data: payload }, mutationOptions);
+    if (isEdit) {
+      updatePart({ id: editingProduct.id ?? 0, data: payload }, opts);
     } else {
-      createPart(payload, mutationOptions);
+      createPart(payload as Product, opts);
     }
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl bg-slate-50 overflow-y-auto rounded-3xl font-padauk">
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          <DialogHeader>
-            <DialogTitle className="text-xl font-bold text-slate-800">
-              {initialData
-                ? "ပြင်ဆင်ရန် (Edit Product)"
-                : "အသစ်ထည့်ရန် (Add Product)"}
-            </DialogTitle>
-          </DialogHeader>
+    <Dialog open={productDialogOpen} onOpenChange={(open) => !open && closeProductDialog()}>
+      <DialogContent className="bg-white rounded-3xl font-padauk p-0 overflow-hidden border-none shadow-2xl">
 
-          <div className="grid grid-cols-2 gap-4">
+        <DialogHeader className="px-6 py-4 border-b border-slate-100 bg-slate-50/60">
+          <DialogTitle className="text-lg font-black text-slate-700">
+            {isEdit ? "ပြင်ဆင်ရန် (Edit Product)" : "အသစ်ထည့်ရန် (Add Product)"}
+          </DialogTitle>
+        </DialogHeader>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
+          <div className="px-6 py-5 space-y-5 overflow-y-auto max-h-[60vh]">
+
             {/* Name */}
-            <div className="col-span-2 space-y-2">
-              <Label className="font-bold text-slate-600">
+            <div className="space-y-1.5">
+              <Label className="text-xs font-black uppercase tracking-wide text-slate-500">
                 Spare Part Name
               </Label>
               <Input
                 {...register("name")}
-                placeholder="e.g. Matte Glass"
+                placeholder="e.g. Matte Glass Screen Protector"
                 className="rounded-xl h-11"
               />
               {errors.name && (
-                <p className="text-xs text-rose-500">
-                  {errors.name.message as string}
-                </p>
+                <p className="text-[11px] text-rose-500">{errors.name.message as string}</p>
               )}
             </div>
 
             {/* Price */}
-            <div className="space-y-2">
-              <Label className="font-bold text-slate-600">Price (Ks)</Label>
+            <div className="space-y-1.5">
+              <Label className="text-xs font-black uppercase tracking-wide text-slate-500">
+                Price (Ks)
+              </Label>
               <Input
                 type="number"
+                min={0}
                 {...register("price", { valueAsNumber: true })}
                 className="rounded-xl h-11"
               />
             </div>
 
-            {/* Category Dropdown */}
-            <div className="space-y-2">
-              <Label className="font-bold text-slate-600">Category</Label>
+            {/* Brand → Model cascade */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-1.5">
+                <Label className="text-xs font-black uppercase tracking-wide text-slate-500">
+                  Brand
+                </Label>
+                <SearchableSelect
+                  options={brands.map((b: any) => ({ id: b.id, name: b.name }))}
+                  value={dialogBrandId}
+                  onChange={(v) => {
+                    setDialogBrandId(v);
+                    setValue("model_id", 0); // reset model
+                  }}
+                  placeholder="Select brand"
+                  isLoading={loadingBrands}
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <Label className={`text-xs font-black uppercase tracking-wide ${dialogBrandId ? "text-slate-500" : "text-slate-300"
+                  }`}>
+                  Model
+                </Label>
+                <Controller
+                  name="model_id"
+                  control={control}
+                  render={({ field }) => (
+                    <SearchableSelect
+                      options={models.map((m: any) => ({ id: m.id, name: m.name }))}
+                      // value={field.value || null}
+                      value={Number(field.value ?? 0)}
+                      onChange={(v) => field.onChange(v ? Number(v) : 0)}
+                      placeholder="Select model"
+                      isLoading={loadingModels}
+                      disabled={!dialogBrandId}
+                    />
+                  )}
+                />
+                {errors.model_id && (
+                  <p className="text-[11px] text-rose-500">{errors.model_id.message as string}</p>
+                )}
+              </div>
+            </div>
+
+            {/* Category */}
+            <div className="space-y-1.5">
+              <Label className="text-xs font-black uppercase tracking-wide text-slate-500">
+                Category
+              </Label>
               <Controller
                 name="spare_category_id"
                 control={control}
                 render={({ field }) => (
-                  <Select
-                    onValueChange={(val) => field.onChange(Number(val))}
-                    value={field.value ? String(field.value) : ""}
-                  >
-                    <SelectTrigger className="rounded-xl h-11">
-                      <SelectValue placeholder="Select Category" />
-                    </SelectTrigger>
-                    <SelectContent className="max-h-40 overflow-y-auto bg-slate-50">
-                      {categories.map((cat: any) => (
-                        <SelectItem key={cat.id} value={String(cat.id)}>
-                          {cat.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <SearchableSelect
+                    options={categories.map((c: any) => ({ id: c.id, name: c.name }))}
+                    value={Number(field.value || null)}
+                    onChange={(v) => field.onChange(v ? Number(v) : 0)}
+                    placeholder="Select category"
+                    isLoading={loadingCategories}
+                  />
                 )}
               />
+              {errors.spare_category_id && (
+                <p className="text-[11px] text-rose-500">
+                  {errors.spare_category_id.message as string}
+                </p>
+              )}
             </div>
 
-            {/* Model Dropdown */}
-            <div className="space-y-2">
-              <Label className="font-bold text-slate-600">Model</Label>
-              <Controller
-                name="model_id"
-                control={control}
-                render={({ field }) => (
-                  <Select
-                    onValueChange={(val) => field.onChange(Number(val))}
-                    value={field.value ? String(field.value) : ""}
-                  >
-                    <SelectTrigger className="rounded-xl h-11">
-                      <SelectValue placeholder="Select Model" />
-                    </SelectTrigger>
-                    <SelectContent className="max-h-40 overflow-y-auto bg-slate-50">
-                      {models.map((mod: any) => (
-                        <SelectItem key={mod.id} value={String(mod.id)}>
-                          {mod.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                )}
-              />
-            </div>
-
-            {/* Specifications Section */}
-            <div className="col-span-2 border-t pt-4 space-y-4">
-              <div className="flex justify-between items-center">
-                <Label className="text-primary font-bold">
+            {/* Specifications */}
+            <div className="border-t border-slate-100 pt-5 space-y-4">
+              <div className="flex items-center justify-between">
+                <Label className="text-xs font-black uppercase tracking-wide text-primary">
                   Specifications
                 </Label>
                 <Button
@@ -235,57 +236,65 @@ export default function ProductDialog({ isOpen, onClose, initialData }: any) {
                   variant="outline"
                   size="sm"
                   onClick={() => append({ key: "", value: "" })}
-                  className="rounded-lg h-8"
+                  className="rounded-lg h-8 text-xs gap-1"
                 >
-                  <Plus size={14} className="mr-1" /> Add Field
+                  <Plus size={12} /> Add Field
                 </Button>
               </div>
 
-              {fields.map((field, index) => (
-                <div key={field.id} className="flex gap-2 items-center">
-                  <Input
-                    {...register(`specifications.${index}.key` as const)}
-                    placeholder="Key (e.g. Color)"
-                    className="flex-1 rounded-lg"
-                  />
-                  <Input
-                    {...register(`specifications.${index}.value` as const)}
-                    placeholder="Value (e.g. Black)"
-                    className="flex-1 rounded-lg"
-                  />
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => remove(index)}
-                  >
-                    <Trash2
-                      size={18}
-                      className="text-slate-300 hover:text-rose-500"
+              {fields.length === 0 && (
+                <p className="text-xs text-slate-400 italic text-center py-2">
+                  No specifications yet. Click "Add Field" to add one.
+                </p>
+              )}
+
+              <div className="space-y-2">
+                {fields.map((field, index) => (
+                  <div key={field.id} className="flex gap-2 items-center">
+                    <Input
+                      {...register(`specifications.${index}.key` as const)}
+                      placeholder="Key (e.g. Color)"
+                      className="flex-1 rounded-xl h-10 text-sm"
                     />
-                  </Button>
-                </div>
-              ))}
+                    <Input
+                      {...register(`specifications.${index}.value` as const)}
+                      placeholder="Value (e.g. Black)"
+                      className="flex-1 rounded-xl h-10 text-sm"
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => remove(index)}
+                      className="shrink-0"
+                    >
+                      <Trash2 size={16} className="text-slate-300 hover:text-rose-500 transition-colors" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
-          <DialogFooter className="border-t pt-6 gap-2">
+          {/* Footer */}
+          <DialogFooter className="px-6 py-4 border-t border-slate-100 bg-slate-50/60 flex gap-2 mb-2">
             <Button
               type="button"
               variant="ghost"
-              onClick={onClose}
-              className="rounded-xl px-6"
+              onClick={closeProductDialog}
+              className="rounded-xl px-6 text-slate-500"
             >
               Cancel
             </Button>
             <Button
               type="submit"
               disabled={isCreating || isUpdating}
-              className="bg-primary hover:bg-blue-600 rounded-xl px-10"
+              className="bg-primary hover:bg-blue-600 rounded-xl px-10 font-bold"
             >
               {isCreating || isUpdating ? (
-                <Loader2 className="animate-spin" />
-              ) : initialData ? (
-                "Update"
+                <Loader2 className="animate-spin" size={16} />
+              ) : isEdit ? (
+                "Update Part"
               ) : (
                 "Save Part"
               )}

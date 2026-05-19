@@ -1,13 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createModel, deleteModel, fetchModels, fetchModelsById, updateModel } from "@/services/model.service";
+import { createModel, deleteModel, fetchModels, fetchModelsByBrandId, fetchModelsById, updateModel } from "@/services/model.service";
 import { CreateModelInput, UpdateModelInput } from "@/types/model";
 import { toast } from "sonner";
+import { Brand } from "@/types/brand";
 
 export const useModels = () => {
   return useQuery({
     queryKey: ["models"],
     queryFn: fetchModels,
-    staleTime: 1000 * 60 * 5, 
+    staleTime: 1000 * 60 * 5,
   });
 };
 
@@ -15,6 +16,15 @@ export const useModelById = (id: string) => {
   return useQuery({
     queryKey: ["models", id],
     queryFn: () => fetchModelsById(id),
+    staleTime: 1000 * 60 * 5,
+  });
+};
+
+export const useModelsByBrand = (brandId: string | null) => {
+  return useQuery({
+    queryKey: ["models-by-brand", { brandId }],
+    queryFn: () => fetchModelsByBrandId(brandId),
+    enabled: !!brandId,
     staleTime: 1000 * 60 * 5,
   });
 };

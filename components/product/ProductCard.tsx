@@ -1,141 +1,263 @@
-import { Edit, Eye, MoreVertical, Trash2 } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "../ui/button";
-import { useDeleteSparePart } from "@/hooks/useSparePart";
-import { useState } from "react";
-import ConfirmDeleteModal from "../ui/ConfirmDeleteModel";
-import { useRouter } from "next/navigation";
+// "use client";
+
+// import { useState } from "react";
+// import { Package, Pencil, ChevronRight, AlertCircle } from "lucide-react";
+// import { Product } from "@/types/product";
+// import { Button } from "@/components/ui/button";
+// import {
+//   Sheet,
+//   SheetContent,
+//   SheetHeader,
+//   SheetTitle,
+// } from "@/components/ui/sheet";
+// import PartDetails from "@/components/quick-search/PartDetails";
+// import { useSparePartsById } from "@/hooks/useSparePart";
+
+// interface ProductCardProps {
+//   product: Product;
+//   onEdit: (product: Product) => void;
+// }
+
+// export default function ProductCard({ product, onEdit }: ProductCardProps) {
+//   const [detailOpen, setDetailOpen] = useState(false);
+
+//   // Fetch full detail (with batches) only when sheet is opened
+//   const { data: detailData, isLoading } = useSparePartsById(
+//     detailOpen && product.id ? String(product.id) : null,
+//   );
+
+//   const stock = product.quantity ?? 0;
+//   const isInStock = stock > 0;
+//   const isLow = stock > 0 && stock < 5;
+
+//   const brandName = product.brand?.name ?? "—";
+//   const modelName = product.model?.name ?? "—";
+//   const categoryName = product.category?.name ?? "—";
+
+//   return (
+//     <>
+//       {/* ── Card ── */}
+//       <div className="bg-white border border-slate-100 rounded-2xl p-5 hover:shadow-md hover:border-slate-200 transition-all group flex flex-col gap-4">
+
+//         {/* Top row: icon + name + edit */}
+//         <div className="flex items-start gap-3">
+//           <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-primary border border-blue-100 shrink-0">
+//             <Package size={18} />
+//           </div>
+
+//           <div className="flex-1 min-w-0">
+//             <p className="text-sm font-black text-slate-800 truncate">{product.name}</p>
+//             <p className="text-[11px] text-slate-400 font-medium truncate mt-0.5">
+//               {brandName} › {modelName}
+//             </p>
+//           </div>
+
+//           <button
+//             type="button"
+//             onClick={(e) => { e.stopPropagation(); onEdit(product); }}
+//             className="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-600 shrink-0"
+//           >
+//             <Pencil size={14} />
+//           </button>
+//         </div>
+
+//         {/* Category badge */}
+//         <div>
+//           <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide text-orange-500 bg-orange-50 px-2.5 py-1 rounded-lg border border-orange-100">
+//             📁 {categoryName}
+//           </span>
+//         </div>
+
+//         {/* Price + stock row */}
+//         <div className="flex items-center justify-between">
+//           <div>
+//             <p className="text-[10px] uppercase font-bold text-slate-400 mb-0.5">Price</p>
+//             <p className="text-base font-black text-primary">
+//               {product.price.toLocaleString()} Ks
+//             </p>
+//           </div>
+
+//           <div className="text-right">
+//             <p className="text-[10px] uppercase font-bold text-slate-400 mb-0.5">Stock</p>
+//             <div className="flex items-center gap-1.5">
+//               {isLow && <AlertCircle size={12} className="text-orange-400" />}
+//               <span
+//                 className={`text-base font-black ${!isInStock
+//                   ? "text-red-400"
+//                   : isLow
+//                     ? "text-orange-500"
+//                     : "text-emerald-500"
+//                   }`}
+//               >
+//                 {stock}
+//               </span>
+//               <span className="text-[10px] text-slate-400 font-medium">units</span>
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* Stock status bar */}
+//         <div className="space-y-1">
+//           <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+//             <div
+//               className={`h-full rounded-full transition-all ${!isInStock ? "bg-red-300" : isLow ? "bg-orange-400" : "bg-emerald-400"
+//                 }`}
+//               style={{ width: isInStock ? `${Math.min((stock / 50) * 100, 100)}%` : "4px" }}
+//             />
+//           </div>
+//           <p className={`text-[10px] font-bold ${!isInStock ? "text-red-400" : isLow ? "text-orange-500" : "text-emerald-500"
+//             }`}>
+//             {!isInStock ? "○ Out of Stock" : isLow ? "⚠ Low Stock" : "● In Stock"}
+//           </p>
+//         </div>
+
+//         {/* View details button */}
+//         <Button
+//           variant="ghost"
+//           size="sm"
+//           onClick={() => setDetailOpen(true)}
+//           className="w-full rounded-xl border border-slate-100 bg-slate-50 hover:bg-slate-100 text-slate-600 text-xs font-bold h-8 gap-1"
+//         >
+//           View Details
+//           <ChevronRight size={13} />
+//         </Button>
+//       </div>
+
+//       {/* ── Detail Sheet ── */}
+//       <Sheet open={detailOpen} onOpenChange={setDetailOpen}>
+//         <SheetContent
+//           side="right"
+//           className="w-full sm:max-w-2xl overflow-y-auto font-padauk p-0 bg-white"
+//         >
+//           {/* <SheetHeader className="px-6 py-4 border-b border-slate-100 bg-slate-50/50">
+//             <SheetTitle className="text-base font-black text-slate-700">
+//               Part Detail
+//             </SheetTitle>
+//           </SheetHeader> */}
+
+//           <div className="p-6">
+//             {isLoading ? (
+//               <div className="flex items-center justify-center py-20 text-slate-400 gap-2 text-sm">
+//                 <div className="w-4 h-4 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+//                 Loading details...
+//               </div>
+//             ) : detailData?.data ? (
+//               <PartDetails part={detailData.data} />
+//             ) : (
+//               <PartDetails part={product} />
+//             )}
+//           </div>
+//         </SheetContent>
+//       </Sheet>
+//     </>
+//   );
+// }
+
+"use client";
+
+import { Package, Pencil, ChevronRight, AlertCircle, Layers } from "lucide-react";
+import { Product } from "@/types/product";
+import { Button } from "@/components/ui/button";
+import { useSparePartsStore } from "@/store/use-spare-parts-store";
 
 interface ProductCardProps {
-  product: any;
-  onEdit: any;
+  product: Product;
 }
 
-export default function ProductCard({ product, onEdit }: ProductCardProps) {
-  const { mutate: deleteSparePart, isPending: isDeleting } =
-    useDeleteSparePart();
-  const [deleteId, setDeleteId] = useState<string | null>(null);
-  const router = useRouter();
+export default function ProductCard({ product }: ProductCardProps) {
+  const { openEditDialog, openDetailSheet } = useSparePartsStore();
 
-  const handleDelete = () => {
-    if (!deleteId) return;
+  const stock = product.quantity ?? 0;
+  const isInStock = stock > 0;
+  const isLow = stock > 0 && stock < 5;
+  const brandName = product.brand?.name ?? "—";
+  const modelName = product.model?.name ?? "—";
+  const categoryName = product.category?.name ?? "—";
+  const batchCount = product.batches?.length ?? 0;
 
-    deleteSparePart(deleteId, {
-      onSuccess: () => {
-        setDeleteId(null); // Close modal
-      },
-    });
-  };
-
-  const handleNavigate = (id: string) => {
-    router.push(`/spare-parts/${id}`);
-  };
+  const stockColor = !isInStock ? "text-red-400" : isLow ? "text-orange-500" : "text-emerald-500";
+  const barColor = !isInStock ? "bg-red-300" : isLow ? "bg-orange-400" : "bg-emerald-400";
+  const statusText = !isInStock ? "○ Out of Stock" : isLow ? "⚠ Low Stock" : "● In Stock";
 
   return (
-    <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-primary/20 transition-all group relative">
-      {/* Header */}
-      <div className="flex justify-between items-start mb-4">
-        <div className="flex gap-3">
-          <div>
-            <h3 className="font-bold text-slate-800 line-clamp-1">
-              {product.name}
-            </h3>
-            <p className="text-[11px] text-slate-400 font-medium uppercase tracking-wider">
-              {product.model.name} • {product.category?.name}
-            </p>
-          </div>
+    <div className="bg-white border border-slate-100 rounded-2xl p-5 hover:shadow-md hover:border-slate-200 transition-all group flex flex-col gap-4">
+
+      {/* Top: icon + name + edit btn */}
+      <div className="flex items-start gap-3">
+        <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-primary border border-blue-100 shrink-0">
+          <Package size={18} />
         </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger className="p-1 text-slate-800 hover:text-slate-600 outline-none ">
-            <MoreVertical size={20} />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="font-padauk bg-slate-50 ">
-            <DropdownMenuItem>
-              <Button
-                variant="outline"
-                className="w-full"
-                onClick={() => handleNavigate(product.id)}
-              >
-                <Eye size={16} className="mr-2" /> Details
-              </Button>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Button
-                variant="outline"
-                className="w-full"
-                onClick={() => onEdit(product)}
-              >
-                <Edit size={16} className="mr-2" /> Edit
-              </Button>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="text-destructive">
-              <Button
-                variant="destructive"
-                onClick={() => setDeleteId(product.id)}
-                className="w-full"
-                disabled={isDeleting}
-              >
-                {isDeleting ? (
-                  "Deleting..."
-                ) : (
-                  <span className="flex items-center">
-                    <Trash2 size={16} className="mr-2" /> Delete
-                  </span>
-                )}
-              </Button>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-black text-slate-800 truncate leading-tight">{product.name}</p>
+          <p className="text-[11px] text-slate-400 font-medium truncate mt-0.5">
+            {brandName} › {modelName}
+          </p>
+        </div>
+
+        <button
+          type="button"
+          title="Edit product"
+          onClick={() => openEditDialog(product)}
+          className="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-600 shrink-0"
+        >
+          <Pencil size={13} />
+        </button>
       </div>
 
-      {/* Pricing Grid */}
-      <div className="grid grid-cols-2 gap-3 mb-4">
-        <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-100">
-          <p className="text-[9px] uppercase font-bold text-slate-400">
-            Sale Price
-          </p>
-          <p className="text-sm font-bold text-primary">
+      {/* Category pill */}
+      <div className="flex items-center gap-2 flex-wrap">
+        <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide text-orange-500 bg-orange-50 px-2.5 py-1 rounded-lg border border-orange-100">
+          📁 {categoryName}
+        </span>
+        {batchCount > 0 && (
+          <span className="inline-flex items-center gap-1 text-[10px] font-bold text-slate-400 bg-slate-50 px-2 py-1 rounded-lg border border-slate-100">
+            <Layers size={10} />
+            {batchCount} batch{batchCount !== 1 ? "es" : ""}
+          </span>
+        )}
+      </div>
+
+      {/* Price + stock */}
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-[10px] uppercase font-bold text-slate-400 mb-0.5">Price</p>
+          <p className="text-base font-black text-primary">
             {product.price.toLocaleString()} Ks
           </p>
         </div>
-      </div>
 
-      {/* Specification Status */}
-      <div className="space-y-2 mt-4">
-        <h4 className="text-[10px] uppercase font-bold text-slate-400 tracking-widest">
-          Specifications
-        </h4>
-        <div className="grid grid-cols-1 gap-2">
-          {product.specification &&
-            Object.entries(product.specification).map(([key, value]) => (
-              <div
-                key={key}
-                className="flex justify-between items-center bg-slate-50 gap-1 p-2 rounded-lg border border-slate-100"
-              >
-                <span className="text-[10px] font-bold text-slate-400 uppercase">
-                  {key}:
-                </span>
-                <span className="text-xs font-bold text-slate-700 text-right">
-                  {String(value)}
-                </span>
-              </div>
-            ))}
+        <div className="text-right">
+          <p className="text-[10px] uppercase font-bold text-slate-400 mb-0.5">Stock</p>
+          <div className="flex items-center justify-end gap-1.5">
+            {isLow && <AlertCircle size={11} className="text-orange-400" />}
+            <span className={`text-base font-black ${stockColor}`}>{stock}</span>
+            <span className="text-[10px] text-slate-400 font-medium">units</span>
+          </div>
         </div>
       </div>
 
-      <ConfirmDeleteModal
-        isOpen={!!deleteId}
-        isLoading={isDeleting}
-        onClose={() => setDeleteId(null)}
-        onConfirm={handleDelete}
-        title="ဖျက်ရန် သေချာပါသလား?"
-        description="ဤ spare part ကို ဖျက်လိုက်ပါက ပြန်လည်ရယူ၍ မရနိုင်တော့ပါ။"
-      />
+      {/* Stock bar */}
+      <div className="space-y-1">
+        <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+          <div
+            className={`h-full rounded-full transition-all ${barColor}`}
+            style={{ width: isInStock ? `${Math.min((stock / 50) * 100, 100)}%` : "3px" }}
+          />
+        </div>
+        <p className={`text-[10px] font-bold ${stockColor}`}>{statusText}</p>
+      </div>
+
+      {/* View details CTA */}
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={() => product.id && openDetailSheet(product.id)}
+        className="w-full rounded-xl border border-slate-100 bg-slate-50 hover:bg-slate-100 text-slate-600 text-xs font-bold h-8 gap-1 mt-auto"
+      >
+        View Details
+        <ChevronRight size={13} />
+      </Button>
     </div>
   );
 }

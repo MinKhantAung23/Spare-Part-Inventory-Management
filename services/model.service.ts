@@ -3,7 +3,7 @@ import api from "@/lib/api";
 import { CreateModelInput, UpdateModelInput } from "@/types/model";
 
 export const fetchModels = async () => {
-  const { data } = await api.get("/api/model"); 
+  const { data } = await api.get("/api/model");
   return data;
 };
 
@@ -12,7 +12,12 @@ export const fetchModelsById = async (id: string) => {
   return data;
 };
 
-export const createModel  = async (data: CreateModelInput) => {
+export const fetchModelsByBrandId = async (id: string | null) => {
+  const { data } = await api.get(`/api/model/brand/${id}`);
+  return data.data;
+};
+
+export const createModel = async (data: CreateModelInput) => {
   const { data: response } = await api.post("/api/model", data);
   return response;
 };

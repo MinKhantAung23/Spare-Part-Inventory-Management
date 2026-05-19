@@ -13,20 +13,20 @@
   /* Mapping the CSS variables to Tailwind utility names */
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
-  
+
   --color-primary: hsl(var(--primary));
   --color-primary-foreground: hsl(var(--primary-foreground));
-  
+
   --color-secondary: hsl(var(--secondary));
   --color-secondary-foreground: hsl(var(--secondary-foreground));
-  
+
   --color-muted: hsl(var(--muted));
   --color-muted-foreground: hsl(var(--muted-foreground));
-  
+
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
-  
+
   --color-success: hsl(var(--success));
   --color-destructive: hsl(var(--destructive));
 
@@ -37,7 +37,7 @@
 :root {
   --background: 0 0% 100%;
   --foreground: 222.2 84% 4.9%;
-  
+
   --primary: 221.2 83.2% 53.3%;
   --primary-foreground: 210 40% 98%;
 
@@ -67,8 +67,9 @@
     /* Fixed the error: now border-border is recognized because it's in @theme */
     @apply border-border outline-ring/50;
   }
-  
-  html, body {
+
+  html,
+  body {
     @apply bg-background text-foreground min-h-screen;
     font-family: var(--font-padauk), sans-serif;
     line-height: 1.6;
@@ -77,7 +78,7 @@
   table {
     @apply w-full text-left border-collapse;
   }
-  
+
   th {
     @apply bg-secondary p-3 font-bold text-sm uppercase tracking-wider;
   }
@@ -91,7 +92,12 @@
   .badge-stock-in {
     @apply bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-xs font-bold;
   }
+
   .badge-stock-out {
     @apply bg-rose-100 text-rose-700 px-2 py-1 rounded text-xs font-bold;
   }
-} 
+}
+
+input {
+  background-color: white;
+}
