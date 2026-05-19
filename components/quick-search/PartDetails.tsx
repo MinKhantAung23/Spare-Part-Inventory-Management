@@ -145,15 +145,15 @@ function BatchesTable({ batches }: { batches: Batch[] }) {
                       <div className="w-16 h-1 bg-slate-100 rounded-full overflow-hidden">
                         <div
                           className={`h-full rounded-full transition-all ${batch.remaining_quantity === 0
-                              ? "bg-slate-300"
-                              : batch.remaining_quantity < batch.initial_quantity * 0.2
-                                ? "bg-orange-400"
-                                : "bg-emerald-400"
+                            ? "bg-slate-300"
+                            : batch.remaining_quantity < batch.initial_quantity * 0.2
+                              ? "bg-orange-400"
+                              : "bg-emerald-400"
                             }`}
                           style={{
                             width: `${batch.initial_quantity > 0
-                                ? (batch.remaining_quantity / batch.initial_quantity) * 100
-                                : 0
+                              ? (batch.remaining_quantity / batch.initial_quantity) * 100
+                              : 0
                               }%`,
                           }}
                         />
@@ -254,7 +254,7 @@ export default function PartDetails({ part }: { part: Product }) {
               className="rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white gap-1.5 font-bold shadow-sm"
             >
               <PackagePlus size={15} />
-              Stock In
+              စတော့သွင်းမည်
             </Button>
             <Button
               size="sm"
@@ -263,7 +263,7 @@ export default function PartDetails({ part }: { part: Product }) {
               className="rounded-xl bg-rose-500 hover:bg-rose-600 text-white gap-1.5 font-bold shadow-sm disabled:opacity-40"
             >
               <PackageMinus size={15} />
-              Stock Out
+              စတော့ထုတ်မည်
             </Button>
           </div>
         </div>

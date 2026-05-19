@@ -1,3 +1,4 @@
+// import { create } from "zustand";
 import { create } from "zustand";
 
 export interface SparePartsFilters {
@@ -15,34 +16,24 @@ const DEFAULT_FILTERS: SparePartsFilters = {
 };
 
 interface SparePartsState {
-    // ── Search & filter ──────────────────────────────────────
     searchQuery: string;
     filters: SparePartsFilters;
     filterDialogOpen: boolean;
-
-    // ── Pagination ───────────────────────────────────────────
     page: number;
     pageSize: number;
 
-    // ── Product dialog (add/edit) ────────────────────────────
     productDialogOpen: boolean;
-    editingProduct: any | null; // Product | null
-
-    // ── Detail sheet ─────────────────────────────────────────
+    editingProduct: any | null;
     detailSheetProductId: number | null;
 
-    // ── Actions ──────────────────────────────────────────────
     setSearchQuery: (q: string) => void;
     setFilter: <K extends keyof SparePartsFilters>(key: K, val: SparePartsFilters[K]) => void;
     clearFilters: () => void;
     setFilterDialogOpen: (open: boolean) => void;
-
     setPage: (p: number) => void;
-
     openAddDialog: () => void;
     openEditDialog: (product: any) => void;
     closeProductDialog: () => void;
-
     openDetailSheet: (id: number) => void;
     closeDetailSheet: () => void;
 }
@@ -51,40 +42,29 @@ export const useSparePartsStore = create<SparePartsState>((set) => ({
     searchQuery: "",
     filters: { ...DEFAULT_FILTERS },
     filterDialogOpen: false,
-
     page: 1,
-    pageSize: 9,
+    pageSize: 10, // Synced with API limit
 
     productDialogOpen: false,
     editingProduct: null,
-
     detailSheetProductId: null,
 
-    // ── Search ──
-    setSearchQuery: (q) => set({ searchQuery: q, page: 1 }),
+    setSearchQuery: (q) => set({ searchQuery: q, page: 1 }), // Reset to page 1 on search
 
-    // ── Filters ──
     setFilter: (key, val) =>
         set((state) => {
             const next = { ...state.filters, [key]: val };
-            // Cascade: reset model when brand changes
-            if (key === "brandId") next.modelId = null;
-            return { filters: next, page: 1 };
+            if (key === "brandId") next.modelId = null; // Cascade reset
+            return { filters: next, page: 1 }; // Reset to page 1 on filter change
         }),
 
     clearFilters: () => set({ filters: { ...DEFAULT_FILTERS }, page: 1 }),
-
     setFilterDialogOpen: (open) => set({ filterDialogOpen: open }),
-
-    // ── Pagination ──
     setPage: (p) => set({ page: p }),
 
-    // ── Product dialog ──
     openAddDialog: () => set({ productDialogOpen: true, editingProduct: null }),
     openEditDialog: (product) => set({ productDialogOpen: true, editingProduct: product }),
     closeProductDialog: () => set({ productDialogOpen: false, editingProduct: null }),
-
-    // ── Detail sheet ──
     openDetailSheet: (id) => set({ detailSheetProductId: id }),
     closeDetailSheet: () => set({ detailSheetProductId: null }),
 }));

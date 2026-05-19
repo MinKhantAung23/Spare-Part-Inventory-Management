@@ -25,15 +25,15 @@ export default function ProductDetailSheet() {
         <Sheet open={isOpen} onOpenChange={(open) => !open && closeDetailSheet()}>
             <SheetContent
                 side="right"
-                className="w-full sm:max-w-2xl overflow-y-auto font-padauk p-0 border-l border-slate-100"
+                className="w-full sm:max-w-2xl overflow-y-auto font-padauk p-0 border-l border-slate-100 bg-background"
             >
-                <SheetHeader className="px-6 py-4 border-b border-slate-100 bg-slate-50/50 sticky top-0 z-10">
+                <SheetHeader className="px-6 py-4 border-b border-slate-100 sticky top-0 z-10 bg-blue-50">
                     <SheetTitle className="text-sm font-black text-slate-600 uppercase tracking-widest">
                         Part Detail
                     </SheetTitle>
                 </SheetHeader>
 
-                <div className="p-6">
+                <div className="p-6 bg-background">
                     {isLoading ? (
                         <div className="flex flex-col items-center justify-center py-24 text-slate-400 gap-3">
                             <Loader2 className="animate-spin text-primary" size={24} />

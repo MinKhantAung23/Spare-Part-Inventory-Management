@@ -31,7 +31,7 @@ export default function StockDialog({ isOpen, onClose, part, defaultTab = "in" }
                             }`}
                     >
                         <PackagePlus size={16} />
-                        Stock In
+                        စတော့သွင်းမည်
                     </button>
                     <button
                         type="button"
@@ -42,7 +42,7 @@ export default function StockDialog({ isOpen, onClose, part, defaultTab = "in" }
                             }`}
                     >
                         <PackageMinus size={16} />
-                        Stock Out
+                        စတော့ထုတ်မည်
                     </button>
                 </div>
 
