@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Loader2, Smartphone } from "lucide-react";
 import {
   AccordionItem,
@@ -17,21 +17,39 @@ interface ModelRowProps {
 }
 
 export function ModelRow({ model }: ModelRowProps) {
-  const { setSelectedModelId } = useSearchStore();
-
-  // Enable the categories query only after this model is opened.
-  // Categories are global (23 of them), so React Query caches them after the
-  // first model is expanded — subsequent models pay zero network cost.
+  const { setSelectedModelId, searchTerm } = useSearchStore();
   const [isOpen, setIsOpen] = useState(false);
 
+  const isSearching = searchTerm.trim().length > 0;
+
+  // Fetch your global categories lookup list
   const { data, isLoading } = useCategories();
-  const categories = isOpen ? (data?.data ?? data ?? []) : [];
+  const categories = isOpen || isSearching ? (data?.data ?? data ?? []) : [];
 
   function handleOpen() {
     const next = !isOpen;
     setIsOpen(next);
     if (next) setSelectedModelId(String(model.id));
   }
+
+  // Highlights the searched text sequence in the model name string
+  const renderHighlightedName = (fullName: string, query: string) => {
+    if (!query.trim()) return fullName;
+    const regex = new RegExp(`(${query})`, "gi");
+    const parts = fullName.split(regex);
+    return parts.map((part, i) =>
+      part.toLowerCase() === query.toLowerCase() ? (
+        <mark
+          key={i}
+          className="bg-amber-200 text-slate-950 font-extrabold rounded px-0.5"
+        >
+          {part}
+        </mark>
+      ) : (
+        part
+      ),
+    );
+  };
 
   return (
     <AccordionItem value={String(model.id)} className="border-none">
@@ -40,8 +58,15 @@ export function ModelRow({ model }: ModelRowProps) {
         className="hover:no-underline py-2 px-3 hover:bg-slate-50 rounded-lg text-slate-500 data-[state=open]:bg-slate-50"
       >
         <div className="flex items-center gap-2">
-          <Smartphone size={14} />
-          <span className="text-xs font-bold">{model.name}</span>
+          <Smartphone
+            size={14}
+            className={
+              isOpen || isSearching ? "text-primary" : "text-slate-400"
+            }
+          />
+          <span className="text-xs font-bold">
+            {renderHighlightedName(model.name, searchTerm)}
+          </span>
         </div>
       </AccordionTrigger>
 
@@ -51,7 +76,6 @@ export function ModelRow({ model }: ModelRowProps) {
             <Loader2 className="animate-spin" size={10} /> Loading categories...
           </div>
         ) : (
-          /* type="single" + collapsible: only one category open at a time per model */
           <Accordion type="single" collapsible className="w-full space-y-1">
             {categories.map((cat: any) => (
               <CategoryRow

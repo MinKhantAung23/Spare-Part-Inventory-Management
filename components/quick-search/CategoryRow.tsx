@@ -16,7 +16,6 @@ interface CategoryRowProps {
 }
 
 export function CategoryRow({ category, modelId }: CategoryRowProps) {
-  // Fetch spare parts ONLY when the user opens this category
   const [isOpen, setIsOpen] = useState(false);
 
   const { data, isLoading } = useSparePartsFiltered(

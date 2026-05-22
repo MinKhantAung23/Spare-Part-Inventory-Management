@@ -36,7 +36,7 @@ function formatDate(dateStr: string) {
 }
 
 function formatPrice(price: number) {
-  return price.toLocaleString();
+  return price;
 }
 
 // ── Sub-components ─────────────────────────────────────────────────────────────
@@ -234,6 +234,7 @@ export default function PartDetails({ part }: { part: Product }) {
     tab: "in",
   });
 
+
   const addItem = useCartStore((state) => state.addItem);
 
   const handleAddToCart = () => {
@@ -338,14 +339,14 @@ export default function PartDetails({ part }: { part: Product }) {
           />
           <StatCard
             label="Sale Price"
-            value={`${formatPrice(part.sale_price)} Ks`}
+            value={`${formatPrice(part.sale_price) || 0} Ks`}
             color="text-primary"
             bg="bg-blue-50"
             border="border-blue-100"
           />
           <StatCard
             label="Cost Price"
-            value={`${formatPrice(part.cost_price ?? 0)} Ks`}
+            value={`${formatPrice(part.sale_price)} Ks`}
             color="text-slate-500"
             bg="bg-slate-50"
             border="border-slate-100"

@@ -62,7 +62,6 @@ export async function fetchSparePartsFiltered({
 
 export const fetchSparePartsById = async (id: string | null) => {
   const { data } = await api.get(`/api/spare-part/${id}`);
-  console.log("fetchSparePartsById => ", data)
   return data;
 };
 

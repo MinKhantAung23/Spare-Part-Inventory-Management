@@ -6,11 +6,13 @@ interface SearchState {
   selectedModelId: string | null;
   selectedCategoryId: string | null;
   selectedPartId: string | null;
+  searchTerm: string;
 
   setSelectedBrandId: (id: string | null) => void;
   setSelectedModelId: (id: string | null) => void;
   setSelectedCategoryId: (id: string | null) => void;
   setSelectedPartId: (id: string | null) => void;
+  setSearchTerm: (term: string) => void;
   resetSearch: () => void;
 }
 
@@ -19,6 +21,7 @@ export const useSearchStore = create<SearchState>((set) => ({
   selectedModelId: null,
   selectedCategoryId: null,
   selectedPartId: null,
+  searchTerm: "",
 
   setSelectedBrandId: (id) =>
     set({
@@ -43,10 +46,13 @@ export const useSearchStore = create<SearchState>((set) => ({
 
   setSelectedPartId: (id) => set({ selectedPartId: id }),
 
+  setSearchTerm: (term) => set({ searchTerm: term }), 
+
   resetSearch: () => set({
     selectedBrandId: null,
     selectedModelId: null,
     selectedCategoryId: null,
-    selectedPartId: null
+    selectedPartId: null,
+    searchTerm: ""
   }),
 }));

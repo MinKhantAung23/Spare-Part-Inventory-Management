@@ -29,7 +29,6 @@ import { BatchesTable } from "@/components/quick-search/PartDetails";
 
 export default function ProductDetailPage() {
   const params = useParams();
-  const router = useRouter();
   const id = params.id as string;
 
   const [qty, setQty] = useState(1);
@@ -83,7 +82,7 @@ export default function ProductDetailPage() {
 
               <div className="flex items-center gap-4 pt-2">
                 <span className="text-4xl font-extrabold text-primary tracking-tighter">
-                  {Number(product.price).toLocaleString()}{" "}
+                  {Number(product.sale_price).toLocaleString()}{" "} 
                   <span className="text-xl font-bold ml-1">Ks</span>
                 </span>
               </div>
