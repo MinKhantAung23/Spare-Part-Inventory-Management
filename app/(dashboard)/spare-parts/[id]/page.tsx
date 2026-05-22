@@ -82,7 +82,7 @@ export default function ProductDetailPage() {
 
               <div className="flex items-center gap-4 pt-2">
                 <span className="text-4xl font-extrabold text-primary tracking-tighter">
-                  {Number(product.sale_price).toLocaleString()}{" "} 
+                  {Number(product.sale_price).toLocaleString()}{" "}
                   <span className="text-xl font-bold ml-1">Ks</span>
                 </span>
               </div>
@@ -94,7 +94,7 @@ export default function ProductDetailPage() {
             <section className="grid grid-cols-2 gap-y-6 gap-x-12">
               <div className="space-y-1">
                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">
-                  Current Stock
+                  လက်ရှိစတော့အခြေအနေ
                 </p>
                 <p
                   className={`text-lg font-bold ${product.quantity > 0 ? "text-green-600" : "text-rose-500"}`}
@@ -109,7 +109,7 @@ export default function ProductDetailPage() {
                 <div className="flex items-end gap-6">
                   <div className="space-y-3 w-full">
                     <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
-                      Quantity
+                      အရေအတွက်
                     </span>
                     <div className="flex items-center justify-center bg-slate-100 rounded-2xl p-1.5 max-w-[200px] border border-slate-200">
                       <span className="font-bold text-xl">

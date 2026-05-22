@@ -20,17 +20,8 @@ export default function ActivityPage() {
             <ShieldCheck size={28} />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-slate-800">လုပ်ဆောင်ချက်မှတ်တမ်း (Activity Logs)</h1>
-            <p className="text-sm text-slate-400">System audit trail and user tracking</p>
+            <h1 className="text-2xl font-bold text-slate-800">လုပ်ဆောင်ချက်မှတ်တမ်း "Activity Logs"</h1>
           </div>
-        </div>
-        <div className="flex gap-2">
-          <Button variant="outline" className="rounded-xl gap-2 border-slate-200">
-            <Download size={18} /> Export
-          </Button>
-          <Button variant="destructive" className="rounded-xl gap-2 bg-rose-500 text-white hover:bg-rose-600">
-            <Trash2 size={18} /> Clear Logs
-          </Button>
         </div>
       </div>
 

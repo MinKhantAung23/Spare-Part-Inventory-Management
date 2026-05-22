@@ -59,6 +59,9 @@ export default function StockInDetailPage() {
               </h1>
 
               <div className="flex items-center gap-4 pt-2">
+                <span className="text-slate-400">
+                  ရောင်းစျေး
+                </span>
                 <span className="text-4xl font-extrabold text-primary tracking-tighter">
                   {Number(product.spare_part.price).toLocaleString()}{" "}
                   <span className="text-xl font-bold ml-1">Ks</span>
@@ -72,7 +75,7 @@ export default function StockInDetailPage() {
             <section className="grid grid-cols-2 gap-y-6 gap-x-12">
               <div className="space-y-1">
                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">
-                  Remaining Stock
+                  လက်ကျန်စတော့
                 </p>
                 <p
                   className={`text-lg font-bold ${product.remaining_quantity > 0 ? "text-green-600" : "text-rose-500"}`}
@@ -84,15 +87,15 @@ export default function StockInDetailPage() {
               </div>
 
               <div className="space-y-1">
-                
-                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
-                    Initial Quantity
-                  </p>
-                  <p
-                    className={`text-lg font-bold ${product.remaining_quantity > 0 ? "text-green-600" : "text-rose-500"}`}
-                  >
-                    {product.initial_quantity}
-                  </p>
+
+                <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
+                  မူလ အရေအတွက်
+                </p>
+                <p
+                  className={`text-lg font-bold ${product.remaining_quantity > 0 ? "text-green-600" : "text-rose-500"}`}
+                >
+                  {product.initial_quantity}
+                </p>
               </div>
             </section>
 
@@ -100,16 +103,16 @@ export default function StockInDetailPage() {
             <div className="grid grid-cols-2 gap-4 pt-2">
               <div className="flex flex-col justify-center gap-3 p-4 rounded-2xl bg-slate-50/50 border border-slate-100">
                 <span className="text-xs font-bold text-slate-600">
-                  Purchased Price
+                  ဝယ်စျေး
                 </span>
-               <span className="text-3xl font-extrabold text-primary tracking-tighter">
+                <span className="text-3xl font-extrabold text-primary tracking-tighter">
                   {Number(product.purchase_price).toLocaleString()}{" "}
                   <span className="text-xl font-bold ml-1">Ks</span>
                 </span>
               </div>
               <div className="flex flex-col justify-center gap-3 p-4 rounded-2xl bg-slate-50/50 border border-slate-100">
                 <span className="text-xs font-bold text-slate-600">
-                 received_date
+                  ပစ္စည်းဝင်သည့် ရက်စွဲ
                 </span>
                 <span className="text-3xl font-extrabold text-primary tracking-tighter">
                   {product.received_date}
@@ -129,7 +132,7 @@ function ProductLoadingSkeleton() {
   return (
     <div className="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 lg:grid-cols-12 gap-12 xl:gap-24">
       <div className="lg:col-span-7">
-        <Skeleton className="aspect-[4/3] rounded-[2.5rem] w-full" />
+        <Skeleton className="aspect-4/3 rounded-[2.5rem] w-full" />
       </div>
       <div className="lg:col-span-5 space-y-8">
         <div className="flex gap-2">
@@ -157,7 +160,7 @@ function ProductErrorState() {
       </div>
       <h2 className="text-2xl font-bold text-slate-900">
         Resource Unavailable
-      </h2> 
+      </h2>
       <p className="text-slate-500 mt-2 max-w-xs">
         We encountered an issue fetching the product info, or this specific ID
         has been shifted.

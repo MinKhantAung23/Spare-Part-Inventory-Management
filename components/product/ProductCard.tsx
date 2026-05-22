@@ -184,7 +184,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   const brandName = product.brand?.name ?? "—";
   const modelName = product.model?.name ?? "—";
   const categoryName = product.category?.name ?? "—";
-  const batchCount = product.batches?.length ?? 0;
+  const batchCount = product.stock_batches?.length ?? 0;
 
   const stockColor = !isInStock
     ? "text-red-400"

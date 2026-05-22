@@ -27,7 +27,7 @@ export const useCartStore = create<CartState>()(
       items: [],
       isOpen: false,
       setIsOpen: (open) => set({ isOpen: open }),
-      
+
       addItem: (newItem) => {
         set((state) => {
           const existingItem = state.items.find((item) => item.id === newItem.id);
@@ -41,8 +41,8 @@ export const useCartStore = create<CartState>()(
               isOpen: true,
             };
           }
-          return { 
-            items: [...state.items, { ...newItem, quantity: 1 }], 
+          return {
+            items: [...state.items, { ...newItem, quantity: 1 }],
             isOpen: true,
           };
         });
@@ -77,7 +77,7 @@ export const useCartStore = create<CartState>()(
       name: "spare-parts-cart-storage", // Unique key for localStorage
       storage: createJSONStorage(() => localStorage), // Defaults to localStorage
       // Keep UI state separate so the cart doesn't pop open on page refresh
-      partialize: (state) => ({ items: state.items }), 
+      partialize: (state) => ({ items: state.items }),
     }
   )
 );

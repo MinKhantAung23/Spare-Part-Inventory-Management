@@ -238,7 +238,7 @@ export default function PartDetails({ part }: { part: Product }) {
   const addItem = useCartStore((state) => state.addItem);
 
   const handleAddToCart = () => {
-    const newItem = { id: String(part.id), name: part.name, price: part.sale_price };
+    const newItem = { id: String(part.id), name: part.name, sale_price: part.sale_price, };
     addItem(newItem);
   };
 
@@ -378,8 +378,8 @@ export default function PartDetails({ part }: { part: Product }) {
         )}
 
         {/* ── Stock Batches ── */}
-        {part.batches && part.batches.length > 0 && (
-          <BatchesTable batches={part.batches} />
+        {part.stock_batches && part.stock_batches.length > 0 && (
+          <BatchesTable batches={part.stock_batches} />
         )}
       </div>
 

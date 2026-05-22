@@ -77,7 +77,7 @@ export function CartContent() {
       {/* 1. Added full height configuration to the container layout wrapper */}
       <SheetContent
         side="right"
-        className="w-[400px] sm:w-[450px] flex flex-col h-full bg-slate-50 p-0"
+        className="w-100 sm:w-112.5 flex flex-col h-full bg-slate-50 p-0"
       >
         <SheetTitle className="p-4 pb-3 shrink-0 border-b border-slate-100 bg-slate-200 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
           <div className="flex items-center justify-between">
@@ -87,7 +87,7 @@ export function CartContent() {
               </div>
               <div className="flex flex-col items-start gap-0.5">
                 <h2 className="text-base font-bold text-slate-800 tracking-tight">
-                  Your Cart
+                  စျေးခြင်း
                 </h2>
                 <span className="text-[11px] font-medium text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded-md">
                   {totalItems} {totalItems === 1 ? "item" : "items"} selected
@@ -102,7 +102,7 @@ export function CartContent() {
             {items.length === 0 ? (
               <div className="h-full flex items-center justify-center">
                 <p className="text-muted-foreground text-lg font-bold text-center">
-                  Your cart is empty.
+                  ပစ္စည်းရောင်းမည်
                 </p>
               </div>
             ) : (

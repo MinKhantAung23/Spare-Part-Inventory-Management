@@ -30,7 +30,7 @@ export interface Product {
   model: Model | null;
   category: Category | null;
   specification: Specification | null;
-  batches?: Batch[];
+  stock_batches?: Batch[];
   createdAt?: string;
   updatedAt?: string;
 }
