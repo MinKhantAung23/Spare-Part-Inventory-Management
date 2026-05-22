@@ -21,8 +21,8 @@ export async function fetchStockIn(params: StockInQueryParams = {}) {
   if (params.brandId) query.set("brandId", params.brandId);
   if (params.modelId) query.set("modelId", params.modelId);
   if (params.categoryId) query.set("categoryId", params.categoryId);
-  if (params.dateFrom) query.set("dateFrom", params.dateFrom);
-  if (params.dateTo) query.set("dateTo", params.dateTo);
+  if (params.dateFrom) query.set("from_date", params.dateFrom);
+  if (params.dateTo) query.set("to_date", params.dateTo);
 
   const qs = query.toString();
   const { data } = await api.get(`/api/stock-batch${qs ? `?${qs}` : ""}`);
