@@ -57,12 +57,12 @@ export default function StockOutFormPage() {
     useEffect(() => {
         if (cascade.selectedPart) {
             setValue("spare_part_id", cascade.selectedPart.id);
-            setValue("unit_price", cascade.selectedPart.price ?? 0);
+            setValue("unit_price", cascade.selectedPart.sale_price ?? 0);
         }
     }, [cascade.selectedPart, setValue]);
 
-    const qty = watch("quantity") || 0;
-    const price = watch("unit_price") || 0;
+    const qty = (watch("quantity") || 0) as number;
+    const price = (watch("unit_price") || 0) as number;
 
     const currentStock = cascade.selectedPart?.quantity ?? 0;
 

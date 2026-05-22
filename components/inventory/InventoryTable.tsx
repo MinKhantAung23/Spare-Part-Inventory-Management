@@ -19,7 +19,7 @@ export default function InventoryTable({ data }: { data: any[] }) {
             <TableHead className="w-[300px] font-bold">Spare Part</TableHead>
             <TableHead className="font-bold">Stock</TableHead>
             <TableHead className="font-bold">Sell Price</TableHead>
-            <TableHead className="font-bold">Buy Price</TableHead>
+            <TableHead className="font-bold">Total Cost</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -33,7 +33,7 @@ export default function InventoryTable({ data }: { data: any[] }) {
                   <span className="font-bold text-slate-800">{item.spare_part.name}</span>
                 </div>
               </TableCell>
-             
+
               <TableCell>
                 <div className="flex flex-col gap-1">
                   <span
@@ -54,10 +54,10 @@ export default function InventoryTable({ data }: { data: any[] }) {
               <TableCell className="font-medium">
                 {item.spare_part.price.toLocaleString()} Ks
               </TableCell>
-               <TableCell className="font-medium">
+              <TableCell className="font-medium">
                 {item.total_cost.toLocaleString()} Ks
               </TableCell>
-             
+
             </TableRow>
           ))}
         </TableBody>

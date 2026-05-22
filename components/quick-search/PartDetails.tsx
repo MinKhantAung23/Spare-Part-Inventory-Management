@@ -142,10 +142,10 @@ export function BatchesTable({ batches }: { batches: Batch[] }) {
               const usedPct =
                 batch.initial_quantity > 0
                   ? Math.round(
-                      ((batch.initial_quantity - batch.remaining_quantity) /
-                        batch.initial_quantity) *
-                        100,
-                    )
+                    ((batch.initial_quantity - batch.remaining_quantity) /
+                      batch.initial_quantity) *
+                    100,
+                  )
                   : 0;
 
               return (
@@ -173,22 +173,20 @@ export function BatchesTable({ batches }: { batches: Batch[] }) {
                       </span>
                       <div className="w-16 h-1 bg-slate-100 rounded-full overflow-hidden">
                         <div
-                          className={`h-full rounded-full transition-all ${
-                            batch.remaining_quantity === 0
-                              ? "bg-slate-300"
-                              : batch.remaining_quantity <
-                                  batch.initial_quantity * 0.2
-                                ? "bg-orange-400"
-                                : "bg-emerald-400"
-                          }`}
+                          className={`h-full rounded-full transition-all ${batch.remaining_quantity === 0
+                            ? "bg-slate-300"
+                            : batch.remaining_quantity <
+                              batch.initial_quantity * 0.2
+                              ? "bg-orange-400"
+                              : "bg-emerald-400"
+                            }`}
                           style={{
-                            width: `${
-                              batch.initial_quantity > 0
-                                ? (batch.remaining_quantity /
-                                    batch.initial_quantity) *
-                                  100
-                                : 0
-                            }%`,
+                            width: `${batch.initial_quantity > 0
+                              ? (batch.remaining_quantity /
+                                batch.initial_quantity) *
+                              100
+                              : 0
+                              }%`,
                           }}
                         />
                       </div>
@@ -239,8 +237,8 @@ export default function PartDetails({ part }: { part: Product }) {
   const addItem = useCartStore((state) => state.addItem);
 
   const handleAddToCart = () => {
-    const newItem = { id: String(part.id), name: part.name, price: part.price };
-    addItem(newItem); 
+    const newItem = { id: String(part.id), name: part.name, price: part.sale_price };
+    addItem(newItem);
   };
 
   if (!part)
@@ -290,9 +288,8 @@ export default function PartDetails({ part }: { part: Product }) {
                 <span className="text-orange-500">📁 {categoryName}</span>
               </p>
               <span
-                className={`inline-block mt-1.5 text-xs font-bold ${
-                  isInStock ? "text-emerald-500" : "text-red-400"
-                }`}
+                className={`inline-block mt-1.5 text-xs font-bold ${isInStock ? "text-emerald-500" : "text-red-400"
+                  }`}
               >
                 {isInStock ? "● In Stock" : "○ Out of Stock"}
               </span>
@@ -341,14 +338,14 @@ export default function PartDetails({ part }: { part: Product }) {
           />
           <StatCard
             label="Sale Price"
-            value={`${formatPrice(part.price)} Ks`}
+            value={`${formatPrice(part.sale_price)} Ks`}
             color="text-primary"
             bg="bg-blue-50"
             border="border-blue-100"
           />
           <StatCard
             label="Cost Price"
-            value={`${formatPrice(part.price)} Ks`}
+            value={`${formatPrice(part.cost_price ?? 0)} Ks`}
             color="text-slate-500"
             bg="bg-slate-50"
             border="border-slate-100"

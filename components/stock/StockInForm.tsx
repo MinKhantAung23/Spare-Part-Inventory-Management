@@ -32,7 +32,7 @@ export default function StockInForm({ part, onSuccess }: StockInFormProps) {
     defaultValues: {
       spare_part_id: part.id ?? 0,
       quantity: 1,
-      purchase_price: part.price ?? 0,
+      purchase_price: part.sale_price ?? 0,
       received_date: new Date(),
     },
   });

@@ -21,7 +21,9 @@ export const useCreateStockOut = () => {
       toast.success("Stock out created successfully");
     },
     onError: (error: any) => {
-      toast.error(error.response?.data?.error || "Failed to create");
+      // toast.error(error.response?.data?.error || "Failed to create");
+      const serverError = error.response?.data?.error || error?.message || "Failed to create";
+      toast.error(serverError);
     },
   });
 };

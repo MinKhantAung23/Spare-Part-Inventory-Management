@@ -7,4 +7,8 @@ export const stockOutSchema = z.object({
   reason: z.string().min(1, "Reason is required"),
 });
 
-export type StockOutFormValues = z.infer<typeof stockOutSchema>;
+// export type StockOutFormValues = z.infer<typeof stockOutSchema>;
+// Change z.infer to z.input
+export type StockOutFormValues = z.input<typeof stockOutSchema>;
+// type StockOutInput = z.input<typeof stockOutSchema>;
+export type StockOutOutput = z.infer<typeof stockOutSchema>;

@@ -47,7 +47,7 @@ export default function StockOutForm({ part, onSuccess }: StockOutFormProps) {
     defaultValues: {
       spare_part_id: part.id ?? 0,
       quantity: 1,
-      unit_price: part.price ?? 0,
+      unit_price: part.sale_price ?? 0,
       reason: "Sale",
     },
   });
