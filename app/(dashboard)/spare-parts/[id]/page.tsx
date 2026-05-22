@@ -24,6 +24,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 // Hooks
 import { useSparePartsById } from "@/hooks/useSparePart";
+import StockDialog from "@/components/quick-search/Stockdialog";
+import { BatchesTable } from "@/components/quick-search/PartDetails";
 
 export default function ProductDetailPage() {
   const params = useParams();
@@ -35,7 +37,7 @@ export default function ProductDetailPage() {
   // Fetch real data using your hook
   const { data: response, isLoading, isError } = useSparePartsById(id);
   const product = response?.data;
-    
+
   // Loading State
   if (isLoading) return <ProductLoadingSkeleton />;
 
@@ -103,7 +105,7 @@ export default function ProductDetailPage() {
                     : "Out of Stock"}
                 </p>
               </div>
-              
+
               <div className="space-y-6">
                 <div className="flex items-end gap-6">
                   <div className="space-y-3 w-full">
@@ -112,7 +114,7 @@ export default function ProductDetailPage() {
                     </span>
                     <div className="flex items-center justify-center bg-slate-100 rounded-2xl p-1.5 max-w-[200px] border border-slate-200">
                       <span className="font-bold text-xl">
-                        {product.quantity === 0 ? 0 : qty} 
+                        {product.quantity === 0 ? 0 : qty}
                       </span>
                     </div>
                   </div>
@@ -145,22 +147,19 @@ export default function ProductDetailPage() {
               </section>
             )}
 
-            {/* Quality Standards */}
-            <div className="grid grid-cols-2 gap-4 pt-2">
-              <div className="flex items-center gap-3 p-4 rounded-2xl bg-slate-50/50 border border-slate-100">
-                <ShieldCheck className="text-green-500" size={18} />
-                <span className="text-xs font-bold text-slate-600">
-                  Verified Fit
-                </span>
-              </div>
-              <div className="flex items-center gap-3 p-4 rounded-2xl bg-slate-50/50 border border-slate-100">
-                <Info className="text-blue-500" size={18} />
-                <span className="text-xs font-bold text-slate-600">
-                  OEM Grade
-                </span>
-              </div>
-            </div>
+            {/* ── Stock Batches ── */}
+            {product.batches && product.batches.length > 0 && (
+              <BatchesTable batches={product.batches} />
+            )}
           </div>
+
+          {/* Stock Dialog */}
+          {/* <StockDialog
+                 isOpen={stockDialog.open}
+                 onClose={() => setStockDialog((s) => ({ ...s, open: false }))}
+                 part={product}
+                 defaultTab={stockDialog.tab}
+               /> */}
         </div>
       </main>
     </div>

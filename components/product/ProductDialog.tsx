@@ -167,7 +167,7 @@ export default function ProductDialog() {
                   value={dialogBrandId}
                   onChange={(v) => {
                     setDialogBrandId(v);
-                    setValue("model_id", 0); // reset model
+                    setValue("model_id", 0);
                   }}
                   placeholder="Select brand"
                   isLoading={loadingBrands}
