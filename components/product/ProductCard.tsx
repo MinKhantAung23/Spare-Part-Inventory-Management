@@ -252,7 +252,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         {/* Category pill */}
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide text-orange-500 bg-orange-50 px-2.5 py-1 rounded-lg border border-orange-100">
+          <span className="inline-flex items-center gap-1 text-[12px] font-bold uppercase tracking-wide text-orange-500 bg-orange-50 px-2.5 py-1 rounded-lg border border-orange-100">
             📁 {categoryName}
           </span>
           {batchCount > 0 && (
@@ -313,7 +313,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           onClick={() => router.push(`/spare-parts/${product.id}`)}
           className="w-full rounded-xl border border-slate-100 bg-slate-50 hover:bg-slate-100 text-slate-600 text-xs font-bold h-8 gap-1 mt-auto"
         >
-          View Details
+          အသေးစိတ်ကြည့်ရန်
           <ChevronRight size={13} />
         </Button>
       </div>

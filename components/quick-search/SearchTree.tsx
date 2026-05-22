@@ -3,7 +3,7 @@
 import { Loader2, Search, X } from "lucide-react";
 import { Accordion } from "@/components/ui/accordion";
 import { useBrands } from "@/hooks/useBrand";
-import { useModels } from "@/hooks/useModel";
+import { useModels, useModelsQuery } from "@/hooks/useModel";
 import { useSearchStore } from "@/store/use-search-store";
 import { BrandRow } from "./BrandRow";
 
@@ -19,7 +19,7 @@ export default function SearchTree() {
   const { searchTerm, setSearchTerm } = useSearchStore();
 
   const { data: modelsData, isLoading: isModelsLoading } =
-    useModels(searchTerm);
+    useModelsQuery({search: searchTerm});
 
   const brands = brandsData?.data ?? brandsData ?? [];
   const fetchedModels = modelsData?.data ?? modelsData ?? [];

@@ -16,10 +16,10 @@ export default function InventoryTable({ data }: { data: any[] }) {
       <Table>
         <TableHeader className="bg-slate-50/50">
           <TableRow>
-            <TableHead className="w-[300px] font-bold">Spare Part</TableHead>
-            <TableHead className="font-bold">Stock</TableHead>
-            <TableHead className="font-bold">Sell Price</TableHead>
-            <TableHead className="font-bold">Total Cost</TableHead>
+            <TableHead className="w-[300px] font-bold">အပိုပစ္စည်း</TableHead>
+            <TableHead className="font-bold">လက်ကျန်ပစ္စည်း</TableHead>
+            <TableHead className="font-bold">‌ရောင်းဈေး</TableHead>
+            <TableHead className="font-bold">ကုန်ကျစရိတ်</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

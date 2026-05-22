@@ -121,7 +121,7 @@ export default function ProductDialog() {
 
         <DialogHeader className="px-6 py-4 border-b border-slate-100 bg-slate-50/60">
           <DialogTitle className="text-lg font-black text-slate-700">
-            {isEdit ? "ပြင်ဆင်ရန် (Edit Product)" : "အသစ်ထည့်ရန် (Add Product)"}
+            {isEdit ? "ပြင်ဆင်ရန်" : "အသစ်ထည့်ရန်"}
           </DialogTitle>
         </DialogHeader>
 
@@ -131,7 +131,7 @@ export default function ProductDialog() {
             {/* Name */}
             <div className="space-y-1.5">
               <Label className="text-xs font-black uppercase tracking-wide text-slate-500">
-                Spare Part Name
+                အပိုပစ္စည်းအမည်
               </Label>
               <Input
                 {...register("name")}
@@ -146,7 +146,7 @@ export default function ProductDialog() {
             {/* Price */}
             <div className="space-y-1.5">
               <Label className="text-xs font-black uppercase tracking-wide text-slate-500">
-                Price (Ks)
+                ဈေးနှုန်း (Ks)
               </Label>
               <Input
                 type="number"
@@ -203,7 +203,7 @@ export default function ProductDialog() {
             {/* Category */}
             <div className="space-y-1.5">
               <Label className="text-xs font-black uppercase tracking-wide text-slate-500">
-                Category
+                အပိုပစ္စည်း အမျိုးအစား
               </Label>
               <Controller
                 name="spare_category_id"
@@ -229,7 +229,7 @@ export default function ProductDialog() {
             <div className="border-t border-slate-100 pt-5 space-y-4">
               <div className="flex items-center justify-between">
                 <Label className="text-xs font-black uppercase tracking-wide text-primary">
-                  Specifications
+                  အသေးစိတ်အချက်အလက်
                 </Label>
                 <Button
                   type="button"

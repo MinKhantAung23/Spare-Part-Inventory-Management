@@ -140,7 +140,7 @@ export default function StockOutFormPage() {
                         </StepBlock>
 
                         {/* Step 3 — Category */}
-                        <StepBlock step={3} currentStep={step} label="Category" accent="rose">
+                        <StepBlock step={3} currentStep={step} label="အပိုပစ္စည်းအမျိုးအစား" accent="rose">
                             <SearchableSelect
                                 options={cascade.categories.map((c: any) => ({ id: c.id, name: c.name }))}
                                 value={cascade.categoryId}
@@ -152,7 +152,7 @@ export default function StockOutFormPage() {
                         </StepBlock>
 
                         {/* Step 4 — Spare Part */}
-                        <StepBlock step={4} currentStep={step} label="Spare Part" accent="rose">
+                        <StepBlock step={4} currentStep={step} label="အပိုပစ္စည်း" accent="rose">
                             <SearchableSelect
                                 options={cascade.parts.map((p: any) => ({
                                     id: p.id,
@@ -180,19 +180,19 @@ export default function StockOutFormPage() {
 
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="space-y-1.5">
-                                        <Label className="text-xs font-bold text-slate-500 uppercase tracking-wide">Quantity</Label>
+                                        <Label className="text-xs font-bold text-slate-500 uppercase tracking-wide">အရေအတွက်</Label>
                                         <Input type="number" min={1} max={currentStock} {...register("quantity", { valueAsNumber: true })} className="h-11 rounded-xl" />
                                         {errors.quantity && <p className="text-[11px] text-rose-500">{errors.quantity.message}</p>}
                                     </div>
                                     <div className="space-y-1.5">
-                                        <Label className="text-xs font-bold text-slate-500 uppercase tracking-wide">Unit Price (Ks)</Label>
+                                        <Label className="text-xs font-bold text-slate-500 uppercase tracking-wide">ရောင်းဈေး (Ks)</Label>
                                         <Input type="number" min={0} {...register("unit_price", { valueAsNumber: true })} className="h-11 rounded-xl" />
                                         {errors.unit_price && <p className="text-[11px] text-rose-500">{errors.unit_price.message}</p>}
                                     </div>
                                 </div>
 
                                 <div className="space-y-1.5">
-                                    <Label className="text-xs font-bold text-slate-500 uppercase tracking-wide">Reason</Label>
+                                    <Label className="text-xs font-bold text-slate-500 uppercase tracking-wide">အကြောင်းအရာ</Label>
                                     <Controller
                                         name="reason"
                                         control={control}

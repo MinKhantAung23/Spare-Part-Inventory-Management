@@ -39,10 +39,10 @@ export default function UserTable({ data , onEdit}: { data: any[], onEdit: any }
       <Table>
         <TableHeader className="bg-slate-50/50">
           <TableRow>
-            <TableHead className="font-bold">User Name</TableHead>
+            <TableHead className="font-bold">အသုံးပြုသူ အမည်</TableHead>
             <TableHead className="font-bold">Role</TableHead>
-            <TableHead className="font-bold">Created Date</TableHead>
-            <TableHead className="text-right font-bold">Action</TableHead>
+            <TableHead className="font-bold">ပြုလုပ်သည့်ရက်စွဲ</TableHead>
+            <TableHead className="text-right font-bold"></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

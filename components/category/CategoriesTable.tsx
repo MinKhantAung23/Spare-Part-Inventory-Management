@@ -36,7 +36,7 @@ export default function CategoriesTable({
       <Table>
         <TableHeader className="bg-slate-50/50">
           <TableRow>
-            <TableHead className="font-bold">Category Name</TableHead>
+            <TableHead className="font-bold">အပိုပစ္စည်း အမျိုးအစား</TableHead>
             <TableHead className="font-bold text-center">Actions</TableHead>
           </TableRow>
         </TableHeader>

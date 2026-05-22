@@ -83,15 +83,15 @@ const UserDialog = ({ isOpen, onClose, initialData }: any) => {
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-slate-800">
               {initialData
-                ? "ပြင်ဆင်ရန် (Edit User)"
-                : "အသစ်ထည့်ရန် (Add User)"}
+                ? "ပြင်ဆင်ရန်"
+                : "အသစ်ထည့်ရန်"}
             </DialogTitle>
           </DialogHeader>
 
           <div className="grid grid-cols-2 gap-4">
             {/* Name */}
             <div className="col-span-2 space-y-2">
-              <Label className="font-bold text-slate-600">User Name</Label>
+              <Label className="font-bold text-slate-600">အမည်</Label>
               <Input
                 {...register("name")}
                 placeholder="e.g. Mg Manage"

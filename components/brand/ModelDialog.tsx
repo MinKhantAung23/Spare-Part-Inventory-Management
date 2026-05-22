@@ -88,8 +88,8 @@ const ModelDialog = ({ isOpen, onClose, initialData }: any) => {
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-slate-800">
               {initialData
-                ? "ပြင်ဆင်ရန် (Edit Model)"
-                : "အသစ်ထည့်ရန် (Add Model)"}
+                ? "Model ပြင်ဆင်ရန်"
+                : "Model အသစ်ထည့်ရန်"}
             </DialogTitle>
           </DialogHeader>
 

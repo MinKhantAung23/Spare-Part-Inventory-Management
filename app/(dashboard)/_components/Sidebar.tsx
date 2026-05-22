@@ -26,12 +26,12 @@ export default function Sidebar({ isExpanded, setIsExpanded }: any) {
     {
       title: "MAIN",
       items: [
-        { name: "Dashboard", href: "/", icon: LayoutDashboard },
+        { name: "ပင်မစာမျက်နှာ", href: "/", icon: LayoutDashboard },
         { name: "Quick Search", href: "/quick-search", icon: Search },
-        { name: "Spare Parts", href: "/spare-parts", icon: Package },
-        { name: "Inventory", href: "/inventory", icon: Database },
-        { name: "Stock In", href: "/stock-in", icon: ArrowDownCircle },
-        { name: "Stock Out", href: "/stock-out", icon: ArrowUpCircle },
+        { name: "အပိုပစ္စည်းများ", href: "/spare-parts", icon: Package },
+        { name: "ကုန်ပစ္စည်းလက်ကျန်စာရင်း", href: "/inventory", icon: Database },
+        { name: "ပစ္စည်းအဝင်စာရင်း", href: "/stock-in", icon: ArrowDownCircle },
+        { name: "ပစ္စည်းအထွက်စာရင်း", href: "/stock-out", icon: ArrowUpCircle },
       ],
     },
     {
@@ -43,8 +43,8 @@ export default function Sidebar({ isExpanded, setIsExpanded }: any) {
     {
       title: "REPORTS",
       items: [
-        { name: "Activity Logs", href: "/activity-logs", icon: History },
-        { name: "Users", href: "/users", icon: Users2 },
+        { name: "လုပ်ဆောင်ချက်မှတ်တမ်း", href: "/activity-logs", icon: History },
+        { name: "အသုံးပြုသူများ", href: "/users", icon: Users2 },
       ],
     },
   ];

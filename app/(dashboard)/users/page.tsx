@@ -38,7 +38,7 @@ export default function UsersPage() {
         </div>
         <Button onClick={handleAddUser} className="rounded-xl bg-primary hover:bg-blue-600 gap-2 shadow-lg shadow-primary/20">
           <UserPlus size={18} />
-          Add New User
+          အသစ်ထည့်ရန်
         </Button>
       </div>
 
