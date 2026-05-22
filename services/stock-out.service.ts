@@ -14,7 +14,7 @@ export async function fetchStockOut(params: StockOutQueryParams = {}) {
 
   if (params.page) query.set("page", String(params.page));
   if (params.limit) query.set("limit", String(params.limit));
-  if (params.search) query.set("search", params.search);
+  if (params.search) query.set("name", params.search);
   if (params.dateFrom) query.set("from", params.dateFrom);
   if (params.dateTo) query.set("to", params.dateTo);
 

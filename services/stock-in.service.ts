@@ -17,7 +17,7 @@ export async function fetchStockIn(params: StockInQueryParams = {}) {
 
   if (params.page) query.set("page", String(params.page));
   if (params.limit) query.set("limit", String(params.limit));
-  if (params.search) query.set("search", params.search);
+  if (params.search) query.set("name", params.search);
   if (params.brandId) query.set("brandId", params.brandId);
   if (params.modelId) query.set("modelId", params.modelId);
   if (params.categoryId) query.set("categoryId", params.categoryId);
