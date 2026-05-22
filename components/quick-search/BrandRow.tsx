@@ -1,36 +1,42 @@
 "use client";
 
-import { useState } from "react";
-import { Loader2 } from "lucide-react";
 import {
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
   Accordion,
 } from "@/components/ui/accordion";
-import { useModelsByBrand } from "@/hooks/useModel";
+import { useSearchStore } from "@/store/use-search-store";
 import { ModelRow } from "./ModelRow";
 import { Brand } from "@/types/brand";
 
 interface BrandRowProps {
   brand: Brand;
   colorClass: string;
+  allModels: any[];
 }
 
-export function BrandRow({ brand, colorClass }: BrandRowProps) {
-  // Only enable the models query once the user opens this brand
-  const [isOpen, setIsOpen] = useState(false);
+export function BrandRow({ brand, colorClass, allModels }: BrandRowProps) {
+  const { searchTerm } = useSearchStore();
+  const isSearching = searchTerm.trim().length > 0;
 
-  const { data, isLoading } = useModelsByBrand(isOpen ? String(brand.id) : null);
-  const models = data?.data ?? data ?? [];
+  // Bulletproof filtering: checks both brand_id and brandId, converting both sides to strings
+  const brandModels = allModels.filter((model: any) => {
+    const modelBrandId = model?.brand.id ?? model?.brandId;
+    return String(modelBrandId) === String(brand.id);
+  });
+
+  // If you are actively searching and this specific brand has no matching models,
+  // hide it from the list entirely to keep search results clean.
+  if (isSearching && brandModels.length === 0) {
+    return null;
+  }
+
+  const allModelIds = brandModels.map((model: any) => String(model.id));
 
   return (
     <AccordionItem value={String(brand.id)} className="border-none px-2">
-      <AccordionTrigger
-        key={brand.id}
-        onClick={() => setIsOpen((prev) => !prev)}
-        className="hover:no-underline py-3 px-3 hover:bg-slate-50 rounded-xl transition-all data-[state=open]:bg-slate-50"
-      >
+      <AccordionTrigger className="hover:no-underline py-3 px-3 hover:bg-slate-50 rounded-xl transition-all data-[state=open]:bg-slate-50">
         <div className="flex items-center gap-3">
           <div
             className={`w-7 h-7 rounded-lg flex items-center justify-center text-white text-[10px] font-bold ${colorClass}`}
@@ -42,20 +48,22 @@ export function BrandRow({ brand, colorClass }: BrandRowProps) {
       </AccordionTrigger>
 
       <AccordionContent className="pl-6 pt-1 pb-1 space-y-1 h-auto">
-        {isLoading ? (
-          <div className="text-[11px] text-slate-400 p-2 flex items-center gap-1">
-            <Loader2 className="animate-spin" size={12} /> Fetching models...
-          </div>
-        ) : models.length === 0 ? (
-          <div className="text-[11px] text-slate-400 p-2 italic">No models found.</div>
-        ) : (
-          /* type="multiple" lets several models stay open side-by-side */
-          <Accordion type="single" className="w-full space-y-1">
-            {models.map((model: any, i: number) => (
+        {isSearching ? (
+          <Accordion
+            type="multiple"
+            value={allModelIds}
+            className="w-full space-y-1"
+          >
+            {brandModels.map((model: any) => (
               <ModelRow key={model.id} model={model} />
             ))}
           </Accordion>
-
+        ) : (
+          <Accordion type="single" collapsible className="w-full space-y-1">
+            {brandModels.map((model: any) => (
+              <ModelRow key={model.id} model={model} />
+            ))}
+          </Accordion>
         )}
       </AccordionContent>
     </AccordionItem>

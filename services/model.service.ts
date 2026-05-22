@@ -2,8 +2,9 @@ import { Product } from "@/types/product";
 import api from "@/lib/api";
 import { CreateModelInput, UpdateModelInput } from "@/types/model";
 
-export const fetchModels = async () => {
-  const { data } = await api.get("/api/model");
+export const fetchModels = async ( nameSearch?: string) => {
+
+  const { data } = await api.get(`/api/model?name=${nameSearch}`);
   return data;
 };
 

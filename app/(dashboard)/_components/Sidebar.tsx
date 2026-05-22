@@ -89,9 +89,11 @@ export default function Sidebar({ isExpanded, setIsExpanded }: any) {
             <div className="space-y-1">
               {section.items.map((item) => {
                 // const active = pathname === item.href;
-                const active = item.href === "/"
-                  ? pathname === "/"
-                  : pathname === item.href || pathname.startsWith(`${item.href}/`);
+                const active =
+                  item.href === "/"
+                    ? pathname === "/"
+                    : pathname === item.href ||
+                      pathname.startsWith(`${item.href}/`);
                 return (
                   <Link
                     key={item.href}

@@ -270,7 +270,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               Price
             </p>
             <p className="text-base font-black text-primary">
-              {product.price.toLocaleString()} Ks
+              {product.sale_price.toLocaleString()} Ks
             </p>
           </div>
 
