@@ -1,10 +1,21 @@
 import api from "@/lib/api";
 import { CreateBrandInput, UpdateBrandInput } from "@/types/brand";
 
-export const fetchBrands = async () => {
-  const { data } = await api.get("/api/brand"); 
-  return data;
-};
+export interface BrandQueryParams {
+  page?: number;
+  limit?: number;
+  search?: string;
+}
+
+export async function fetchBrands(params: BrandQueryParams = {}) {
+  const query = new URLSearchParams();
+  if (params.page) query.set("page", String(params.page));
+  if (params.limit) query.set("limit", String(params.limit));
+  if (params.search) query.set("name", params.search);
+  const qs = query.toString();
+  const { data } = await api.get(`/api/brand${qs ? `?${qs}` : ""}`);
+  return data; // { success, pagination, data[] }
+}
 
 export const fetchBrandsById = async (id: string) => {
   const { data } = await api.get(`/api/brand/${id}`);

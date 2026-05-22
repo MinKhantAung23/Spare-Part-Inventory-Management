@@ -5,7 +5,7 @@ import { persist, createJSONStorage } from "zustand/middleware";
 export interface CartItem {
   id: string;
   name: string;
-  sale_price: number;
+  price: number;
   cost_price?: number;
   quantity: number;
 }
@@ -70,7 +70,7 @@ export const useCartStore = create<CartState>()(
       clearCart: () => set({ items: [] }),
 
       getTotalPrice: () => {
-        return get().items.reduce((total, item) => total + item.sale_price * item.quantity, 0);
+        return get().items.reduce((total, item) => total + item.price * item.quantity, 0);
       }
     }),
     {

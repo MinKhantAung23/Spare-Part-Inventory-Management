@@ -39,7 +39,7 @@ export function CartContent() {
       items: items.map((item) => ({
         spare_part_id: Number(item.id),
         quantity: item.quantity,
-        unit_price: item.sale_price,
+        unit_price: item.price,
       })),
       notes: "Sale notes",
     };
@@ -115,10 +115,10 @@ export function CartContent() {
                     <div>
                       <h4 className="font-bold text-md">{item.name}</h4>
                       <p className="text-sm text-muted-foreground">
-                        {item.sale_price} ks x {item.quantity}
+                        {item.price} ks x {item.quantity}
                       </p>
                       <span className="text-xs text-destructive">
-                        {item.sale_price * item.quantity} ks
+                        {item.price * item.quantity} ks
                       </span>
                     </div>
                     <div className="flex items-center gap-3">

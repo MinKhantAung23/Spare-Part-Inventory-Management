@@ -6,20 +6,32 @@ import {
   fetchBrandsById,
   updateBrand,
 } from "@/services/brand.service";
+import type { BrandQueryParams } from "@/services/brand.service";
 import { CreateBrandInput, UpdateBrandInput } from "@/types/brand";
 import { toast } from "sonner";
 
+// ── Server-side paginated + searched ─────────────────────────────────────────
+export const useBrandsQuery = (params: BrandQueryParams) => {
+  return useQuery({
+    queryKey: ["brands", "list", params],
+    queryFn: () => fetchBrands(params),
+    staleTime: 1000 * 60 * 2,
+    placeholderData: (prev) => prev,
+  });
+};
+
+// ── Legacy (FilterDialog dropdowns, etc.) ─────────────────────────────────────
 export const useBrands = () => {
   return useQuery({
-    queryKey: ["brands"],
-    queryFn: fetchBrands,
+    queryKey: ["brands", "all"],
+    queryFn: () => fetchBrands({ limit: 1000 }),
     staleTime: 1000 * 60 * 5,
   });
 };
 
 export const useBrandById = (id: string) => {
   return useQuery({
-    queryKey: ["brands", id],
+    queryKey: ["brands", "detail", id],
     queryFn: () => fetchBrandsById(id),
     staleTime: 1000 * 60 * 5,
   });
@@ -27,7 +39,6 @@ export const useBrandById = (id: string) => {
 
 export const useCreateBrand = () => {
   const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: (data: CreateBrandInput) => createBrand(data),
     onSuccess: () => {
@@ -42,14 +53,11 @@ export const useCreateBrand = () => {
 
 export const useUpdateBrand = () => {
   const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: ({ id, data }: { id: string; data: UpdateBrandInput }) =>
       updateBrand({ id, data }),
     onSuccess: (data, variables) => {
-      // Refresh the list and the specific detail view
       queryClient.invalidateQueries({ queryKey: ["brands"] });
-      queryClient.invalidateQueries({ queryKey: ["brands", variables.id] });
       toast.success("Updated successfully");
     },
   });
@@ -57,7 +65,6 @@ export const useUpdateBrand = () => {
 
 export const useDeleteBrand = () => {
   const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: deleteBrand,
     onSuccess: () => {

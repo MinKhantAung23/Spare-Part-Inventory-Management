@@ -20,7 +20,7 @@ export interface Batch {
 export interface Product {
   id?: number | null;
   name: string;
-  sale_price: number;
+  price: number;
   cost_price?: number | null;
   image: string | null;
   spare_category_id?: number;

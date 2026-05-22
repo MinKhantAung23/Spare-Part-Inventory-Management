@@ -2,11 +2,21 @@ import { Product } from "@/types/product";
 import api from "@/lib/api";
 import { CreateModelInput, UpdateModelInput } from "@/types/model";
 
-export const fetchModels = async ( nameSearch?: string) => {
+export interface ModelQueryParams {
+  page?: number;
+  limit?: number;
+  search?: string;
+}
 
-  const { data } = await api.get(`/api/model?name=${nameSearch}`);
-  return data;
-};
+export async function fetchModels(params: ModelQueryParams = {}) {
+  const query = new URLSearchParams();
+  if (params.page) query.set("page", String(params.page));
+  if (params.limit) query.set("limit", String(params.limit));
+  if (params.search) query.set("name", params.search);
+  const qs = query.toString();
+  const { data } = await api.get(`/api/model${qs ? `?${qs}` : ""}`);
+  return data; // { success, pagination, data[] }
+}
 
 export const fetchModelsById = async (id: string) => {
   const { data } = await api.get(`/api/model/${id}`);

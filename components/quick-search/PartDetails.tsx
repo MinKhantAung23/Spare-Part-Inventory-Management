@@ -238,7 +238,7 @@ export default function PartDetails({ part }: { part: Product }) {
   const addItem = useCartStore((state) => state.addItem);
 
   const handleAddToCart = () => {
-    const newItem = { id: String(part.id), name: part.name, sale_price: part.sale_price, };
+    const newItem = { id: String(part.id), name: part.name, price: part.price, };
     addItem(newItem);
   };
 
@@ -339,14 +339,14 @@ export default function PartDetails({ part }: { part: Product }) {
           />
           <StatCard
             label="Sale Price"
-            value={`${formatPrice(part.sale_price) || 0} Ks`}
+            value={`${formatPrice(part.price) || 0} Ks`}
             color="text-primary"
             bg="bg-blue-50"
             border="border-blue-100"
           />
           <StatCard
             label="Cost Price"
-            value={`${formatPrice(part.sale_price)} Ks`}
+            value={`${formatPrice(part.price)} Ks`}
             color="text-slate-500"
             bg="bg-slate-50"
             border="border-slate-100"

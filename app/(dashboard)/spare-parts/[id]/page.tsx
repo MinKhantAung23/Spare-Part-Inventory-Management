@@ -86,7 +86,7 @@ export default function ProductDetailPage() {
     addItem({
       id: String(product.id),
       name: product.name,
-      sale_price: product.sale_price,
+      price: product.price,
     });
   };
 
@@ -176,7 +176,7 @@ export default function ProductDetailPage() {
         />
         <StatCard
           label="Sale Price"
-          value={`${Number(product.sale_price).toLocaleString()} Ks`}
+          value={`${Number(product.price).toLocaleString()} Ks`}
           color="text-primary"
           bg="bg-blue-50"
           border="border-blue-100"

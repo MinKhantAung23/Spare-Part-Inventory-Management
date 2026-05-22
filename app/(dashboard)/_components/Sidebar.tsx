@@ -38,7 +38,6 @@ export default function Sidebar({ isExpanded, setIsExpanded }: any) {
       title: "CATALOG",
       items: [
         { name: "Brands & Models", href: "/brands", icon: Tags },
-        { name: "Categories", href: "/categories", icon: Layers },
       ],
     },
     {
@@ -93,7 +92,7 @@ export default function Sidebar({ isExpanded, setIsExpanded }: any) {
                   item.href === "/"
                     ? pathname === "/"
                     : pathname === item.href ||
-                      pathname.startsWith(`${item.href}/`);
+                    pathname.startsWith(`${item.href}/`);
                 return (
                   <Link
                     key={item.href}

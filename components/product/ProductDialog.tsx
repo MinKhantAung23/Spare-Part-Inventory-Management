@@ -77,7 +77,7 @@ export default function ProductDialog() {
       setDialogBrandId(brandId);
       reset({
         name: editingProduct.name,
-        price: editingProduct.sale_price,
+        price: editingProduct.price,
         spare_category_id: editingProduct.category?.id ?? editingProduct.spare_category_id ?? 0,
         model_id: editingProduct.model?.id ?? editingProduct.model_id ?? 0,
         specifications: specs as any,

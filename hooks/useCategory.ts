@@ -6,20 +6,32 @@ import {
   fetchCategoriesById,
   updateCategory,
 } from "@/services/category.service";
+import type { CategoryQueryParams } from "@/services/category.service";
 import { CreateCategoryInput, UpdateCategoryInput } from "@/types/category";
 import { toast } from "sonner";
 
+// ── Server-side paginated + searched ─────────────────────────────────────────
+export const useCategoriesQuery = (params: CategoryQueryParams) => {
+  return useQuery({
+    queryKey: ["categories", "list", params],
+    queryFn: () => fetchCategories(params),
+    staleTime: 1000 * 60 * 2,
+    placeholderData: (prev) => prev,
+  });
+};
+
+// ── Legacy (FilterDialog dropdowns, etc.) ─────────────────────────────────────
 export const useCategories = () => {
   return useQuery({
-    queryKey: ["categories"],
-    queryFn: fetchCategories,
+    queryKey: ["categories", "all"],
+    queryFn: () => fetchCategories({ limit: 1000 }),
     staleTime: 1000 * 60 * 5,
   });
 };
 
 export const useCategoryById = (id: string) => {
   return useQuery({
-    queryKey: ["categories", id],
+    queryKey: ["categories", "detail", id],
     queryFn: () => fetchCategoriesById(id),
     staleTime: 1000 * 60 * 5,
   });
@@ -27,7 +39,6 @@ export const useCategoryById = (id: string) => {
 
 export const useCreateCategory = () => {
   const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: (data: CreateCategoryInput) => createCategory(data),
     onSuccess: () => {
@@ -42,14 +53,11 @@ export const useCreateCategory = () => {
 
 export const useUpdateCategory = () => {
   const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: ({ id, data }: { id: string; data: UpdateCategoryInput }) =>
       updateCategory({ id, data }),
     onSuccess: (data, variables) => {
-      // Refresh the list and the specific detail view
       queryClient.invalidateQueries({ queryKey: ["categories"] });
-      queryClient.invalidateQueries({ queryKey: ["categories", variables.id] });
       toast.success("Updated successfully");
     },
   });
@@ -57,7 +65,6 @@ export const useUpdateCategory = () => {
 
 export const useDeleteCategory = () => {
   const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: deleteCategory,
     onSuccess: () => {

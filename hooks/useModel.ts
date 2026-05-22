@@ -1,26 +1,38 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createModel, deleteModel, fetchModels, fetchModelsByBrandId, fetchModelsById, updateModel } from "@/services/model.service";
+import {
+  createModel,
+  deleteModel,
+  fetchModels,
+  fetchModelsByBrandId,
+  fetchModelsById,
+  updateModel,
+} from "@/services/model.service";
+import type { ModelQueryParams } from "@/services/model.service";
 import { CreateModelInput, UpdateModelInput } from "@/types/model";
 import { toast } from "sonner";
 
-export const useModels = (nameSearch?: string) => {const queryValue = nameSearch?.trim() || "";
-  
+// ── Server-side paginated + searched ─────────────────────────────────────────
+export const useModelsQuery = (params: ModelQueryParams) => {
   return useQuery({
-    // Keeps separate cache keys for an empty search vs an active search string
-    queryKey: ["models", queryValue], 
-    queryFn: () => fetchModels(queryValue), 
-    staleTime: queryValue ? 0 : 1000 * 60 * 5,
+    queryKey: ["models", "list", params],
+    queryFn: () => fetchModels(params),
+    staleTime: 1000 * 60 * 2,
+    placeholderData: (prev) => prev,
   });
-  // return useQuery({
-  //   queryKey: ["models", nameSearch],
-  //   queryFn: () => fetchModels(nameSearch),
-  //   staleTime: nameSearch ? 0 : 1000 * 60 * 5,
-  // });
+};
+
+// ── Legacy (dropdowns, etc.) ──────────────────────────────────────────────────
+export const useModels = () => {
+  return useQuery({
+    queryKey: ["models", "all"],
+    queryFn: () => fetchModels({ limit: 1000 }),
+    staleTime: 1000 * 60 * 5,
+  });
 };
 
 export const useModelById = (id: string) => {
   return useQuery({
-    queryKey: ["models", id],
+    queryKey: ["models", "detail", id],
     queryFn: () => fetchModelsById(id),
     staleTime: 1000 * 60 * 5,
   });
@@ -37,7 +49,6 @@ export const useModelsByBrand = (brandId: string | null) => {
 
 export const useCreateModel = () => {
   const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: (data: CreateModelInput) => createModel(data),
     onSuccess: () => {
@@ -52,14 +63,11 @@ export const useCreateModel = () => {
 
 export const useUpdateModel = () => {
   const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: ({ id, data }: { id: string; data: UpdateModelInput }) =>
       updateModel({ id, data }),
     onSuccess: (data, variables) => {
-      // Refresh the list and the specific detail view
       queryClient.invalidateQueries({ queryKey: ["models"] });
-      queryClient.invalidateQueries({ queryKey: ["models", variables.id] });
       toast.success("Updated successfully");
     },
   });
@@ -67,7 +75,6 @@ export const useUpdateModel = () => {
 
 export const useDeleteModel = () => {
   const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: deleteModel,
     onSuccess: () => {
