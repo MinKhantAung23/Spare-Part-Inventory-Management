@@ -28,6 +28,7 @@ export const useSpareParts = () => {
     queryKey: ["spareParts", "all"],
     queryFn: () => fetchSpareParts({ limit: 1000 }), // fetch all for dropdown use
     staleTime: 1000 * 60 * 5,
+    placeholderData: (prev) => prev,
   });
 };
 
@@ -94,6 +95,7 @@ export const useDeleteSparePart = () => {
       queryClient.invalidateQueries({ queryKey: ["spareParts", "list"] });
       toast.success("Deleted successfully");
     },
+
     onError: (error: any) => {
       toast.error(error.response?.data?.message || "Failed to delete");
     },
