@@ -8,7 +8,6 @@ import {
   PackageMinus,
   ShoppingCart,
   AlertCircle,
-  Loader2,
 } from "lucide-react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
@@ -72,10 +71,7 @@ export default function ProductDetailPage() {
     typeof product.brand === "object" ? product.brand?.name : product.brand;
   const modelName =
     typeof product.model === "object" ? product.model?.name : product.model;
-  const categoryName =
-    typeof product.category === "object"
-      ? product.category?.name
-      : product.category;
+  const categoryName = product.cost_price ?? 0;
 
   const stock = product.quantity ?? 0;
   const isInStock = stock > 0;
@@ -171,21 +167,21 @@ export default function ProductDetailPage() {
         {/* ── Stat Cards ──────────────────────────────────────────────────────── */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <StatCard
-            label="In Stock"
+            label="လက်ကျန်"
             value={stock}
             color="text-emerald-500"
             bg="bg-emerald-50"
             border="border-emerald-100"
           />
           <StatCard
-            label="Sale Price"
+            label="ရောင်းစျေး"
             value={`${Number(product.price).toLocaleString()} Ks`}
             color="text-primary"
             bg="bg-blue-50"
             border="border-blue-100"
           />
           <StatCard
-            label="Category"
+            label="ဝယ်စျေး"
             value={categoryName ?? "—"}
             color="text-slate-600"
             bg="bg-slate-50"

@@ -331,22 +331,22 @@ export default function PartDetails({ part }: { part: Product }) {
         {/* ── Stats ── */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <StatCard
-            label="In Stock"
+            label="လက်ကျန်"
             value={stock}
             color="text-emerald-500"
             bg="bg-emerald-50"
             border="border-emerald-100"
           />
           <StatCard
-            label="Sale Price"
+            label="ရောင်းစျေး"
             value={`${formatPrice(part.price) || 0} Ks`}
             color="text-primary"
             bg="bg-blue-50"
             border="border-blue-100"
           />
           <StatCard
-            label="Cost Price"
-            value={`${formatPrice(part.price) || 0} Ks`}
+            label="ဝယ်စျေး"
+            value={`${formatPrice(part.cost_price ?? 0) || 0} Ks`}
             color="text-slate-500"
             bg="bg-slate-50"
             border="border-slate-100"
