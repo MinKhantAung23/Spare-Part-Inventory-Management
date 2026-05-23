@@ -2,210 +2,346 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import {
+  Loader2,
+  ShieldCheck,
+  UserCog,
+  Eye,
+  EyeOff,
+  LogOut,
+  KeyRound,
+  User,
+  CalendarDays,
+} from "lucide-react";
+import { useAuthStore } from "@/store/use-auth-store";
+import { useUserById } from "@/hooks/useUser";
+import { useUpdateUser } from "@/hooks/useUser";
+import { toast } from "sonner";
+import { formatDate } from "date-fns";
 
-export default function ProfilePage() {
-  const router = useRouter();
-  const [user, setUser] = useState({
-    name: "John Doe",
-    email: "john@example.com",
-  });
-  const [showPasswordModal, setShowPasswordModal] = useState(false);
-  const [passwords, setPasswords] = useState({
-    current: "",
-    new: "",
-    confirm: "",
-  });
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+// ── Password change modal ──────────────────────────────────────────────────────
+function PasswordModal({
+  userId,
+  onClose,
+}: {
+  userId: string;
+  onClose: () => void;
+}) {
+  const { mutate: updateUser, isPending } = useUpdateUser();
 
-  const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    router.push("/login");
-  };
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showNew, setShowNew] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
-  const handlePasswordChange = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setMessage(null);
 
-    if (passwords.new !== passwords.confirm) {
-      setMessage({ type: "error", text: "New passwords do not match." });
+    if (newPassword.length < 6) {
+      toast.error("Password must be at least 6 characters");
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      toast.error("Passwords do not match");
       return;
     }
 
-    setLoading(true);
-    try {
-      const response = await fetch("/api/change-password", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          currentPassword: passwords.current,
-          newPassword: passwords.new,
-        }),
-      });
-
-      if (response.ok) {
-        setMessage({ type: "success", text: "Password changed successfully!" });
-        setPasswords({ current: "", new: "", confirm: "" });
-        setTimeout(() => {
-          setShowPasswordModal(false);
-          setMessage(null);
-        }, 1500);
-      } else {
-        setMessage({ type: "error", text: "Failed to change password. Please check your current password." });
+    updateUser(
+      { id: userId, data: { password: newPassword } },
+      {
+        onSuccess: () => {
+          toast.success("Password updated successfully");
+          onClose();
+        },
+        onError: (err: any) => {
+          toast.error(
+            err?.response?.data?.message || "Failed to update password"
+          );
+        },
       }
-    } catch (error) {
-      setMessage({ type: "error", text: "An error occurred. Please try again." });
-    } finally {
-      setLoading(false);
-    }
+    );
   };
 
   return (
-    <div className="min-h-screen bg-radial from-slate-50 via-gray-100 to-blue-50 flex items-center justify-center p-6 antialiased">
-      {/* Profile Card Container */}
-      <div className="max-w-4xl w-full bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 grid md:grid-cols-5">
-        
-        {/* Left Sidebar / Avatar Section */}
-        <div className="md:col-span-2 bg-gradient-to-b from-slate-500 to-indigo-800 p-8 flex flex-col items-center justify-center text-center relative overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-blue-500/20 via-transparent to-transparent opacity-50" />
-          
-          <div className="relative z-10">
-            {/* Avatar Placeholder */}
-            <div className="w-24 h-24 bg-white/10 rounded-full flex items-center justify-center border-2 border-white/20 mx-auto mb-4 shadow-inner backdrop-blur-md">
-              <span className="text-3xl font-bold text-white tracking-wider">
-                {user.name.split(" ").map((n) => n[0]).join("")}
-              </span>
-            </div>
-            <h2 className="text-xl font-bold text-white">{user.name}</h2>
-            <p className="text-indigo-200 text-sm mt-1">Verified Member</p>
+    <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+      <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full border border-slate-100 font-padauk">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
+            <KeyRound size={18} className="text-primary" />
           </div>
-        </div>
-
-        {/* Right Details Section */}
-        <div className="md:col-span-3 p-8 md:p-10 flex flex-col justify-between">
           <div>
-            <div className="flex items-center justify-between border-b border-gray-100 pb-5 mb-6">
-              <h1 className="text-2xl font-bold text-gray-800 tracking-tight">Account Settings</h1>
-              <span className="px-2.5 py-1 text-xs font-semibold text-green-700 bg-green-50 rounded-full border border-green-200">Active</span>
-            </div>
-
-            {/* Information Fields */}
-            <div className="space-y-5">
-              <div>
-                <label className="text-xs font-semibold text-gray-400 uppercase tracking-wider block mb-1">Full Name</label>
-                <div className="text-base font-medium text-gray-800 bg-gray-50/70 border border-gray-100 rounded-xl px-4 py-3">
-                  {user.name}
-                </div>
-              </div>
-              <div>
-                <label className="text-xs font-semibold text-gray-400 uppercase tracking-wider block mb-1">Email Address</label>
-                <div className="text-base font-medium text-gray-800 bg-gray-50/70 border border-gray-100 rounded-xl px-4 py-3">
-                  {user.email}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 mt-10 pt-6 border-t border-gray-100">
-            <button
-              onClick={() => { setMessage(null); setShowPasswordModal(true); }}
-              className="flex-1 bg-white hover:bg-gray-50 text-gray-700 font-semibold py-2.5 px-4 rounded-xl border border-gray-300 transition-all duration-200 shadow-xs active:scale-[0.98]"
-            >
-              Update Password
-            </button>
-            <button
-              onClick={handleLogout}
-              className="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-2.5 px-4 rounded-xl transition-all duration-200 shadow-md shadow-red-600/10 active:scale-[0.98]"
-            >
-              Sign Out
-            </button>
+            <h2 className="text-lg font-black text-slate-800">
+              Change Password
+            </h2>
+            <p className="text-xs text-slate-400 mt-0.5">
+              Enter and confirm your new password
+            </p>
           </div>
         </div>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* New Password */}
+          <div className="space-y-1.5">
+            <label className="text-[11px] uppercase font-bold text-slate-400 tracking-widest">
+              New Password
+            </label>
+            <div className="relative">
+              <input
+                type={showNew ? "text" : "password"}
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                placeholder="Min. 6 characters"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pr-11 outline-none focus:border-primary/50 focus:bg-white transition-all text-sm"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowNew(!showNew)}
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+              >
+                {showNew ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
+          </div>
+
+          {/* Confirm Password */}
+          <div className="space-y-1.5">
+            <label className="text-[11px] uppercase font-bold text-slate-400 tracking-widest">
+              Confirm New Password
+            </label>
+            <div className="relative">
+              <input
+                type={showConfirm ? "text" : "password"}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Re-enter new password"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pr-11 outline-none focus:border-primary/50 focus:bg-white transition-all text-sm"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirm(!showConfirm)}
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+              >
+                {showConfirm ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
+          </div>
+
+          {/* Match indicator */}
+          {confirmPassword && (
+            <p
+              className={`text-[11px] font-bold ${newPassword === confirmPassword
+                ? "text-emerald-500"
+                : "text-rose-500"
+                }`}
+            >
+              {newPassword === confirmPassword
+                ? "✓ Passwords match"
+                : "✗ Passwords do not match"}
+            </p>
+          )}
+
+          <div className="flex gap-3 pt-2">
+            <button
+              type="button"
+              onClick={onClose}
+              className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-2.5 rounded-xl transition-all text-sm"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={isPending}
+              className="flex-1 bg-primary hover:bg-blue-600 disabled:opacity-60 text-white font-bold py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 text-sm"
+            >
+              {isPending ? (
+                <Loader2 size={15} className="animate-spin" />
+              ) : (
+                "Save Changes"
+              )}
+            </button>
+          </div>
+        </form>
       </div>
+    </div>
+  );
+}
 
-      {/* Modal Backdrop */}
-      {showPasswordModal && (
-        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-fade-in">
-          {/* Modal Content */}
-          <div className="bg-white rounded-2xl shadow-2xl p-6 md:p-8 max-w-md w-full border border-gray-100 transform transition-all scale-100">
-            <div className="mb-6">
-              <h2 className="text-xl font-bold text-gray-900">Change Password</h2>
-              <p className="text-sm text-gray-500 mt-1">Please enter your current credentials to update your password.</p>
+// ── Info row ──────────────────────────────────────────────────────────────────
+function InfoRow({
+  label,
+  value,
+  icon: Icon,
+}: {
+  label: string;
+  value: string;
+  icon: React.ElementType;
+}) {
+  return (
+    <div className="space-y-1">
+      <label className="text-[10px] uppercase font-bold text-slate-400 tracking-widest flex items-center gap-1.5">
+        <Icon size={10} className="text-slate-400" />
+        {label}
+      </label>
+      <div className="text-sm font-semibold text-slate-800 bg-slate-50 border border-slate-100 rounded-xl px-4 py-3">
+        {value}
+      </div>
+    </div>
+  );
+}
+
+// ── Page ──────────────────────────────────────────────────────────────────────
+export default function ProfilePage() {
+  const router = useRouter();
+  const { user: authUser, logout } = useAuthStore();
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+
+  const userId = String(authUser?.id ?? "");
+  const { data: response, isLoading, isError } = useUserById(userId);
+  const user = response?.data ?? response; // handle { data: user } or direct user object
+
+  const handleLogout = () => {
+    logout();
+    toast.success("Logged out successfully");
+    router.push("/login");
+  };
+
+  // Initials
+  const initials = (user?.name ?? authUser?.name ?? "?")
+    .split(" ")
+    .map((w: string) => w[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2);
+
+  const isAdmin = (user?.role ?? authUser?.role) === "admin";
+
+  return (
+    <div className="min-h-[80vh] flex items-center justify-center p-6 font-padauk">
+      {isLoading ? (
+        <div className="flex flex-col items-center gap-3 text-slate-400 py-20">
+          <Loader2 className="animate-spin text-primary" size={32} />
+          <p className="text-sm font-medium">Loading profile...</p>
+        </div>
+      ) : isError ? (
+        <div className="flex flex-col items-center gap-3 text-slate-400 py-20">
+          <p className="text-sm font-semibold text-rose-500">
+            Failed to load profile data.
+          </p>
+          <button
+            onClick={() => router.refresh()}
+            className="text-xs text-primary underline underline-offset-2"
+          >
+            Try again
+          </button>
+        </div>
+      ) : (
+        <div className="max-w-3xl w-full bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100 grid md:grid-cols-5">
+          {/* ── Left panel ── */}
+          <div className="md:col-span-2 bg-linear-to-b from-slate-700 to-blue-900 p-8 flex flex-col items-center justify-center text-center relative overflow-hidden">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,var(--tw-gradient-stops))] from-blue-400/20 via-transparent to-transparent opacity-60" />
+
+            <div className="relative z-10 space-y-4">
+              {/* Avatar */}
+              <div className="w-24 h-24 bg-white/10 border-2 border-white/20 rounded-full flex items-center justify-center mx-auto shadow-inner backdrop-blur-md">
+                <span className="text-3xl font-black text-white tracking-wider">
+                  {initials}
+                </span>
+              </div>
+
+              <div>
+                <h2 className="text-xl font-black text-white">
+                  {user?.name ?? authUser?.name}
+                </h2>
+                {/* Role badge */}
+                <div
+                  className={`inline-flex items-center gap-1.5 mt-2 px-3 py-1 rounded-full text-[11px] font-bold ${isAdmin
+                    ? "bg-primary/20 text-blue-200"
+                    : "bg-white/10 text-slate-300"
+                    }`}
+                >
+                  {isAdmin ? (
+                    <ShieldCheck size={11} />
+                  ) : (
+                    <UserCog size={11} />
+                  )}
+                  {(user?.role ?? authUser?.role ?? "staff").toUpperCase()}
+                </div>
+              </div>
+
+              {/* Status */}
+              <div className="flex items-center justify-center gap-1.5 text-emerald-400 text-xs font-bold">
+                <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
+                Active Account
+              </div>
+            </div>
+          </div>
+
+          {/* ── Right panel ── */}
+          <div className="md:col-span-3 p-8 md:p-10 flex flex-col justify-between gap-8">
+            <div>
+              <div className="flex items-center justify-between border-b border-slate-100 pb-5 mb-6">
+                <h1 className="text-2xl font-black text-slate-800">
+                  Account Settings
+                </h1>
+                <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full">
+                  Active
+                </span>
+              </div>
+
+              {/* Info rows */}
+              <div className="space-y-4">
+                <InfoRow
+                  label="Full Name"
+                  value={user?.name ?? authUser?.name ?? "—"}
+                  icon={User}
+                />
+                <InfoRow
+                  label="Role"
+                  value={isAdmin ? "Administrator" : "Staff Member"}
+                  icon={isAdmin ? ShieldCheck : UserCog}
+                />
+                {user?.createdAt && (
+                  <InfoRow
+                    label="Member Since"
+                    value={formatDate(
+                      new Date(user.createdAt),
+                      "dd MMM yyyy"
+                    )}
+                    icon={CalendarDays}
+                  />
+                )}
+              </div>
             </div>
 
-            {/* Custom UI Feedback Alert */}
-            {message && (
-              <div className={`p-3.5 mb-5 rounded-xl text-sm font-medium border ${
-                message.type === "success" 
-                  ? "bg-green-50 text-green-800 border-green-200" 
-                  : "bg-red-50 text-red-800 border-red-200"
-              }`}>
-                {message.text}
-              </div>
-            )}
-
-            <form onSubmit={handlePasswordChange} className="space-y-4">
-              <div>
-                <label className="block text-gray-700 text-sm font-semibold mb-1.5">
-                  Current Password
-                </label>
-                <input
-                  type="password"
-                  value={passwords.current}
-                  onChange={(e) => setPasswords({ ...passwords, current: e.target.value })}
-                  className="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-gray-900"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-gray-700 text-sm font-semibold mb-1.5">
-                  New Password
-                </label>
-                <input
-                  type="password"
-                  value={passwords.new}
-                  onChange={(e) => setPasswords({ ...passwords, new: e.target.value })}
-                  className="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-gray-900"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-gray-700 text-sm font-semibold mb-1.5">
-                  Confirm New Password
-                </label>
-                <input
-                  type="password"
-                  value={passwords.confirm}
-                  onChange={(e) => setPasswords({ ...passwords, confirm: e.target.value })}
-                  className="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-gray-900"
-                  required
-                />
-              </div>
-
-              <div className="flex gap-3 pt-4">
-                <button
-                  type="button"
-                  onClick={() => { setShowPasswordModal(false); setMessage(null); }}
-                  className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-2.5 px-4 rounded-xl transition-all duration-200"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="flex-1 bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-400 text-white font-semibold py-2.5 px-4 rounded-xl shadow-md shadow-indigo-600/10 transition-all duration-200 flex items-center justify-center"
-                >
-                  {loading ? (
-                    <span className="inline-block w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  ) : (
-                    "Save Changes"
-                  )}
-                </button>
-              </div>
-            </form>
+            {/* Action buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 pt-6 border-t border-slate-100">
+              <button
+                onClick={() => setShowPasswordModal(true)}
+                className="flex-1 flex items-center justify-center gap-2 bg-white hover:bg-slate-50 text-slate-700 font-bold py-2.5 px-4 rounded-xl border border-slate-200 transition-all text-sm"
+              >
+                <KeyRound size={15} />
+                Password ပြင်ဆင်မည်
+              </button>
+              <button
+                onClick={handleLogout}
+                className="flex-1 flex items-center justify-center gap-2 bg-rose-500 hover:bg-rose-600 text-white font-bold py-2.5 px-4 rounded-xl transition-all shadow-md shadow-rose-500/20 text-sm"
+              >
+                <LogOut size={15} />
+                Sign Out
+              </button>
+            </div>
           </div>
         </div>
+      )}
+
+      {/* Password Modal */}
+      {showPasswordModal && (
+        <PasswordModal
+          userId={userId}
+          onClose={() => setShowPasswordModal(false)}
+        />
       )}
     </div>
   );
