@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+// 1. useEffect ကိုပါ Import လုပ်ပေးပါ
+import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { PackagePlus, PackageMinus } from "lucide-react";
 import { Product } from "@/types/product";
@@ -16,6 +17,12 @@ interface StockDialogProps {
 
 export default function StockDialog({ isOpen, onClose, part, defaultTab = "in" }: StockDialogProps) {
     const [tab, setTab] = useState<"in" | "out">(defaultTab);
+
+    useEffect(() => {
+        if (isOpen) {
+            setTab(defaultTab);
+        }
+    }, [isOpen, defaultTab]);
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
