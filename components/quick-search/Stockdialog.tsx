@@ -1,12 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { PackagePlus, PackageMinus } from "lucide-react";
 import { Product } from "@/types/product";
 import StockInForm from "../stock/StockInForm";
@@ -19,13 +14,8 @@ interface StockDialogProps {
   defaultTab?: "in" | "out";
 }
 
-export default function StockDialog({
-  isOpen,
-  onClose,
-  part,
-  defaultTab = "in",
-}: StockDialogProps) {
-  const [tab, setTab] = useState<"in" | "out">(defaultTab);
+export default function StockDialog({ isOpen, onClose, part, defaultTab = "in" }: StockDialogProps) {
+    const [tab, setTab] = useState<"in" | "out">(defaultTab);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
