@@ -66,7 +66,7 @@ export default function SparePartsPage() {
       <div className="flex justify-between items-center flex-wrap gap-3">
         <h1 className="text-2xl font-bold text-slate-800">အပိုပစ္စည်းများ</h1>
         <Button onClick={openAddDialog} className="bg-primary text-white px-5 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2">
-          <Plus size={16} /> စတော့ထည့်မည်
+          <Plus size={16} /> အသစ်ထည့်မည်
         </Button>
       </div>
 

@@ -346,7 +346,7 @@ export default function PartDetails({ part }: { part: Product }) {
           />
           <StatCard
             label="Cost Price"
-            value={`${formatPrice(part.price)} Ks`}
+            value={`${formatPrice(part.price) || 0} Ks`}
             color="text-slate-500"
             bg="bg-slate-50"
             border="border-slate-100"

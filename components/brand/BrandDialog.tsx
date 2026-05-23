@@ -78,8 +78,8 @@ const BrandDialog = ({ isOpen, onClose, initialData }: any) => {
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-slate-800">
               {initialData
-                ? "ပြင်ဆင်ရန် (Edit Brand)"
-                : "အသစ်ထည့်ရန် (Add Brand)"}
+                ? "Brand ပြင်ဆင်ရန်"
+                : "Brand အသစ်ထည့်ရန်"}
             </DialogTitle>
           </DialogHeader>
 

@@ -38,7 +38,6 @@ const CategoryDialog = ({ isOpen, onClose, initialData }: any) => {
     formState: { errors },
   } = form;
 
-  
   // 3. Populate Form for Editing
   useEffect(() => {
     if (initialData && isOpen) {
@@ -49,7 +48,6 @@ const CategoryDialog = ({ isOpen, onClose, initialData }: any) => {
       reset();
     }
   }, [initialData, isOpen, reset]);
-
 
   // 4. Handle Submission
   const onSubmit = (values: any) => {
@@ -77,9 +75,7 @@ const CategoryDialog = ({ isOpen, onClose, initialData }: any) => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-slate-800">
-              {initialData
-                ? "ပြင်ဆင်ရန် (Edit Category)"
-                : "အသစ်ထည့်ရန် (Add Category)"}
+              {initialData ? "Category ပြင်ဆင်ရန်" : "Category အသစ်ထည့်ရန်"}
             </DialogTitle>
           </DialogHeader>
 
@@ -87,7 +83,7 @@ const CategoryDialog = ({ isOpen, onClose, initialData }: any) => {
             {/* Name */}
             <div className="col-span-2 space-y-2">
               <Label className="font-bold text-slate-600">
-                Spare Part Category
+                အပိုပစ္စည်း အမျိုးအစား
               </Label>
               <Input
                 {...register("name")}

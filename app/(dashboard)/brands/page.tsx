@@ -245,7 +245,7 @@ function ModelsTab({
           ) : ""}
         </p>
         <Button onClick={onAdd} className="rounded-xl bg-primary gap-2 shadow-lg shadow-primary/20 h-9 text-sm">
-          <Smartphone size={15} /> Add Model
+          <Plus size={15} /> Add Model
         </Button>
       </div>
 

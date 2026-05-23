@@ -19,11 +19,11 @@ export default function StockOutTable({ data }: { data: any[] }) {
       <Table>
         <TableHeader className="bg-rose-50/30">
           <TableRow>
-            <TableHead className="font-bold">Spare Part</TableHead>
-            <TableHead className="font-bold text-center">Qty Out</TableHead>
-            <TableHead className="font-bold">Reason</TableHead>
-            <TableHead className="font-bold">Profit</TableHead>
-            <TableHead className="font-bold">Date</TableHead>
+            <TableHead className="font-bold">အပိုပစ္စည်း</TableHead>
+            <TableHead className="font-bold text-center">အထွက်အရေအတွက်</TableHead>
+            <TableHead className="font-bold">အကြောင်းအရာ</TableHead>
+            <TableHead className="font-bold">အမြတ်</TableHead>
+            <TableHead className="font-bold">ရက်စွဲ</TableHead>
             {/* <TableHead className="text-right font-bold">Action</TableHead> */}
           </TableRow>
         </TableHeader>

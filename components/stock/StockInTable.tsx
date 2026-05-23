@@ -21,11 +21,11 @@ export default function StockInTable({ data }: { data: any[] }) {
       <Table>
         <TableHeader className="bg-emerald-50/30">
           <TableRow>
-            <TableHead className="font-bold">Spare Part</TableHead>
-            <TableHead className="font-bold text-center">Qty In</TableHead>
-            <TableHead className="font-bold">Price</TableHead>
-            <TableHead className="font-bold">Received Date</TableHead>
-            <TableHead className="text-right font-bold">Action</TableHead>
+            <TableHead className="font-bold">အပိုပစ္စည်း</TableHead>
+            <TableHead className="font-bold text-center">အဝင်အရေအတွက်</TableHead>
+            <TableHead className="font-bold">ဈေးနှုန်း</TableHead>
+            <TableHead className="font-bold">လက်ခံရရှိသည့်ရက်စွဲ</TableHead>
+            <TableHead className="text-right font-bold"></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -61,11 +61,10 @@ export default function StockInTable({ data }: { data: any[] }) {
                 <div className="flex justify-end gap-1">
                   <Button
                     onClick={() => router.push(`/stock-in/${log.id}`)}
-                    variant="outline"
-                    size="icon"
-                    className="h-8 w-8 bg-amber-200 hover:bg-yellow-300"
+                    variant="secondary"
+                    size="sm"
                   >
-                    <Eye size={14} />
+                    အသေးစိတ်ကြည့်ရန်
                   </Button>
                   {/* <Button variant="destructive" size="icon">
                     <Trash size={14} />
