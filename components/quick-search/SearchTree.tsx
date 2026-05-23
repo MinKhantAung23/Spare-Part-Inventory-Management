@@ -19,7 +19,7 @@ export default function SearchTree() {
   const { searchTerm, setSearchTerm } = useSearchStore();
 
   const { data: modelsData, isLoading: isModelsLoading } =
-    useModelsQuery({search: searchTerm});
+    useModelsQuery({search: searchTerm, limit: 1000});
 
   const brands = brandsData?.data ?? brandsData ?? [];
   const fetchedModels = modelsData?.data ?? modelsData ?? [];
@@ -27,8 +27,6 @@ export default function SearchTree() {
   const isSearching = searchTerm.trim().length > 0;
   const isLoading = isBrandsLoading || (isSearching && isModelsLoading);
 
-  // When a user types a search value, collect all brand IDs to push into the Accordion value
-  // This automatically forces every brand row to unfold visually
   const allBrandIds = brands.map((brand: any) => String(brand.id));
 
   return (
