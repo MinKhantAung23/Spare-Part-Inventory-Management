@@ -3,12 +3,12 @@ import { CreateSaleInput } from "@/types/sale";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-export const useSales = (params: any) => {
+// hooks/useSale.ts
+export const useSales = (params: { page: number; limit: number; date?: string; search?: string }) => {
   return useQuery({
-    queryKey: ["sales"],
+    queryKey: ["sales", "list", params], 
     queryFn: () => fetchSales(params),
-    staleTime: 1000 * 60 * 5, // 2 min
-    placeholderData: (prev) => prev, 
+    staleTime: 1000 * 30, // 30 seconds
   });
 };
 

@@ -12,8 +12,7 @@ import {
   Trash,
   CheckCircle2,
   Printer,
-  Star
-
+  Star,
 } from "lucide-react";
 import {
   Sheet,
@@ -275,7 +274,7 @@ export function CartContent() {
                 type="button"
                 disabled
                 className="hover:bg-slate-900 text-white rounded-xl bg-amber-500"
-                onClick={() => { }}
+                onClick={() => {}}
               >
                 <Printer className="fill-black" /> Premium
               </Button>
