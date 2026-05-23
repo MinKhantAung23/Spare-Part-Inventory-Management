@@ -69,7 +69,7 @@ export default function StockOutForm({ part, onSuccess }: StockOutFormProps) {
         toast.success("Stock Out recorded");
         reset();
         onSuccess();
-        window.location.reload();
+        // window.location.reload();
       },
       onError: (err: any) => {
         toast.error(err.response?.data?.error || "Failed to record stock out");

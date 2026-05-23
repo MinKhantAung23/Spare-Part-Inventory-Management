@@ -36,6 +36,14 @@ export const useCreateStockOut = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["stockOut", "list"] });
       queryClient.invalidateQueries({ queryKey: ["stockOut", "all"] });
+      queryClient.invalidateQueries({
+        queryKey: ["stockOut"],
+      });
+
+      // ALL spare parts (IMPORTANT FIX)
+      queryClient.invalidateQueries({
+        queryKey: ["spareParts"],
+      });
       toast.success("Stock out created successfully");
     },
     onError: (error: any) => {

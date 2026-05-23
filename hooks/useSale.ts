@@ -18,6 +18,14 @@ export const useCreateSale = () => {
     mutationFn: (data: CreateSaleInput) => createSale(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["sales"] });
+      queryClient.invalidateQueries({
+        queryKey: ["stockOut"],
+      });
+
+      // ALL spare parts (IMPORTANT FIX)
+      queryClient.invalidateQueries({
+        queryKey: ["spareParts"],
+      });
       toast.success("Sale created successfully");
     },
     onError: (error: any) => {
