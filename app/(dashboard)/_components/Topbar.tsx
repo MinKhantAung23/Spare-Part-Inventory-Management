@@ -40,7 +40,7 @@ export default function Topbar() {
         </button> */}
 
         <CartContent />
-        <div className="h-8 w-[1px] bg-border mx-1"></div>
+        <div className="h-8 w-px bg-border mx-1"></div>
         <Link href={"/profile"}>
           <div className="flex items-center gap-2 cursor-pointer group">
             <div className="text-right hidden sm:block hover:text-blue-400">

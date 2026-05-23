@@ -110,54 +110,57 @@ export default function StockOutPage() {
       {/* Top Bar */}
       <div className="flex justify-between items-center flex-wrap gap-3">
         <h1 className="text-2xl font-bold text-slate-800">ပစ္စည်းအထွက်စာရင်း</h1>
-        <Link
-          href="/stock-out/new-stock-out/"
-          className="flex items-center justify-center gap-2 rounded-xl bg-rose-500 px-5 py-2.5 text-sm font-bold text-white transition-all hover:bg-rose-600"
-        >
-          <Plus size={16} />
-          စတော့ရောင်းမည်
-        </Link>
+        <div className="flex space-x-1">
+
+          <Link
+            href="/stock-out/new-stock-out/"
+            className="flex items-center justify-center gap-2 rounded-xl bg-rose-500 px-5 py-2.5 text-sm font-bold text-white transition-all hover:bg-rose-600"
+          >
+            <Plus size={16} />
+            စတော့ရောင်းမည်
+          </Link>
+          <button
+            onClick={() => setFilterDialogOpen(true)}
+            className={`relative flex items-center gap-2 px-4 py-2.5 rounded-xl border text-sm font-bold ${activeFilterCount > 0
+              ? "bg-rose-500/10 border-rose-400/30 text-rose-600"
+              : "bg-white text-slate-500"
+              }`}
+          >
+            <SlidersHorizontal size={15} />
+            <span>Filters</span>
+            {activeFilterCount > 0 && (
+              <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-rose-500 text-white text-[9px] rounded-full flex items-center justify-center">
+                {activeFilterCount}
+              </span>
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Search & Filter Bar */}
       <div className="flex gap-3">
         <div className="relative flex-1">
-          <Search
+          {/* <Search
             className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
             size={16}
-          />
-          <input
+          /> */}
+          {/* <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by spare part name, category..."
             className="w-full bg-white border border-slate-200 rounded-xl py-2.5 pl-10 pr-10 outline-none focus:border-rose-400/50 transition-all text-sm"
-          />
-          {searchQuery && (
+          /> */}
+          {/* {searchQuery && (
             <button
               onClick={() => setSearchQuery("")}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
             >
               <X size={14} />
             </button>
-          )}
+          )} */}
         </div>
 
-        <button
-          onClick={() => setFilterDialogOpen(true)}
-          className={`relative flex items-center gap-2 px-4 py-2.5 rounded-xl border text-sm font-bold ${activeFilterCount > 0
-            ? "bg-rose-500/10 border-rose-400/30 text-rose-600"
-            : "bg-white text-slate-500"
-            }`}
-        >
-          <SlidersHorizontal size={15} />
-          <span>Filters</span>
-          {activeFilterCount > 0 && (
-            <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-rose-500 text-white text-[9px] rounded-full flex items-center justify-center">
-              {activeFilterCount}
-            </span>
-          )}
-        </button>
       </div>
 
       {/* Summary Cards */}

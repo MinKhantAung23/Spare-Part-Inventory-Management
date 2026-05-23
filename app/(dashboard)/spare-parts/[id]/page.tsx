@@ -142,7 +142,7 @@ export default function ProductDetailPage() {
               className="rounded-xl bg-primary hover:bg-blue-600 text-white gap-1.5 font-bold shadow-sm disabled:opacity-40"
             >
               <ShoppingCart size={15} />
-              Add To Cart
+              စျေးခြင်းထဲထည့်မည်
             </Button>
             <Button
               size="sm"
