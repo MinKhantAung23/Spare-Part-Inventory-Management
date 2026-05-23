@@ -9,7 +9,6 @@ import {
   Database,
   ArrowDownCircle,
   ArrowUpCircle,
-  Layers,
   ChevronLeft,
   ChevronRight,
   Smartphone,
@@ -17,7 +16,7 @@ import {
   Users2,
   Tags,
   LogOut,
-  ShieldCheck
+  ShieldCheck,
 } from "lucide-react";
 
 export default function Sidebar({ isExpanded, setIsExpanded }: any) {
@@ -71,9 +70,9 @@ export default function Sidebar({ isExpanded, setIsExpanded }: any) {
         {isExpanded && (
           <div className="leading-tight truncate">
             <h1 className="font-bold text-slate-800 text-sm">
-              MobileParts IMS
+              Ko Bhone
             </h1>
-            <p className="text-[10px] text-slate-400">Inventory System</p>
+            <p className="text-[10px] text-slate-400">Mobile Spare Parts And Services</p>
           </div>
         )}
       </div>
