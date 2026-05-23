@@ -11,6 +11,9 @@ import {
   ShoppingCartIcon,
   Trash,
   CheckCircle2,
+  Printer,
+  Star
+
 } from "lucide-react";
 import {
   Sheet,
@@ -182,8 +185,8 @@ export function CartContent() {
             {items.length > 0 && (
               <div className="border-t bg-slate-200 p-4 shrink-0 shadow-[0_-4px_12px_rgba(0,0,0,0.02)]">
                 <div className="flex justify-between font-bold mb-4 text-lg">
-                  <span>Total:</span>
-                  <span>{getTotalPrice()} mmk</span>
+                  <span>စုစုပေါင်း:</span>
+                  <span>{getTotalPrice().toLocaleString()} MMK</span>
                 </div>
                 <Button
                   onClick={handleCheckout}
@@ -209,7 +212,7 @@ export function CartContent() {
 
       {/* SUCCESS RECEIPTS BREAKDOWN DIALOG BOX */}
       <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
-        <DialogContent className="sm:max-w-[425px] bg-slate-50">
+        <DialogContent className="sm:max-w-106.25 bg-slate-50">
           <DialogHeader className="flex flex-col items-center justify-center text-center pt-4">
             <div className="w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mb-2">
               <CheckCircle2 size={28} className="stroke-[2.5]" />
@@ -242,7 +245,7 @@ export function CartContent() {
                     </p>
                   </div>
                   <span className="font-bold text-xs text-slate-600 shrink-0">
-                    {item.price * item.quantity} ks
+                    {(item.price * item.quantity).toLocaleString()} ks
                   </span>
                 </div>
               ))}
@@ -255,18 +258,28 @@ export function CartContent() {
               စုစုပေါင်းကျသင့်ငွေ (Total):
             </span>
             <span className="text-base font-black text-emerald-600">
-              {successTotal} mmk
+              {successTotal.toLocaleString()} mmk
             </span>
           </div>
 
           <DialogFooter className="mt-4">
-            <Button
-              type="button"
-              className="w-full bg-slate-800 hover:bg-slate-900 text-white rounded-xl"
-              onClick={() => setShowSuccessDialog(false)}
-            >
-              Close Receipt
-            </Button>
+            <div className="flex flex-col w-full space-y-1">
+              <Button
+                type="button"
+                className=" bg-slate-800 hover:bg-slate-900 text-white rounded-xl"
+                onClick={() => setShowSuccessDialog(false)}
+              >
+                Close Receipt
+              </Button>
+              <Button
+                type="button"
+                disabled
+                className="hover:bg-slate-900 text-white rounded-xl bg-amber-500"
+                onClick={() => { }}
+              >
+                <Printer className="fill-black" /> Premium
+              </Button>
+            </div>
           </DialogFooter>
         </DialogContent>
       </Dialog>

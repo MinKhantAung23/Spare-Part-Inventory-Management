@@ -305,7 +305,7 @@ export default function PartDetails({ part }: { part: Product }) {
             className="rounded-xl bg-primary hover:bg-primary text-white gap-1.5 font-bold shadow-sm disabled:opacity-40"
           >
             <ShoppingCart size={15} />
-            Add To Cart
+            စျေးခြင်းထဲထည့်မည်
           </Button>
           <div className="flex gap-2 shrink-0">
             <Button
