@@ -48,7 +48,7 @@ export default function TermsAndConditions() {
                         </h2>
                         <ul className="list-disc pl-6 space-y-2 text-gray-600 ml-4">
                             <li>
-                                Software ၏ မူလ Code ပိုင်းဆိုင်ရာ ချို့ယွင်းချက်များ၊ Bug များနှင့် Error များကို ဝန်ဆောင်မှုခ (ဝါ) ပြင်ဆင်ခ လုံးဝမယူဘဲ{' '}
+                                Software ၏ မူလ Code ပိုင်းဆိုင်ရာ ချို့ယွင်းချက်များ၊ Bug များနှင့် Error များကို ဝန်ဆောင်ခ (ဝါ) ပြင်ဆင်ခ လုံးဝမယူဘဲ{' '}
                                 <strong className="text-emerald-600 font-semibold">(100% Free / 0% Fee)</strong> အခမဲ့ တတာဝန်ယူ ပြင်ဆင်ပေးပါမည်။
                             </li>
                         </ul>
@@ -61,7 +61,7 @@ export default function TermsAndConditions() {
                             တာဝန်ယူမှု မရှိသည့် ကိစ္စရပ်များ (Exclusions & Limitations)
                         </h2>
                         <ul className="list-disc pl-6 space-y-2 text-gray-600 ml-4">
-                            <li>Software နှင့် တိုက်ရိုက်သက်ဆိုင်ခြင်းမရှိသော Hardware ပိုင်းဆိုင်ရာ ချို့ယွင်းမှုများ၊ စက်ပစ္စည်း ရုပ်ပိုင်းဆိုင်ရာ ထိခိုက်ပျက်စီးမှုများ (Physical Damages) အတွက် ဝန်ဆောင်မှုပေးသူတွင် တတာဝန်မရှိပါ။</li>
+                            <li>Software နှင့် တိုက်ရိုက်သက်ဆိုင်ခြင်းမရှိသော Hardware ပိုင်းဆိုင်ရာ ချို့ယွင်းမှုများ၊ စက်ပစ္စည်း ရုပ်ပိုင်းဆိုင်ရာ ထိခိုက်ပျက်စီးမှုများ (Physical Damages) အတွက် ဝန်ဆောင်မှုပေးသူတွင် တာဝန်မရှိပါ။</li>
                             <li>အသုံးပြုသူ၏ ပေါ့ဆမှုကြောင့် ဖြစ်ပေါ်လာသော ပျက်စီးမှုများ သို့မဟုတ် မူလသဘောတူညီချက်ပြင်ပရှိ စနစ်ပြင်ဆင်ပြောင်းလဲမှုများ <strong className="text-gray-950 font-medium">(Additional Changes)</strong> အတွက် အခမဲ့ ပြင်ဆင်ပေးခြင်း အကျုံးမဝင်ပါ။</li>
                         </ul>
                     </section>
@@ -74,8 +74,8 @@ export default function TermsAndConditions() {
                         </h2>
                         <ul className="list-disc pl-6 space-y-2 text-gray-600 ml-4">
                             <li>
-                                Software နှင့် ပတ်သက်သော ကိစ္စရပ်များ၊ မေးမြန်းမှုများနှင့် နည်းပညာဆိုင်ရာ အကူအညီများကို ရုံးဖွင့်ရက် ရုံးချိန်အတွင်း ဖြစ်သော{' '}
-                                <strong className="text-gray-950 font-semibold">နံနက် ၁၀:၀၀ နာရီ မှ ညနေ ၅:00 နာရီ (10:00 AM - 5:00 PM)</strong> အတွင်း အမြဲမပြတ် ဆောင်ရွက်ပေးသွားမည် ဖြစ်သည်။
+                                Software နှင့် ပတ်သက်သော ကိစ္စရပ်များ၊ မေးမြန်းမှုများနှင့် နည်းပညာဆိုင်ရာ အကူအညီများကို အစိုးရရုံးဖွင့်ရက် ရုံးချိန်အတွင်း ဖြစ်သော{' '}
+                                <strong className="text-gray-950 font-semibold">နံနက် ၁၀:၀၀ နာရီ မှ ညနေ ၃၀:၀၀ နာရီ (10:00 AM - 3:00 PM)</strong> အတွင်း ChatBox မှတဆင့် ဆက်သွယ်မေးမြန်းနိုင်ပါမည်။
                             </li>
                         </ul>
                     </section>
