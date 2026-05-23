@@ -45,6 +45,14 @@ export const useCreateStockIn = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["stockIn", "list"] });
       queryClient.invalidateQueries({ queryKey: ["stockIn", "all"] });
+      queryClient.invalidateQueries({
+        queryKey: ["stockIn"],
+      });
+
+      // ALL spare parts (IMPORTANT FIX)
+      queryClient.invalidateQueries({
+        queryKey: ["spareParts"],
+      });
       toast.success("Stock in created successfully");
     },
     onError: (error: any) => {
