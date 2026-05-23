@@ -17,6 +17,8 @@ import {
   Tags,
   LogOut,
   ShieldCheck,
+  User,
+  Ticket,
 } from "lucide-react";
 
 export default function Sidebar({ isExpanded, setIsExpanded }: any) {
@@ -29,23 +31,35 @@ export default function Sidebar({ isExpanded, setIsExpanded }: any) {
         { name: "ပင်မစာမျက်နှာ", href: "/", icon: LayoutDashboard },
         { name: "Quick Search", href: "/quick-search", icon: Search },
         { name: "အပိုပစ္စည်းများ", href: "/spare-parts", icon: Package },
-        { name: "ကုန်ပစ္စည်းလက်ကျန်စာရင်း", href: "/inventory", icon: Database },
+        {
+          name: "ကုန်ပစ္စည်းလက်ကျန်စာရင်း",
+          href: "/inventory",
+          icon: Database,
+        },
         { name: "ပစ္စည်းအဝင်စာရင်း", href: "/stock-in", icon: ArrowDownCircle },
         { name: "ပစ္စည်းအထွက်စာရင်း", href: "/stock-out", icon: ArrowUpCircle },
+        { name: "အရောင်းဘောင်ချာများ", href: "/sales", icon: Ticket },
       ],
     },
     {
       title: "CATALOG",
-      items: [
-        { name: "Brands & Models", href: "/brands", icon: Tags },
-      ],
+      items: [{ name: "Brands & Models", href: "/brands", icon: Tags }],
     },
     {
       title: "REPORTS",
       items: [
-        { name: "လုပ်ဆောင်ချက်မှတ်တမ်း", href: "/activity-logs", icon: History },
-        { name: "လုံခြုံရေးနှင့် မူဝါဒများ", href: "/terms_and_conditions", icon: ShieldCheck },
+        {
+          name: "လုပ်ဆောင်ချက်မှတ်တမ်း",
+          href: "/activity-logs",
+          icon: History,
+        },
         { name: "အသုံးပြုသူများ", href: "/users", icon: Users2 },
+        {
+          name: "လုံခြုံရေးနှင့် မူဝါဒများ",
+          href: "/terms_and_conditions",
+          icon: ShieldCheck,
+        }
+        // { name: "About Us", href: "/about-us", icon: User },
       ],
     },
   ];
@@ -69,10 +83,10 @@ export default function Sidebar({ isExpanded, setIsExpanded }: any) {
         </div>
         {isExpanded && (
           <div className="leading-tight truncate">
-            <h1 className="font-bold text-slate-800 text-sm">
-              Ko Bhone
-            </h1>
-            <p className="text-[10px] text-slate-400">Mobile Spare Parts And Services</p>
+            <h1 className="font-bold text-slate-800 text-sm">Ko Bhone</h1>
+            <p className="text-[10px] text-slate-400">
+              Mobile Spare Parts And Services
+            </p>
           </div>
         )}
       </div>
@@ -93,7 +107,7 @@ export default function Sidebar({ isExpanded, setIsExpanded }: any) {
                   item.href === "/"
                     ? pathname === "/"
                     : pathname === item.href ||
-                    pathname.startsWith(`${item.href}/`);
+                      pathname.startsWith(`${item.href}/`);
                 return (
                   <Link
                     key={item.href}

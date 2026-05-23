@@ -154,6 +154,9 @@ export default function ProductDialog() {
                 {...register("price", { valueAsNumber: true })}
                 className="rounded-xl h-11"
               />
+              {errors.price && (
+                <p className="text-[11px] text-rose-500">{errors.price.message as string}</p>
+              )}
             </div>
 
             {/* Brand → Model cascade */}
