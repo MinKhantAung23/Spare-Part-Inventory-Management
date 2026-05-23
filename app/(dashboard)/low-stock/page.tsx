@@ -10,6 +10,7 @@ import {
   ChevronRight,
   AlertTriangle,
   ArrowLeft,
+  Eye,
 } from "lucide-react";
 import {
   Table,
@@ -28,11 +29,12 @@ function LowStockTable({ data }: { data: any[] }) {
       <Table>
         <TableHeader className="bg-slate-50/50">
           <TableRow>
-            <TableHead className="w-75 font-bold">အပိုပစ္စည်း (Inventory)</TableHead>
+            <TableHead className="w-64 font-bold">အပိုပစ္စည်း (Inventory)</TableHead>
             <TableHead className="font-bold">လက်ကျန်ပစ္စည်း</TableHead>
             <TableHead className="font-bold">ရောင်းဈေး</TableHead>
             <TableHead className="font-bold">ကုန်ကျစရိတ်</TableHead>
             <TableHead className="font-bold">အခြေအနေ</TableHead>
+            <TableHead className="font-bold text-center">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -41,6 +43,7 @@ function LowStockTable({ data }: { data: any[] }) {
               key={item.id}
               className="hover:bg-rose-50/30 transition-colors"
             >
+              {/* Name */}
               <TableCell>
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-rose-50 border border-rose-100 rounded-xl flex items-center justify-center shrink-0">
@@ -52,18 +55,21 @@ function LowStockTable({ data }: { data: any[] }) {
                 </div>
               </TableCell>
 
+              {/* Quantity + bar */}
               <TableCell>
                 <div className="flex flex-col gap-1">
                   <span
-                    className={`text-sm font-black ${item.quantity === 0 ? "text-rose-600" : "text-amber-500"
-                      }`}
+                    className={`text-sm font-black ${
+                      item.quantity === 0 ? "text-rose-600" : "text-amber-500"
+                    }`}
                   >
                     {item.quantity} Units
                   </span>
                   <div className="w-20 h-1.5 bg-slate-100 rounded-full overflow-hidden">
                     <div
-                      className={`h-full rounded-full ${item.quantity === 0 ? "bg-rose-500" : "bg-amber-400"
-                        }`}
+                      className={`h-full rounded-full ${
+                        item.quantity === 0 ? "bg-rose-500" : "bg-amber-400"
+                      }`}
                       style={{
                         width: `${Math.min((item.quantity / 5) * 100, 100)}%`,
                       }}
@@ -72,14 +78,17 @@ function LowStockTable({ data }: { data: any[] }) {
                 </div>
               </TableCell>
 
+              {/* Price */}
               <TableCell className="font-medium text-slate-700">
                 {Number(item.spare_part?.price ?? 0).toLocaleString()} Ks
               </TableCell>
 
+              {/* Cost */}
               <TableCell className="font-medium text-slate-700">
                 {Number(item.total_cost ?? 0).toLocaleString()} Ks
               </TableCell>
 
+              {/* Status badge */}
               <TableCell>
                 {item.quantity === 0 ? (
                   <span className="inline-flex items-center gap-1 text-[11px] font-black bg-rose-100 text-rose-600 px-2.5 py-1 rounded-full">
@@ -92,6 +101,17 @@ function LowStockTable({ data }: { data: any[] }) {
                     Low Stock
                   </span>
                 )}
+              </TableCell>
+
+              {/* Detail action → full page */}
+              <TableCell className="text-center">
+                <Link
+                  href={`/spare-parts/${item.spare_part_id ?? item.spare_part?.id}`}
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-primary border border-primary/30 bg-primary/5 hover:bg-primary/10 px-3 py-1.5 rounded-xl transition-all"
+                >
+                  <Eye size={13} />
+                  View
+                </Link>
               </TableCell>
             </TableRow>
           ))}
@@ -114,7 +134,7 @@ export default function LowStockPage() {
   const { data: response, isLoading } = useLowStockQuery({
     page,
     search: searchQuery,
-    limit: 10
+    limit: 10,
   });
 
   const visibleItems = useMemo(() => response?.data ?? [], [response]);
@@ -122,7 +142,6 @@ export default function LowStockPage() {
   const totalPages = paginationMeta?.totalPages ?? 1;
   const totalItems = paginationMeta?.totalItems ?? 0;
 
-  // Ellipsis-aware page number array
   const pageNumbers = useMemo(() => {
     const pages: (number | "…")[] = [];
     for (let n = 1; n <= totalPages; n++) {
@@ -152,12 +171,22 @@ export default function LowStockPage() {
                 <AlertTriangle size={15} className="text-rose-500" />
               </div>
               <h1 className="text-2xl font-bold text-slate-800">
-                လက်ကျန်နည်းနေသည်
+                လက်ကျန်နည်းနေသည် (Low Stock)
               </h1>
             </div>
+            <p className="text-sm text-slate-400 mt-1 ml-10">
+              Click <span className="font-semibold text-primary">View</span> on
+              any row to see full part details
+            </p>
           </div>
         </div>
 
+        {!isLoading && totalItems > 0 && (
+          <div className="flex items-center gap-2 bg-rose-50 border border-rose-200 text-rose-600 text-sm font-bold px-4 py-2 rounded-xl">
+            <AlertTriangle size={14} />
+            {totalItems} item{totalItems !== 1 ? "s" : ""} need attention
+          </div>
+        )}
       </div>
 
       {/* Search bar */}
@@ -256,10 +285,11 @@ export default function LowStockPage() {
                 <button
                   key={n}
                   onClick={() => setPage(n)}
-                  className={`w-8 h-8 flex items-center justify-center rounded-lg text-sm font-bold ${page === n
-                    ? "bg-rose-500 text-white"
-                    : "border border-slate-200 text-slate-500"
-                    }`}
+                  className={`w-8 h-8 flex items-center justify-center rounded-lg text-sm font-bold ${
+                    page === n
+                      ? "bg-rose-500 text-white"
+                      : "border border-slate-200 text-slate-500"
+                  }`}
                 >
                   {n}
                 </button>
@@ -276,6 +306,7 @@ export default function LowStockPage() {
           </div>
         </div>
       )}
+
     </div>
   );
 }
