@@ -17,6 +17,7 @@ import {
   Users2,
   Tags,
   LogOut,
+  ShieldCheck
 } from "lucide-react";
 
 export default function Sidebar({ isExpanded, setIsExpanded }: any) {
@@ -44,6 +45,7 @@ export default function Sidebar({ isExpanded, setIsExpanded }: any) {
       title: "REPORTS",
       items: [
         { name: "လုပ်ဆောင်ချက်မှတ်တမ်း", href: "/activity-logs", icon: History },
+        { name: "လုံခြုံရေးနှင့် မူဝါဒများ", href: "/terms_and_conditions", icon: ShieldCheck },
         { name: "အသုံးပြုသူများ", href: "/users", icon: Users2 },
       ],
     },

@@ -91,11 +91,10 @@ function Pagination({
             <button
               key={n}
               onClick={() => onPage(n)}
-              className={`w-8 h-8 flex items-center justify-center rounded-lg text-sm font-bold ${
-                page === n
-                  ? "bg-primary text-white"
-                  : "border border-slate-200 text-slate-500"
-              }`}
+              className={`w-8 h-8 flex items-center justify-center rounded-lg text-sm font-bold ${page === n
+                ? "bg-primary text-white"
+                : "border border-slate-200 text-slate-500"
+                }`}
             >
               {n}
             </button>
@@ -179,7 +178,7 @@ function BrandsTab({
 
   const handleSearch = (v: string) => { setSearch(v); setPage(1); };
 
-  const { data: response, isLoading } = useBrandsQuery({ page, search });
+  const { data: response, isLoading } = useBrandsQuery({ page, search, limit: 10 });
   const items = response?.data ?? [];
   const pagination = response?.pagination;
 
@@ -232,7 +231,7 @@ function ModelsTab({
 
   const handleSearch = (v: string) => { setSearch(v); setPage(1); };
 
-  const { data: response, isLoading } = useModelsQuery({ page, search });
+  const { data: response, isLoading } = useModelsQuery({ page, search, limit: 10 });
   const items = response?.data ?? [];
   const pagination = response?.pagination;
 
@@ -285,7 +284,7 @@ function CategoriesTab({
 
   const handleSearch = (v: string) => { setSearch(v); setPage(1); };
 
-  const { data: response, isLoading } = useCategoriesQuery({ page, search });
+  const { data: response, isLoading } = useCategoriesQuery({ page, search, limit: 10 });
   const items = response?.data ?? [];
   const pagination = response?.pagination;
 
@@ -372,11 +371,10 @@ export default function BrandsModelsPage() {
           <button
             key={id}
             onClick={() => setActiveTab(id)}
-            className={`flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-bold transition-all ${
-              activeTab === id
-                ? "bg-white text-primary shadow-sm"
-                : "text-slate-500 hover:text-slate-700"
-            }`}
+            className={`flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-bold transition-all ${activeTab === id
+              ? "bg-white text-primary shadow-sm"
+              : "text-slate-500 hover:text-slate-700"
+              }`}
           >
             <Icon size={15} />
             {label}

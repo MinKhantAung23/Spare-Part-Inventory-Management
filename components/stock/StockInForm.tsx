@@ -53,6 +53,7 @@ export default function StockInForm({ part, onSuccess }: StockInFormProps) {
         toast.success("Stock In recorded");
         reset();
         onSuccess();
+        window.location.reload();
       },
       onError: (err: any) => {
         toast.error(err.response?.data?.error || "Failed to record stock in");

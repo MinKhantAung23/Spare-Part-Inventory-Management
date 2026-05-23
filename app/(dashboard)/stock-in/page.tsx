@@ -38,6 +38,7 @@ export default function StockInPage() {
     categoryId: filters.categoryId,
     dateFrom: filters.dateFrom,
     dateTo: filters.dateTo,
+    limit: 10
   });
 
   // Extract from the back-end payload meta structure directly
@@ -102,8 +103,8 @@ export default function StockInPage() {
         <button
           onClick={() => setFilterDialogOpen(true)}
           className={`relative flex items-center gap-2 px-4 py-2.5 rounded-xl border text-sm font-bold ${activeFilterCount > 0
-              ? "bg-primary/10 border-primary/30 text-primary"
-              : "bg-white text-slate-500"
+            ? "bg-primary/10 border-primary/30 text-primary"
+            : "bg-white text-slate-500"
             }`}
         >
           <SlidersHorizontal size={15} />
@@ -179,8 +180,8 @@ export default function StockInPage() {
                   key={n}
                   onClick={() => setPage(n)}
                   className={`w-8 h-8 flex items-center justify-center rounded-lg text-sm font-bold ${page === n
-                      ? "bg-primary text-white"
-                      : "border border-slate-200 text-slate-500"
+                    ? "bg-primary text-white"
+                    : "border border-slate-200 text-slate-500"
                     }`}
                 >
                   {n}

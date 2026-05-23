@@ -23,7 +23,8 @@ export default function StockInTable({ data }: { data: any[] }) {
           <TableRow>
             <TableHead className="font-bold">အပိုပစ္စည်း</TableHead>
             <TableHead className="font-bold text-center">အဝင်အရေအတွက်</TableHead>
-            <TableHead className="font-bold">ဈေးနှုန်း</TableHead>
+            <TableHead className="font-bold">ရောင်းစျေး</TableHead>
+            <TableHead className="font-bold">ဝယ်စျေး</TableHead>
             <TableHead className="font-bold">လက်ခံရရှိသည့်ရက်စွဲ</TableHead>
             <TableHead className="text-right font-bold"></TableHead>
           </TableRow>
@@ -35,16 +36,20 @@ export default function StockInTable({ data }: { data: any[] }) {
                 <p className="font-bold text-slate-800">
                   {log?.spare_part.name}
                 </p>
-                {log?.spare_part.price && (
-                  <p className="text-sm text-slate-400 italic">
-                    "{log?.spare_part.price} ks"
-                  </p>
-                )}
+
               </TableCell>
               <TableCell className="text-center">
                 <div className="flex items-center justify-center gap-1 text-emerald-600 font-black">
                   <ArrowDownLeft size={14} />+{log.initial_quantity}
                 </div>
+              </TableCell>
+              <TableCell>
+                <Badge
+                  variant="outline"
+                  className="bg-slate-100 font-bold  text-slate-600 border-slate-200"
+                >
+                  {log.spare_part.price} Ks
+                </Badge>
               </TableCell>
               <TableCell>
                 <Badge

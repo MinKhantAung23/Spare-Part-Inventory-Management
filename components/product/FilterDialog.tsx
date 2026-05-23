@@ -118,7 +118,7 @@ export default function FilterDialog() {
                     </div>
 
                     {/* Stock Status */}
-                    <div className="space-y-1.5">
+                    <div className="space-y-1.5 mb-16">
                         <label className="text-[10px] uppercase font-black text-slate-400 tracking-widest">
                             Stock Status
                         </label>

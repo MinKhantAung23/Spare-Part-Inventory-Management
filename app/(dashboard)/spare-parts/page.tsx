@@ -33,6 +33,7 @@ export default function SparePartsPage() {
     modelId: filters.modelId,
     categoryId: filters.categoryId,
     stockStatus: filters.stockStatus !== "all" ? filters.stockStatus : null,
+    limit: 10
   });
 
   // Extract from the back-end payload meta structure directly

@@ -52,8 +52,8 @@ export default function StockOutForm({ part, onSuccess }: StockOutFormProps) {
     },
   });
 
-  const qty = watch("quantity") || 0;
-  const price = watch("unit_price") || 0;
+  const qty = Number(watch("quantity") || 0);
+  const price = Number(watch("unit_price") || 0);
   const currentStock = part.quantity ?? 0;
 
   const onSubmit = (values: StockOutFormValues) => {
@@ -69,6 +69,7 @@ export default function StockOutForm({ part, onSuccess }: StockOutFormProps) {
         toast.success("Stock Out recorded");
         reset();
         onSuccess();
+        window.location.reload();
       },
       onError: (err: any) => {
         toast.error(err.response?.data?.error || "Failed to record stock out");
@@ -77,7 +78,7 @@ export default function StockOutForm({ part, onSuccess }: StockOutFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit(() => onSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <input type="hidden" {...register("spare_part_id", { valueAsNumber: true })} />
 
       {/* Stock warning */}

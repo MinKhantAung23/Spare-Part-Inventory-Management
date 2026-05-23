@@ -22,6 +22,7 @@ import { useSparePartsById } from "@/hooks/useSparePart";
 import { BatchesTable } from "@/components/quick-search/PartDetails";
 import StockDialog from "@/components/quick-search/Stockdialog";
 import { useCartStore } from "@/store/use-cart-store";
+import { Card } from "@/components/ui/card";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -91,142 +92,146 @@ export default function ProductDetailPage() {
   };
 
   return (
-    <div className="space-y-8 font-padauk">
-      {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-sm text-slate-400">
-        <Link href="/spare-parts" className="hover:text-primary transition-colors">
-          အပိုပစ္စည်းများ
-        </Link>
-        <ChevronRight size={14} />
-        <span className="text-slate-900 font-semibold truncate">
-          {product.name}
-        </span>
-      </nav>
+    <Card className="bg-background p-5">
 
-      {/* ── Header ─────────────────────────────────────────────────────────── */}
-      <div className="flex justify-between items-start flex-wrap gap-4">
-        <div className="flex gap-4">
-          {/* Icon */}
-          <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-primary border border-blue-100 shrink-0">
-            <Smartphone size={32} />
-          </div>
+      <div className="space-y-8 font-padauk">
+        {/* Breadcrumb */}
+        <nav className="flex items-center gap-2 text-sm text-slate-400">
+          <Link href="/spare-parts" className="hover:text-primary transition-colors">
+            အပိုပစ္စည်းများ
+          </Link>
+          <ChevronRight size={14} />
+          <span className="text-slate-900 font-semibold truncate">
+            {product.name}
+          </span>
+        </nav>
 
-          {/* Name + breadcrumb trail */}
-          <div>
-            <h1 className="text-2xl font-black text-slate-800">{product.name}</h1>
-            <p className="text-sm font-bold flex gap-1.5 flex-wrap mt-1 items-center">
-              {brandName && (
-                <>
-                  <span className="text-blue-500">{brandName}</span>
-                  <span className="text-slate-300">›</span>
-                </>
-              )}
-              <span className="text-slate-500">{modelName}</span>
-              <span className="text-slate-300">›</span>
-              <span className="text-orange-500">📁 {categoryName}</span>
-            </p>
-            <span
-              className={`inline-block mt-1.5 text-xs font-bold ${isInStock ? "text-emerald-500" : "text-red-400"
-                }`}
-            >
-              {isInStock ? "● လက်ကျန်စတော့" : "○ လက်ကျန်မရှိပါ"}
-            </span>
-          </div>
-        </div>
+        {/* ── Header ─────────────────────────────────────────────────────────── */}
+        <div className="flex justify-between items-start flex-wrap gap-4">
+          <div className="flex gap-4">
+            {/* Icon */}
+            <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-primary border border-blue-100 shrink-0">
+              <Smartphone size={32} />
+            </div>
 
-        {/* Action Buttons */}
-        <div className="flex flex-wrap gap-2 shrink-0">
-          <Button
-            size="sm"
-            onClick={handleAddToCart}
-            disabled={!isInStock}
-            className="rounded-xl bg-primary hover:bg-blue-600 text-white gap-1.5 font-bold shadow-sm disabled:opacity-40"
-          >
-            <ShoppingCart size={15} />
-            Add To Cart
-          </Button>
-          <Button
-            size="sm"
-            onClick={() => setStockDialog({ open: true, tab: "in" })}
-            className="rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white gap-1.5 font-bold shadow-sm"
-          >
-            <PackagePlus size={15} />
-            စတော့သွင်းမည်
-          </Button>
-          <Button
-            size="sm"
-            onClick={() => setStockDialog({ open: true, tab: "out" })}
-            disabled={!isInStock}
-            className="rounded-xl bg-rose-500 hover:bg-rose-600 text-white gap-1.5 font-bold shadow-sm disabled:opacity-40"
-          >
-            <PackageMinus size={15} />
-            စတော့ထုတ်မည်
-          </Button>
-        </div>
-      </div>
-
-      {/* ── Stat Cards ──────────────────────────────────────────────────────── */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <StatCard
-          label="In Stock"
-          value={stock}
-          color="text-emerald-500"
-          bg="bg-emerald-50"
-          border="border-emerald-100"
-        />
-        <StatCard
-          label="Sale Price"
-          value={`${Number(product.price).toLocaleString()} Ks`}
-          color="text-primary"
-          bg="bg-blue-50"
-          border="border-blue-100"
-        />
-        <StatCard
-          label="Category"
-          value={categoryName ?? "—"}
-          color="text-slate-600"
-          bg="bg-slate-50"
-          border="border-slate-100"
-        />
-      </div>
-
-      <Separator className="bg-slate-100" />
-
-      {/* ── Specifications ──────────────────────────────────────────────────── */}
-      {product.specification && Object.keys(product.specification).length > 0 && (
-        <div className="space-y-2">
-          <h4 className="text-[10px] uppercase font-bold text-slate-400 tracking-widest">
-            Specifications
-          </h4>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-            {Object.entries(product.specification).map(([key, val]) => (
-              <div
-                key={key}
-                className="bg-slate-50 p-3 rounded-xl border border-slate-100"
+            {/* Name + breadcrumb trail */}
+            <div>
+              <h1 className="text-2xl font-black text-slate-800">{product.name}</h1>
+              <p className="text-sm font-bold flex gap-1.5 flex-wrap mt-1 items-center">
+                {brandName && (
+                  <>
+                    <span className="text-blue-500">{brandName}</span>
+                    <span className="text-slate-300">›</span>
+                  </>
+                )}
+                <span className="text-slate-500">{modelName}</span>
+                <span className="text-slate-300">›</span>
+                <span className="text-orange-500">📁 {categoryName}</span>
+              </p>
+              <span
+                className={`inline-block mt-1.5 text-xs font-bold ${isInStock ? "text-emerald-500" : "text-red-400"
+                  }`}
               >
-                <p className="text-[9px] uppercase font-bold text-slate-400">
-                  {key}
-                </p>
-                <p className="text-xs font-bold text-slate-700 mt-0.5">
-                  {String(val)}
-                </p>
-              </div>
-            ))}
+                {isInStock ? "● လက်ကျန်စတော့" : "○ လက်ကျန်မရှိပါ"}
+              </span>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex flex-wrap gap-2 shrink-0">
+            <Button
+              size="sm"
+              onClick={handleAddToCart}
+              disabled={!isInStock}
+              className="rounded-xl bg-primary hover:bg-blue-600 text-white gap-1.5 font-bold shadow-sm disabled:opacity-40"
+            >
+              <ShoppingCart size={15} />
+              Add To Cart
+            </Button>
+            <Button
+              size="sm"
+              onClick={() => setStockDialog({ open: true, tab: "in" })}
+              className="rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white gap-1.5 font-bold shadow-sm"
+            >
+              <PackagePlus size={15} />
+              စတော့သွင်းမည်
+            </Button>
+            <Button
+              size="sm"
+              onClick={() => setStockDialog({ open: true, tab: "out" })}
+              disabled={!isInStock}
+              className="rounded-xl bg-rose-500 hover:bg-rose-600 text-white gap-1.5 font-bold shadow-sm disabled:opacity-40"
+            >
+              <PackageMinus size={15} />
+              စတော့ထုတ်မည်
+            </Button>
           </div>
         </div>
-      )}
 
-      {/* ── Stock Batches ────────────────────────────────────────────────────── */}
-      {batches.length > 0 && <BatchesTable batches={batches} />}
+        {/* ── Stat Cards ──────────────────────────────────────────────────────── */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <StatCard
+            label="In Stock"
+            value={stock}
+            color="text-emerald-500"
+            bg="bg-emerald-50"
+            border="border-emerald-100"
+          />
+          <StatCard
+            label="Sale Price"
+            value={`${Number(product.price).toLocaleString()} Ks`}
+            color="text-primary"
+            bg="bg-blue-50"
+            border="border-blue-100"
+          />
+          <StatCard
+            label="Category"
+            value={categoryName ?? "—"}
+            color="text-slate-600"
+            bg="bg-slate-50"
+            border="border-slate-100"
+          />
+        </div>
 
-      {/* ── Stock Dialog ─────────────────────────────────────────────────────── */}
-      <StockDialog
-        isOpen={stockDialog.open}
-        onClose={() => setStockDialog((s) => ({ ...s, open: false }))}
-        part={product}
-        defaultTab={stockDialog.tab}
-      />
-    </div>
+        <Separator className="bg-slate-100" />
+
+        {/* ── Specifications ──────────────────────────────────────────────────── */}
+        {product.specification && Object.keys(product.specification).length > 0 && (
+          <div className="space-y-2">
+            <h4 className="text-[10px] uppercase font-bold text-slate-400 tracking-widest">
+              Specifications
+            </h4>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              {Object.entries(product.specification).map(([key, val]) => (
+                <div
+                  key={key}
+                  className="bg-slate-50 p-3 rounded-xl border border-slate-100"
+                >
+                  <p className="text-[9px] uppercase font-bold text-slate-400">
+                    {key}
+                  </p>
+                  <p className="text-xs font-bold text-slate-700 mt-0.5">
+                    {String(val)}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ── Stock Batches ────────────────────────────────────────────────────── */}
+        {batches.length > 0 && <BatchesTable batches={batches} />}
+
+        {/* ── Stock Dialog ─────────────────────────────────────────────────────── */}
+        <StockDialog
+          isOpen={stockDialog.open}
+          onClose={() => setStockDialog((s) => ({ ...s, open: false }))}
+          part={product}
+          defaultTab={stockDialog.tab}
+        />
+      </div>
+    </Card>
+
   );
 }
 

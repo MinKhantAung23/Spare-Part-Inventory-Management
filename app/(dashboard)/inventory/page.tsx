@@ -25,6 +25,7 @@ export default function InventoryPage() {
   const { data: response, isLoading } = useInventoryQuery({
     page,
     search: searchQuery,
+    limit: 10
   });
 
   // Extract from the back-end payload structure

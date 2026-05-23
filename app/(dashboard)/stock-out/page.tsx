@@ -38,6 +38,7 @@ export default function StockOutPage() {
     search: searchQuery,
     dateFrom: filters.dateFrom,
     dateTo: filters.dateTo,
+    limit: 10
   });
 
   // Extract from the back-end payload meta structure directly

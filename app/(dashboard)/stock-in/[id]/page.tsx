@@ -37,7 +37,7 @@ export default function StockInDetailPage() {
   if (isError || !product) return <ProductErrorState />;
 
   return (
-    <div className="min-h-screen bg-white font-padauk selection:bg-blue-100">
+    <div className="min-h-screen bg-white font-padauk selection:bg-blue-100 rounded-lg">
       {/* Breadcrumbs */}
       <nav className="max-w-7xl mx-auto px-6 py-6 flex items-center gap-2 text-sm text-slate-400">
         <Link href="/stock-in" className="hover:text-primary transition-colors">
