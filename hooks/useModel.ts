@@ -21,15 +21,6 @@ export const useModelsQuery = (params: ModelQueryParams) => {
   });
 };
 
-// ── Legacy (dropdowns, etc.) ──────────────────────────────────────────────────
-export const useModels = () => {
-  return useQuery({
-    queryKey: ["models", "all"],
-    queryFn: () => fetchModels({ limit: 1000 }),
-    staleTime: 1000 * 60 * 5,
-  });
-};
-
 export const useModelById = (id: string) => {
   return useQuery({
     queryKey: ["models", "detail", id],
