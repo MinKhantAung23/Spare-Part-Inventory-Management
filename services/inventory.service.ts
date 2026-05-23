@@ -4,6 +4,7 @@ export interface InventoryQueryParams {
   page?: number;
   limit?: number;
   search?: string;
+  // lowStock?: boolean;
 }
 
 export async function fetchInventory(params: InventoryQueryParams = {}) {
@@ -12,8 +13,9 @@ export async function fetchInventory(params: InventoryQueryParams = {}) {
   if (params.page) query.set("page", String(params.page));
   if (params.limit) query.set("limit", String(params.limit));
   if (params.search) query.set("name", params.search);
+  // if (params.lowStock) query.set("lowStock", "true");
 
   const qs = query.toString();
-  const { data } = await api.get(`/api/inventory${qs ? `?${qs}` : ""}`);
-  return data; // { success, pagination, data[] }
+  const { data } = await api.get(`/api/dashboard/low-stock${qs ? `?${qs}` : ""}`);
+  return data;
 }

@@ -2,6 +2,7 @@
 
 import { Package, AlertTriangle, TrendingUp, DollarSign } from "lucide-react";
 import { useDashboard } from "@/hooks/useDashboard";
+import Link from "next/link";
 
 export default function DashboardPage() {
   const { data: response, isLoading, error } = useDashboard();
@@ -44,13 +45,15 @@ export default function DashboardPage() {
           icon={<Package className="text-blue-600" />}
           trend={`အရေအတွက်: ${formatNumber(dashboard.total_inventory_quantity)}`}
         />
-        <StatCard
-          title="လက်ကျန်နည်းနေသည်"
-          value={formatNumber(dashboard.low_stock.products)}
-          icon={<AlertTriangle className="text-destructive" />}
-          trend={`အနည်းဆုံးသတ်မှတ်ချက်: ${dashboard.low_stock.threshold}`}
-          isAlert={dashboard.low_stock.products > 0}
-        />
+        <Link href="/low-stock" className="block hover:scale-[1.01] transition-transform">
+          <StatCard
+            title="လက်ကျန်နည်းနေသည်"
+            value={formatNumber(dashboard.low_stock.products)}
+            icon={<AlertTriangle className="text-destructive" />}
+            trend={`အနည်းဆုံးသတ်မှတ်ချက်: ${dashboard.low_stock.threshold}`}
+            isAlert={dashboard.low_stock.products > 0}
+          />
+        </Link>
         <StatCard
           title="ယနေ့ရောင်းရငွေ"
           value={formatCurrency(dashboard.today_sales.sales_value)}
