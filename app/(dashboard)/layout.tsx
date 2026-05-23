@@ -4,6 +4,7 @@ import { useState } from "react";
 import Sidebar from "./_components/Sidebar";
 import Topbar from "./_components/Topbar";
 import Footer from "./_components/Footer";
+import { Toaster } from "sonner";
 
 export default function DashboardLayout({
   children,
@@ -14,6 +15,7 @@ export default function DashboardLayout({
 
   return (
     <div className="flex h-screen overflow-hidden bg-[#F8FAFC] font-padauk">
+      <Toaster position="top-right" />
       {/* 1. Sidebar - Persists on the left */}
       <Sidebar isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
 

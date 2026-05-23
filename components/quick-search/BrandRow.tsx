@@ -60,9 +60,13 @@ export function BrandRow({ brand, colorClass, allModels }: BrandRowProps) {
           </Accordion>
         ) : (
           <Accordion type="single" collapsible className="w-full space-y-1">
-            {brandModels.map((model: any) => (
+            {brandModels.length === 0 ? 
+            <p className="text-muted-foreground text-sm font-bold text-center">ပစ္စည်းမရှိပါ</p> : (
+              brandModels.map((model: any) => (
               <ModelRow key={model.id} model={model} />
-            ))}
+            ))
+            )}
+           
           </Accordion>
         )}
       </AccordionContent>
