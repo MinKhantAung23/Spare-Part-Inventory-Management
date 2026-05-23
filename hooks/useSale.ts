@@ -3,13 +3,15 @@ import { CreateSaleInput } from "@/types/sale";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-export const useSales = () => {
+export const useSales = (params: any) => {
   return useQuery({
     queryKey: ["sales"],
-    queryFn: fetchSales,
-    staleTime: 1000 * 60 * 5,
+    queryFn: () => fetchSales(params),
+    staleTime: 1000 * 60 * 5, // 2 min
+    placeholderData: (prev) => prev, 
   });
 };
+
 
 export const useCreateSale = () => {
   const queryClient = useQueryClient();
