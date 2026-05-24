@@ -21,10 +21,10 @@ import { toast } from "sonner";
 
 const REASONS = [
   { value: "Sale", label: "Sale (ရောင်းချခြင်း)" },
-  { value: "Return", label: "Return (ပြန်ပေးခြင်း)" },
-  { value: "Damage", label: "Damage (ပျက်စီးခြင်း)" },
-  { value: "Transfer", label: "Transfer (လွှဲပြောင်းခြင်း)" },
-  { value: "Loss", label: "Loss (ပျောက်ဆုံးခြင်း)" },
+  // { value: "Return", label: "Return (ပြန်ပေးခြင်း)" },
+  // { value: "Damage", label: "Damage (ပျက်စီးခြင်း)" },
+  // { value: "Transfer", label: "Transfer (လွှဲပြောင်းခြင်း)" },
+  // { value: "Loss", label: "Loss (ပျောက်ဆုံးခြင်း)" },
 ];
 
 interface StockOutFormProps {

@@ -64,7 +64,7 @@ export default function StockOutTable({ data }: { data: any[] }) {
                 </Badge>
               </TableCell>
               <TableCell className="text-sm text-slate-600">
-                {log.profit}
+                {Number(log.profit ?? 0).toLocaleString()}
               </TableCell>
               <TableCell className="text-sm text-slate-600">
                 {format(new Date(log.date), "MMM dd, yyyy")}
