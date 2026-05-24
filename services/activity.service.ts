@@ -1,32 +1,26 @@
-export const fetchActivityLogs = async () => {
-  await new Promise(resolve => setTimeout(resolve, 800));
-  return [
-    {
-      id: "LOG-101",
-      user: "Nay Myo Thant",
-      action: "STOCK_IN",
-      entity: "iPhone 13 LCD",
-      details: "Added 50 units to main warehouse",
-      timestamp: "2024-03-22T10:30:00Z",
-      ipAddress: "192.168.1.15"
-    },
-    {
-      id: "LOG-102",
-      user: "Admin",
-      action: "UPDATE",
-      entity: "Samsung S23 Battery",
-      details: "Changed sale price from 45,000 to 48,000 Ks",
-      timestamp: "2024-03-22T09:15:00Z",
-      ipAddress: "192.168.1.1"
-    },
-    {
-      id: "LOG-103",
-      user: "Staff-01",
-      action: "DELETE",
-      entity: "Old Redmi Note 7 Shell",
-      details: "Removed obsolete category item",
-      timestamp: "2024-03-21T16:45:00Z",
-      ipAddress: "172.16.0.42"
-    }
-  ];
-};
+import api from "@/lib/api";
+
+export interface ActivityLogParams {
+  page?: number;
+  limit?: number;
+  userId?: string;
+  tableName?: string;
+  action?: string;
+  from?: string;
+  to?: string;
+}
+
+export async function fetchActivityLogs(params: ActivityLogParams = {}) {
+  const query = new URLSearchParams();
+  if (params.page) query.set("page", String(params.page));
+  if (params.limit) query.set("limit", String(params.limit));
+  if (params.userId) query.set("userId", params.userId);
+  if (params.tableName) query.set("tableName", params.tableName);
+  if (params.action) query.set("action", params.action);
+  if (params.from) query.set("from", params.from);
+  if (params.to) query.set("to", params.to);
+
+  const qs = query.toString();
+  const { data } = await api.get(`/api/activity-log${qs ? `?${qs}` : ""}`);
+  return data; // { success, count, page, totalPages, data[] }
+}

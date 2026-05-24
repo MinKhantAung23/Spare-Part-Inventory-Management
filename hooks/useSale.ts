@@ -6,7 +6,7 @@ import { toast } from "sonner";
 // hooks/useSale.ts
 export const useSales = (params: { page: number; limit: number; date?: string; search?: string }) => {
   return useQuery({
-    queryKey: ["sales", "list", params], 
+    queryKey: ["sales", "list", params],
     queryFn: () => fetchSales(params),
     staleTime: 1000 * 30, // 30 seconds
   });
@@ -31,7 +31,7 @@ export const useCreateSale = () => {
       toast.success("Sale created successfully");
     },
     onError: (error: any) => {
-      toast.error(error.response?.data?.message || "Failed to create");
+      toast.error(error.response?.data?.error || "Failed to create");
     },
   });
 };
