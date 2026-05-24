@@ -6,3 +6,4 @@ export const createModelSchema = z.object({
 });
 
 export type CreateModelFormValues = z.infer<typeof createModelSchema>;
+export type ModelFormInputValues = z.input<typeof createModelSchema>;
