@@ -2,11 +2,11 @@ import { z } from "zod";
 
 export const createUserSchema = z.object({
   name: z.string().min(1, "Name is required"),
-  role: z.enum(["admin", "staff"], {
-    required_error: "Role is required",
-    invalid_type_error: "Role must be admin or staff",
-  }),
-  // Empty string = no change (update mode); enforced ≥6 only when a value is given
+  role: z.enum(["admin", "staff"], { error: "Role is required" }),
+  // role: z.enum(["admin", "staff"], {
+  //   message: "Role is required",
+  //   error: "Role must be admin or staff",
+  // }),
   password: z
     .string()
     .refine((v) => v === "" || v.length >= 6, {

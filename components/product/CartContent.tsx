@@ -75,7 +75,7 @@ export function CartContent() {
       },
       onError: (error: any) => {
         toast.error(
-          error?.response?.data?.message || "Failed to complete checkout.",
+          error?.response?.data?.error || "Failed to complete checkout.",
         );
         console.error("Sale creation failed:", error);
       },
@@ -274,7 +274,7 @@ export function CartContent() {
                 type="button"
                 disabled
                 className="hover:bg-slate-900 text-white rounded-xl bg-amber-500"
-                onClick={() => {}}
+                onClick={() => { }}
               >
                 <Printer className="fill-black" /> Premium
               </Button>
