@@ -146,7 +146,7 @@ export default function ProductDialog() {
             {/* Price */}
             <div className="space-y-1.5">
               <Label className="text-xs font-black uppercase tracking-wide text-slate-500">
-                ဈေးနှုန်း (Ks)
+                ရောင်းဈေးနှုန်း (Ks)
               </Label>
               <Input
                 type="number"

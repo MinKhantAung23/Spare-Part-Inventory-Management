@@ -30,11 +30,11 @@ export default function Topbar() {
   // Initials from user name
   const initials = user?.name
     ? user.name
-        .split(" ")
-        .map((w) => w[0])
-        .join("")
-        .toUpperCase()
-        .slice(0, 2)
+      .split(" ")
+      .map((w) => w[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2)
     : "??";
 
   return (

@@ -68,7 +68,7 @@ export default function StockInForm({ part, onSuccess }: StockInFormProps) {
 
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-1.5">
-          <Label className="text-xs font-bold text-slate-500 uppercase tracking-wide">Quantity</Label>
+          <Label className="text-xs font-bold text-slate-500 uppercase tracking-wide">အရေအတွက်</Label>
           <Input
             type="number"
             min={1}
@@ -81,7 +81,7 @@ export default function StockInForm({ part, onSuccess }: StockInFormProps) {
         </div>
 
         <div className="space-y-1.5">
-          <Label className="text-xs font-bold text-slate-500 uppercase tracking-wide">Purchase Price (Ks)</Label>
+          <Label className="text-xs font-bold text-slate-500 uppercase tracking-wide">ဝယ်ဈေးနှုန်း (Ks)</Label>
           <Input
             type="number"
             min={0}
@@ -106,7 +106,7 @@ export default function StockInForm({ part, onSuccess }: StockInFormProps) {
 
       {/* Total */}
       <div className="flex justify-between items-center bg-emerald-50 border border-emerald-100 rounded-2xl px-4 py-3">
-        <span className="text-xs font-bold text-emerald-700">Total Amount</span>
+        <span className="text-xs font-bold text-emerald-700">စုစုပေါင်း</span>
         <span className="text-xl font-black text-emerald-600">
           {(qty * price).toLocaleString()} Ks
         </span>

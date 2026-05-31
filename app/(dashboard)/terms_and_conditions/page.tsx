@@ -90,6 +90,24 @@ export default function TermsAndConditions() {
                             <li>မူလစနစ်တွင် မပါဝင်သေးသော Feature အသစ်များကို ထပ်မံထည့်သွင်းလိုပါက (သို့မဟုတ်) လုပ်ငန်းလိုအပ်ချက်အရ စနစ်ကို အတိုးအလျှော့ ပြုလုပ်လိုပါက ထပ်ဆင့်တိုးလာမည့် လုပ်ငန်းပမာဏအပေါ် မူတည်၍ သီးသန့်ကုန်ကျစရိတ် <strong className="text-gray-950 font-medium">(Additional Charges)</strong> များ ပေးဆောင်ရမည်။</li>
                         </ul>
                     </section>
+                    <section>
+                        <h2 className="text-xl font-semibol mb-3 flex items-center text-red-600">
+                            <span className="bg-blue-100 text-blue-800 text-sm font-bold mr-3 px-2.5 py-1 rounded print:border print:border-gray-400">၆</span>
+                            အချက်အလက် သိမ်းဆည်းခြင်းနှင့် တာဝန်ယူမှု ကန့်သတ်ချက်
+                        </h2>
+                        <ul className="list-disc pl-6 space-y-2 text-gray-600 ml-4">
+                            <li>ယခု Software သည် Internet မလိုဘဲ အသုံးပြုရသော <strong>Offline စနစ်</strong> ဖြစ်သောကြောင့် အသုံးပြုသူ ထည့်သွင်းသမျှ အချက်အလက်အားလုံးသည် အသုံးပြုသူ၏ Dvice ထဲတွင်သာ တိုက်ရိုက်သိမ်းဆည်းမည် ဖြစ်ပါသည်။</li>
+                        </ul>
+                        <ul className="list-disc pl-6 space-y-2 text-gray-600 ml-4">
+                            <li> ကုမ္ပဏီအနေဖြင့် အသုံးပြုသူ၏ ဒေတာများကို ရယူသိမ်းဆည်းထားခြင်း သိုမဟုတ် Backup ပြုလုပ်ပေးထားခြင်း လုံးဝ (လုံးဝ) မရှိပါ။</li>
+                        </ul>
+                        <ul className="list-disc pl-6 space-y-2 text-gray-600 ml-4">
+                            <li> စက်ပစ္စည်းပျက်စီးခြင်း၊ ဗိုင်းရပ်စ် (Virus) ကိုက်ခြင်း၊ Software ကို နည်းစနစ်မကျဘဲ ဖျက်မိခြင်း သိုမဟုတ် မတော်တဆမှုတစ်ခုခုကြောင့် အချက်အလက်များ ပျောက်ဆုံးခြင်း၊ ပျက်စီးခြင်း (Data Loss or Corruption) များ ဖြစ်ပေါ်လာပါက [ကုမ္ပဏီ/Developer အမည်] အနေဖြင့် တစ်စုံတစ်ရာ တာဝန်ယူပေးမည် မဟုတ်ပါ။</li>
+                        </ul>
+                        <ul className="list-disc pl-6 space-y-2 text-gray-600 ml-4">
+                            <li> အရေးကြီးသော ဒေတာများ ဆုံးရှုးမှုမရှိစေရန်အတွက် မိမိတို၏ အချက်အလက်များကို အခြား Safe Drive များ သိုမဟုတ် External Storage များတွင် ပုံမှန် Backup (မိတ္တူကူးယူခြင်း) ပြုလုပ်ထားရန် အသုံးပြုသူတွင်သာ လုံးဝတာဝန်ရှိပါသည်။</li>
+                        </ul>
+                    </section>
 
                 </div>
             </div>

@@ -92,7 +92,7 @@ export default function StockOutForm({ part, onSuccess }: StockOutFormProps) {
 
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-1.5">
-          <Label className="text-xs font-bold text-slate-500 uppercase tracking-wide">Quantity</Label>
+          <Label className="text-xs font-bold text-slate-500 uppercase tracking-wide">အရေအတွက်</Label>
           <Input
             type="number"
             min={1}
@@ -106,7 +106,7 @@ export default function StockOutForm({ part, onSuccess }: StockOutFormProps) {
         </div>
 
         <div className="space-y-1.5">
-          <Label className="text-xs font-bold text-slate-500 uppercase tracking-wide">Unit Price (Ks)</Label>
+          <Label className="text-xs font-bold text-slate-500 uppercase tracking-wide">ရောင်းစျေး (တစ်ခုချင်း )</Label>
           <Input
             type="number"
             min={0}
