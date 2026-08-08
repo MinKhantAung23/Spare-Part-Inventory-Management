@@ -109,6 +109,10 @@ export default function TermsAndConditions() {
                         </ul>
                     </section>
 
+                    {/* last updated date 09/08/2026 */}
+                    <p className="text-sm text-gray-500 mt-6">
+                        Last Updated: {new Date("2026-08-09").toLocaleDateString()}
+                    </p>
                 </div>
             </div>
         </main>

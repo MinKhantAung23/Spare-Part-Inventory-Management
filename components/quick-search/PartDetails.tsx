@@ -11,6 +11,7 @@ import {
   Hash,
   ShoppingCart,
 } from "lucide-react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -74,7 +75,7 @@ function BatchStatusBadge({
   if (remaining === 0)
     return (
       <Badge className="bg-slate-100 text-slate-500 border-none text-[10px] font-bold hover:bg-slate-100">
-        Depleted
+        sold out
       </Badge>
     );
   if (remaining < initial * 0.2)
@@ -99,7 +100,8 @@ export function BatchesTable({ batches }: { batches: Batch[] }) {
           Stock Batches
         </h4>
         <span className="text-[11px] font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">
-          {batches.length} batch{batches.length !== 1 ? "es" : ""}
+          {/* {batches.length} batch{batches.length !== 1 ? "es" : ""} */}
+          <Link href="/stock-in">view all</Link>
         </span>
       </div>
 

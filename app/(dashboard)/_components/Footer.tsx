@@ -8,9 +8,17 @@ export default function Footer() {
         <span className="w-1 h-1 bg-slate-300 rounded-full"></span>
         <span>Version 1.0.0-stable</span>
       </div>
+      {/*  link to -> https://nayamyanmar.com/  on Naya Myanmar  clicked */}
       <div className="flex items-center gap-2">
         <Image src="/naya-logo.jpg" alt="Logo" width={20} height={20} />
-        <span className="text-primary font-semibold">Naya Technology</span>
+        <a
+          href="https://nayamyanmar.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary font-semibold hover:underline"
+        >
+          Naya Myanmar
+        </a>
       </div>
     </footer>
   );
